@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEXA Network</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:#050816;
+    color:white;
+}
+.container{
+    max-width:420px;
+    margin:auto;
+    padding:20px;
+}
+.logo{
+    text-align:center;
+    margin-top:20px;
+}
+.logo h1{
+    font-family:'Orbitron',sans-serif;
+    margin:0;
+    font-size:38px;
+}
+.logo p{
+    color:#9db6ff;
+}
+.card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:20px;
+    padding:18px;
+    margin-top:15px;
+}
+.balance{
+    font-size:32px;
+    font-weight:bold;
+}
+.label{
+    opacity:.8;
+}
+button{
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:14px;
+    margin-top:10px;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:16px;
+}
+.start{
+    background:#4F7CFF;
+    color:white;
+}
+.mission{
+    display:flex;
+    justify-content:space-between;
+    margin:10px 0;
+}
+.progress{
+    height:10px;
+    background:#1b2447;
+    border-radius:20px;
+    overflow:hidden;
+}
+.bar{
+    width:80%;
+    height:100%;
+    background:#00E5FF;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="logo">
+<h1>LEXA</h1>
+<p>Contribution Creates Value</p>
+</div>
+
+<div class="card">
+<div class="label">Balance</div>
+<div class="balance" id="balance">0 LEXA</div>
+</div>
+
+<div class="card">
+<div class="label">Mining Rate</div>
+<h2>50 LEXA / Hour</h2>
+
+<p>Status: <span id="status">Inactive</span></p>
+<p>Remaining: <span id="remaining">12h 00m</span></p>
+
+<button class="start" onclick="startMining()">START MINING</button>
+</div>
+
+<div class="card">
+<h3>Level 7 Builder</h3>
+<div class="progress">
+<div class="bar"></div>
+</div>
+</div>
+
+<div class="card">
+<h3>Developer Missions</h3>
+
+<div class="mission">
+<span>🐞 Report Bug</span>
+<b>+200</b>
+</div>
+
+<div class="mission">
+<span>📖 Documentation</span>
+<b>+150</b>
+</div>
+
+<div class="mission">
+<span>💻 Build Project</span>
+<b>+500</b>
+</div>
+
+</div>
+
+</div>
+
+<script>
+let balance = Number(localStorage.getItem("lexaBalance") || 0);
+let startTime = localStorage.getItem("lexaStartTime");
+
+document.getElementById("balance").innerText = balance.toLocaleString()+" LEXA";
+
+function startMining(){
+    if(localStorage.getItem("lexaStartTime")) return;
+
+    localStorage.setItem("lexaStartTime", Date.now());
+    location.reload();
+}
+
+function updateMining(){
+    let st = localStorage.getItem("lexaStartTime");
+    if(!st) return;
+
+    document.getElementById("status").innerText = "Active";
+
+    let elapsed = (Date.now() - Number(st))/1000;
+    let maxSeconds = 12*60*60;
+
+    if(elapsed >= maxSeconds){
+
+        let reward = 600;
+        balance += reward;
+
+        localStorage.setItem("lexaBalance", balance);
+        localStorage.removeItem("lexaStartTime");
+
+        alert("Mining selesai! +600 LEXA");
+        location.reload();
+        return;
+    }
+
+    let remain = maxSeconds - elapsed;
+
+    let h = Math.floor(remain/3600);
+    let m = Math.floor((remain%3600)/60);
+
+    document.getElementById("remaining").innerText =
+        h+"h "+m+"m";
+}
+
+setInterval(updateMining,1000);
+updateMining();
+</script>
+
+</body>
+</html>
