@@ -87,11 +87,9 @@ pointer-events:none;
  transition:.25s ease;
 }
 .balance-row{
-display:flex;
-align-items:center;
-gap:25px;
-}
-.balance-row{
+ display:flex;
+ align-items:center;
+ gap:25px;
  margin-top:18px;
  margin-bottom:12px;
 }
@@ -105,8 +103,8 @@ gap:25px;
  margin-top:18px;
 }
 body{
-    background:#020B22;
-    color:white;
+ background:var(--bg);
+ color:var(--text);
     font-family:'Space Grotesk',sans-serif;
 }
 .balance-label{
@@ -257,12 +255,17 @@ body::before{
  font-size:18px;
 }
 .card{
- background:#081A38;
+ background:var(--card);
+ backdrop-filter:blur(10px);
+ transition:.25s;
  padding:20px;
  border-radius:24px;
  margin-top:15px;
 
  border:1px solid rgba(255,255,255,.06);
+}
+.card:hover{
+ transform:translateY(-2px);
 }
 .menu-sub{
  color:#8da6d9;
@@ -292,7 +295,23 @@ body::before{
  background:rgba(255,255,255,.08);
  font-size:18px;
 }
-
+.progress{
+ width:100%;
+ height:8px;
+ margin-top:12px;
+ border-radius:999px;
+ background:rgba(255,255,255,.1);
+ overflow:hidden;
+}
+#statusText{
+ transition:.3s;
+}
+#progressBar{
+ width:0%;
+ height:100%;
+ background:#00ff88;
+ transition:width 1s linear;
+}
 .stat-label{
  font-size:9px;
  color:#9FB3D9;
@@ -357,7 +376,7 @@ body::before{
  background:#00ff66;
 
  box-shadow:
- 0 0 15px #00ff66;
+ 0 0 10px #00ff66;
 }
 .page.active{
  display:block;
@@ -459,32 +478,32 @@ body::before{
 .nav-item.active{
  color:white;
 }
+.mine-btn:disabled{
+ opacity:.7;
+ cursor:not-allowed;
 
-.mining{
- transform:translateY(-8px);
+ box-shadow:none;
+}
+@media(max-width:480px){
 
- background:
- linear-gradient(
- 135deg,
- #1e88ff,
- #00d4ff
- );
-
- width:68px;
- height:68px;
- color:white;
- font-size:11px;
- border-radius:50%;
-
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
-
- box-shadow:
- 0 0 30px rgba(0,212,255,.4);
+.token{
+ width:80px;
+ height:80px;
 }
 
+.balance{
+ font-size:24px;
+}
+
+.logo{
+ font-size:28px;
+}
+
+.menu-title{
+ font-size:15px;
+}
+
+}
 </style>
 </head>
 <body>
@@ -539,17 +558,23 @@ body::before{
       <div class="balance-label">LEXA</div>
 
       <div class="balance">
-        <img src="lexa-token.png" class="token-mini">
-        12,450
-      </div>
+<img src="lexa-token.png" class="token-mini">
 
+<span id="balanceValue">
+0
+</span>
+
+</div>
+<div class="progress">
+  <div id="progressBar"></div>
+</div>
       <div class="stats">
 
         <div class="stat">
           <div class="stat-icon">⚡</div>
           <div>
             <div class="stat-label">RATE</div>
-            <b>50 / H</b>
+            <b>10 / H</b>
           </div>
         </div>
 
@@ -557,7 +582,11 @@ body::before{
           <div class="stat-icon shield">🛡️</div>
           <div>
             <div class="stat-label">STATUS</div>
-            <b style="color:#00ff88;">READY</b>
+            <b
+id="statusText"
+style="color:#00ff88;">
+READY
+</b>
           </div>
         </div>
 
@@ -567,9 +596,16 @@ body::before{
 
   </div> <!-- TUTUP balance-row -->
 
-  <button class="mine-btn">
-    ⛏ START MINING
-  </button>
+<div id="miningTimer"
+style="margin-top:10px;color:#65d7ff;">
+Mining Time: 12:00:00
+</div>
+  <button
+ id="mineBtn"
+ class="mine-btn"
+ onclick="startMining()">
+ ⛏ START MINING
+</button>
 
 </section>
 <section class="menu-grid">
@@ -592,20 +628,20 @@ Referral Team
 
 </div>
 
-<div class="menu-card">
+<div class="menu-card" onclick="showPage('missions',this)">
 
 <div class="menu-icon">
-📰
+🎯
 </div>
 
 <div>
 
 <div class="menu-title">
-News Update
+Daily Missions
 </div>
 
 <div class="menu-sub">
-Lihat update terbaru
+Selesaikan tugas harian
 </div>
 
 </div>
@@ -686,10 +722,6 @@ Profil, Wallet, Logout
 📰<br>Berita
 </div>
 
-<div class="nav-item mining" onclick="showPage('missions',this)">
-⛏<br>Mining
-</div>
-
 <div class="nav-item" onclick="showPage('referral',this)">
 👥<br>Referral
 </div>
@@ -699,8 +731,187 @@ Profil, Wallet, Logout
 </div>
 
 </div>
-
 <script>
+let miningActive = false;
+let miningSeconds = 43200;
+let miningTimer = null;
+
+window.onload = async ()=>{
+
+   const data =
+   await loadUserData("testuser");
+
+   console.log(data);
+
+};
+
+    // Load balance
+    document.getElementById("balanceValue").innerText =
+    localStorage.getItem("lexaBalance") || 0;
+
+    // Ambil waktu selesai mining
+    const finishTime =
+    localStorage.getItem("lexaFinishTime");
+
+    if(!finishTime) return;
+
+    const now = Date.now();
+    let remaining =
+    Math.floor((finishTime - now) / 1000);
+
+    // Jika mining sudah selesai saat app ditutup
+    if(remaining <= 0){
+
+        let balance =
+        parseInt(
+        localStorage.getItem("lexaBalance")
+        ) || 0;
+
+        balance += 120;
+
+        localStorage.setItem(
+        "lexaBalance",
+        balance
+        );
+
+        document.getElementById("balanceValue").innerText =
+        balance;
+
+        document.getElementById("statusText").innerText =
+        "READY";
+
+        document.getElementById("mineBtn").innerHTML =
+        "⛏ START MINING";
+
+        document.getElementById("mineBtn").disabled =
+        false;
+
+        document.getElementById("progressBar").style.width =
+        "0%";
+
+        document.getElementById("miningTimer").innerHTML =
+        "Mining Time: 12:00:00";
+
+        localStorage.removeItem(
+        "lexaFinishTime"
+        );
+
+        return;
+    }
+
+    // Jika mining masih berjalan
+    miningActive = true;
+    miningSeconds = remaining;
+
+    document.getElementById("statusText").innerText =
+    "MINING";
+
+    document.getElementById("mineBtn").innerHTML =
+    "⏳ MINING ACTIVE";
+
+    document.getElementById("mineBtn").disabled =
+    true;
+
+    startMiningTimer();
+};
+
+function startMining(){
+
+    if(miningActive) return;
+
+    miningActive = true;
+
+    const finishTime =
+    Date.now() + (43200 * 1000);
+
+    localStorage.setItem(
+    "lexaFinishTime",
+    finishTime
+    );
+
+    document.getElementById("statusText").innerText =
+    "MINING";
+
+    document.getElementById("mineBtn").innerHTML =
+    "⏳ MINING ACTIVE";
+
+    document.getElementById("mineBtn").disabled =
+    true;
+
+    miningSeconds = 43200;
+
+    startMiningTimer();
+}
+function startMiningTimer(){
+
+    miningTimer = setInterval(()=>{
+
+        miningSeconds--;
+
+        let h =
+        Math.floor(miningSeconds / 3600);
+
+        let m =
+        Math.floor((miningSeconds % 3600) / 60);
+
+        let s =
+        miningSeconds % 60;
+
+        let percent =
+        ((43200 - miningSeconds) / 43200) * 100;
+
+        document.getElementById("progressBar").style.width =
+        percent + "%";
+
+        document.getElementById("miningTimer").innerHTML =
+        "Mining Time: " +
+        String(h).padStart(2,"0") + ":" +
+        String(m).padStart(2,"0") + ":" +
+        String(s).padStart(2,"0");
+
+        if(miningSeconds <= 0){
+
+            clearInterval(timer);
+
+            let balance =
+            parseInt(
+            localStorage.getItem("lexaBalance")
+            ) || 0;
+
+            balance += 120;
+
+            localStorage.setItem(
+            "lexaBalance",
+            balance
+            );
+
+            document.getElementById("balanceValue").innerText =
+            balance;
+
+            document.getElementById("statusText").innerText =
+            "READY";
+
+            document.getElementById("mineBtn").innerHTML =
+            "⛏ START MINING";
+
+            document.getElementById("mineBtn").disabled =
+            false;
+
+            document.getElementById("progressBar").style.width =
+            "0%";
+
+            document.getElementById("miningTimer").innerHTML =
+            "Mining Time: 12:00:00";
+
+            localStorage.removeItem(
+            "lexaFinishTime"
+            );
+
+            miningActive = false;
+        }
+
+    },1000);
+}
 
 function showPage(id,el){
 
@@ -710,6 +921,8 @@ document.querySelectorAll('.page')
 document.getElementById(id)
 .classList.add('active');
 
+if(el.classList.contains('nav-item')){
+
 document.querySelectorAll('.nav-item')
 .forEach(i=>i.classList.remove('active'));
 
@@ -717,7 +930,70 @@ el.classList.add('active');
 
 }
 
+}
+
+</script>
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+
+import { getAuth }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import { getFirestore }
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyCqEdDDiACoU3aIYYgYGDZ48_x-1YFJ9jc",
+  authDomain: "lexa-network.firebaseapp.com",
+  projectId: "lexa-network",
+  storageBucket: "lexa-network.firebasestorage.app",
+  messagingSenderId: "471101991726",
+  appId: "1:471101991726:web:7ba21aee8b3d64337e28bf"
+};
+
+const app = initializeApp(firebaseConfig);
+
+window.auth = getAuth(app);
+window.db = getFirestore(app);
+async function loadUserData(uid){
+
+  const userRef =
+  doc(window.db,"users",uid);
+
+  const snap =
+  await getDoc(userRef);
+
+  if(!snap.exists()){
+
+    await setDoc(userRef,{
+      balance:0,
+      miningEnd:0,
+      miningActive:false
+    });
+
+    return {
+      balance:0,
+      miningEnd:0,
+      miningActive:false
+    };
+  }
+
+  return snap.data();
+}
+console.log("Firebase Connected");
+
 </script>
 
+</script>
 </body>
 </html>
