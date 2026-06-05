@@ -281,7 +281,9 @@ body::before{
  flex:1;
  padding:10px;
 }
-
+#balanceValue{
+ text-shadow:0 0 15px rgba(0,212,255,.5);
+}
 .stat-icon{
  width:22px;
  height:22px;
@@ -507,6 +509,35 @@ body::before{
 </style>
 </head>
 <body>
+
+<div id="authPage" style="display:none;">
+
+<h2>LEXA Login</h2>
+
+<input
+id="email"
+type="email"
+placeholder="Email">
+
+<br><br>
+
+<input
+id="password"
+type="password"
+placeholder="Password">
+
+<br><br>
+
+<button onclick="registerUser()">
+Register
+</button>
+
+<button onclick="loginUser()">
+Login
+</button>
+
+</div>
+
 <!-- BERANDA -->
 <div class="page active" id="home">
 
@@ -595,9 +626,15 @@ READY
     </div>
 
   </div> <!-- TUTUP balance-row -->
-
+<div id="earningText"
+style="
+margin-top:8px;
+font-size:13px;
+color:#65d7ff;">
++0.00 LEXA
+</div>
 <div id="miningTimer"
-style="margin-top:10px;color:#65d7ff;">
+style="margin-top:10px;color:#65d7ff;display:none;">
 Mining Time: 12:00:00
 </div>
   <button
@@ -702,14 +739,19 @@ Kode Referral:
 
 <div class="page" id="settings">
 
-<h2>Pengaturan</h2>
+   <h2>Pengaturan</h2>
 
-<div class="card">
-Profil, Wallet, Logout
+   <div class="card">
+      Profil, Wallet, Logout
+   </div>
+
+   <div class="card">
+      <button onclick="logoutUser()">
+         Logout
+      </button>
+   </div>
+
 </div>
-
-</div>
-
 <!-- NAVBAR -->
 
 <div class="nav">
@@ -736,87 +778,32 @@ let miningActive = false;
 let miningSeconds = 43200;
 let miningTimer = null;
 
-window.onload = async ()=>{
-
-   try{
-
-      const data =
-      await window.loadUserData("testuser");
-
-      document.getElementById("balanceValue").innerText =
-      data.balance;
-
-      const finishTime =
-      data.miningEnd;
-
-      if(!finishTime) return;
-
-      const now = Date.now();
-
-      let remaining =
-      Math.floor((finishTime - now) / 1000);
-
-      if(remaining <= 0){
-
-         const data =
-         await window.loadUserData("testuser");
-
-         const balance =
-         (data.balance || 0) + 120;
-
-         await window.updateDoc(
-            window.doc(window.db,"users","testuser"),
-            {
-               balance: balance,
-               miningEnd: 0,
-               miningActive: false
-            }
-         );
-
-         document.getElementById("balanceValue").innerText =
-         balance;
-
-         return;
-      }
-
-      miningActive = true;
-      miningSeconds = remaining;
-
-      document.getElementById("statusText").innerText =
-      "MINING";
-
-      document.getElementById("mineBtn").innerHTML =
-      "⏳ MINING ACTIVE";
-
-      document.getElementById("mineBtn").disabled =
-      true;
-
-      startMiningTimer();
-
-   }catch(err){
-
-      alert("ERROR : " + err.message);
-      console.error(err);
-
-   }
-
-};   // <<< INI YANG KURANG
+let realBalance = 0;
+const totalReward = 120;
+const totalDuration = 43200;
 
 async function startMining(){
 
-    if(miningActive) return;
+   if(!window.auth.currentUser){
+
+      alert("Silakan login terlebih dahulu");
+      return;
+
+   }
+
+   if(miningActive) return;
 
     miningActive = true;
 
-    const finishTime =
-    Date.now() + (43200 * 1000);
+    const uid =
+window.auth.currentUser.uid;
 
-    await window.updateDoc(
-  window.doc(window.db,"users","testuser"),
+await window.updateDoc(
+  window.doc(window.db,"users",uid),
   {
-    miningEnd: finishTime,
-    miningActive: true
-  }
+  miningStart: window.serverTimestamp(),
+  miningActive: true
+}
 );
 
     document.getElementById("statusText").innerText =
@@ -830,11 +817,14 @@ async function startMining(){
 
     miningSeconds = 43200;
 
+document.getElementById("miningTimer").style.display =
+"block";
+
     startMiningTimer();
 }
 window.startMining = startMining;
 function startMiningTimer(){
-
+clearInterval(miningTimer);
     miningTimer = setInterval(async ()=>{
 
         miningSeconds--;
@@ -850,7 +840,18 @@ function startMiningTimer(){
 
         let percent =
         ((43200 - miningSeconds) / 43200) * 100;
+const earned =
+((totalDuration - miningSeconds) / totalDuration)
+* totalReward;
+document.getElementById("earningText")
+.innerText =
+"+" + earned.toFixed(2) + " LEXA";
+const displayBalance =
+realBalance + earned;
 
+document.getElementById("balanceValue")
+.innerText =
+displayBalance.toFixed(2);
         document.getElementById("progressBar").style.width =
         percent + "%";
 
@@ -861,26 +862,35 @@ function startMiningTimer(){
         String(s).padStart(2,"0");
 
         if(miningSeconds <= 0){
-
+document.getElementById("earningText")
+.innerText =
+"+0.00 LEXA";
             clearInterval(miningTimer);
 
-            const data =
-            await window.loadUserData("testuser");
+            const uid =
+window.auth.currentUser.uid;
 
-            const balance =
-            (data.balance || 0) + 120;
+const data =
+await window.loadUserData(uid);
 
-            await window.updateDoc(
-  window.doc(window.db,"users","testuser"),
-  {
-    balance: balance,
-    miningEnd: 0,
-    miningActive: false
-  }
+await window.updateDoc(
+   window.doc(window.db,"users",uid),
+   {
+   balance: window.increment(totalReward),
+   miningStart:0,
+   miningActive:false
+}
 );
 
-            document.getElementById("balanceValue").innerText =
-            balance;
+const updatedData =
+await window.loadUserData(uid);
+
+realBalance =
+updatedData.balance;
+
+document.getElementById("balanceValue")
+.innerText =
+realBalance.toFixed(2);
 
             document.getElementById("statusText").innerText =
             "READY";
@@ -896,11 +906,98 @@ function startMiningTimer(){
 
             document.getElementById("miningTimer").innerHTML =
             "Mining Time: 12:00:00";
-
+document.getElementById("miningTimer").style.display =
+"none";
             miningActive = false;
         }
 
     },1000);
+}
+async function registerUser(){
+
+   const email =
+   document.getElementById("email").value;
+
+   const password =
+   document.getElementById("password").value;
+
+   try{
+
+      const result =
+      await window.createUserWithEmailAndPassword(
+         window.auth,
+         email,
+         password
+      );
+
+      const uid =
+      result.user.uid;
+
+      alert("Register berhasil");
+
+      const userRef =
+      window.doc(window.db,"users",uid);
+
+      await window.setDoc(userRef,{
+  balance: 0,
+  miningStart: 0,
+  miningActive: false
+});
+
+   }catch(err){
+
+      alert(err.message);
+
+   }
+
+}
+async function loginUser(){
+
+   const email =
+   document.getElementById("email").value;
+
+   const password =
+   document.getElementById("password").value;
+
+   try{
+
+      await window.signInWithEmailAndPassword(
+         window.auth,
+         email,
+         password
+      );
+
+      alert("Login berhasil");
+
+   }catch(err){
+
+      alert(err.message);
+
+   }
+
+}
+async function logoutUser(){
+
+   clearInterval(miningTimer);
+
+   miningActive = false;
+   miningSeconds = 43200;
+   realBalance = 0;
+document.getElementById("earningText")
+.innerText =
+"+0.00 LEXA";
+document.getElementById("progressBar")
+.style.width = "0%";
+
+document.getElementById("miningTimer")
+.style.display = "none";
+
+document.getElementById("statusText")
+.innerText = "GUEST";
+
+document.getElementById("mineBtn")
+.innerHTML = "⛏ LOGIN TO START";
+   await window.signOut(window.auth);
 }
 
 function showPage(id,el){
@@ -928,15 +1025,25 @@ el.classList.add('active');
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
-import { getAuth }
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+}
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
+import {
+  serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 import {
   getFirestore,
   doc,
   getDoc,
   setDoc,
-  updateDoc
+  updateDoc,
+  increment
 }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 const firebaseConfig = {
@@ -951,10 +1058,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 window.auth = getAuth(app);
+window.createUserWithEmailAndPassword =
+createUserWithEmailAndPassword;
+
+window.signInWithEmailAndPassword =
+signInWithEmailAndPassword;
+
+window.signOut =
+signOut;
+
+window.onAuthStateChanged =
+onAuthStateChanged;
 window.db = getFirestore(app);
 
 window.doc = doc;
+window.getDoc = getDoc;
+window.setDoc = setDoc;
 window.updateDoc = updateDoc;
+window.increment = increment;
+window.serverTimestamp =
+serverTimestamp;
 async function loadUserData(uid){
 
   const userRef =
@@ -966,21 +1089,140 @@ async function loadUserData(uid){
   if(!snap.exists()){
 
     await setDoc(userRef,{
-      balance:0,
-      miningEnd:0,
-      miningActive:false
-    });
+   balance:0,
+   miningStart:0,
+   miningActive:false
+});
 
     return {
-      balance:0,
-      miningEnd:0,
-      miningActive:false
-    };
+   balance:0,
+   miningStart:0,
+   miningActive:false
+};
   }
 
   return snap.data();
 }
 window.loadUserData = loadUserData;
+window.onAuthStateChanged(
+   window.auth,
+   async(user)=>{
+
+      if(!user){
+
+   document.getElementById("authPage")
+   .style.display = "block";
+
+   realBalance = 0;
+
+document.getElementById("balanceValue")
+.innerText = "0.00";
+
+   document.getElementById("statusText")
+   .innerText = "GUEST";
+
+   document.getElementById("mineBtn")
+   .innerHTML = "⛏ LOGIN TO START";
+
+   document.getElementById("mineBtn")
+   .disabled = false;
+
+   return;
+}
+
+document.getElementById("statusText").innerText =
+"READY";
+
+document.getElementById("mineBtn").innerHTML =
+"⛏ START MINING";
+
+document.getElementById("mineBtn").disabled = false;
+
+document.getElementById("miningTimer").style.display =
+"none";
+      const uid = user.uid;
+      const data = await window.loadUserData(uid);
+realBalance = data.balance;
+
+document.getElementById("balanceValue")
+.innerText = realBalance.toFixed(2);
+      if(
+   data.miningActive &&
+   typeof data.miningStart?.toMillis === "function"
+){
+    
+    const miningStartMs =
+    data.miningStart.toMillis();
+
+    const elapsedSeconds =
+    Math.floor(
+      (Date.now() - miningStartMs) / 1000
+    );
+
+    const MAX_SECONDS = 43200;
+
+    // mining selesai
+    if(elapsedSeconds >= MAX_SECONDS){
+
+        await window.updateDoc(
+          window.doc(window.db,"users",uid),
+          {
+             balance: window.increment(120),
+             miningStart: 0,
+             miningActive: false
+          }
+        );
+
+        const updatedData =
+        await window.loadUserData(uid);
+
+        realBalance =
+        updatedData.balance;
+
+        document.getElementById("balanceValue")
+        .innerText =
+        realBalance.toFixed(2);
+       document.getElementById("statusText")
+.innerText = "READY";
+
+document.getElementById("mineBtn")
+.innerHTML = "⛏ START MINING";
+
+document.getElementById("mineBtn")
+.disabled = false;
+
+document.getElementById("miningTimer")
+.style.display = "none";
+
+document.getElementById("progressBar")
+.style.width = "0%";
+
+    }else{
+
+        miningActive = true;
+
+        miningSeconds =
+        MAX_SECONDS - elapsedSeconds;
+
+        document.getElementById("statusText")
+        .innerText = "MINING";
+
+        document.getElementById("mineBtn")
+        .innerHTML = "⏳ MINING ACTIVE";
+
+        document.getElementById("mineBtn")
+        .disabled = true;
+
+        document.getElementById("miningTimer")
+        .style.display = "block";
+
+        startMiningTimer();
+    }
+}
+      document.getElementById("authPage")
+      .style.display = "none";
+   }
+);
 
 </script>
 </body>
