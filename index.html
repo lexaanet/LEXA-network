@@ -509,35 +509,6 @@ body::before{
 </style>
 </head>
 <body>
-
-<div id="authPage" style="display:none;">
-
-<h2>LEXA Login</h2>
-
-<input
-id="email"
-type="email"
-placeholder="Email">
-
-<br><br>
-
-<input
-id="password"
-type="password"
-placeholder="Password">
-
-<br><br>
-
-<button onclick="registerUser()">
-Register
-</button>
-
-<button onclick="loginUser()">
-Login
-</button>
-
-</div>
-
 <!-- BERANDA -->
 <div class="page active" id="home">
 
@@ -570,7 +541,7 @@ Login
 </header>
 
 <section class="welcome">
-  Halo, LuckyWahyu 👋
+  Halo, 👋
 </section>
 
 <section class="mining-card">
@@ -742,13 +713,43 @@ Kode Referral:
    <h2>Pengaturan</h2>
 
    <div class="card">
-      Profil, Wallet, Logout
+      Profil, Wallet
    </div>
 
-   <div class="card">
+   <div id="authPage" class="card">
+
+      <h3>Login Akun</h3>
+
+      <input
+      id="email"
+      type="email"
+      placeholder="Email">
+
+      <br><br>
+
+      <input
+      id="password"
+      type="password"
+      placeholder="Password">
+
+      <br><br>
+
+      <button onclick="registerUser()">
+         Register
+      </button>
+
+      <button onclick="loginUser()">
+         Login
+      </button>
+
+   </div>
+
+   <div id="logoutBox" class="card">
+
       <button onclick="logoutUser()">
          Logout
       </button>
+
    </div>
 
 </div>
@@ -1110,42 +1111,59 @@ window.onAuthStateChanged(
 
       if(!user){
 
-   document.getElementById("authPage")
-   .style.display = "block";
+         document.getElementById("authPage")
+         .style.display = "block";
 
-   realBalance = 0;
+         document.getElementById("logoutBox")
+         .style.display = "none";
 
-document.getElementById("balanceValue")
-.innerText = "0.00";
+         realBalance = 0;
 
-   document.getElementById("statusText")
-   .innerText = "GUEST";
+         document.getElementById("balanceValue")
+         .innerText = "0.00";
 
-   document.getElementById("mineBtn")
-   .innerHTML = "⛏ LOGIN TO START";
+         document.getElementById("statusText")
+         .innerText = "GUEST";
 
-   document.getElementById("mineBtn")
-   .disabled = false;
+         document.getElementById("mineBtn")
+         .innerHTML = "⛏ LOGIN TO START";
 
-   return;
-}
+         document.getElementById("mineBtn")
+         .disabled = false;
 
-document.getElementById("statusText").innerText =
-"READY";
+         return;
+      }
 
-document.getElementById("mineBtn").innerHTML =
-"⛏ START MINING";
+      document.getElementById("authPage")
+      .style.display = "none";
 
-document.getElementById("mineBtn").disabled = false;
+      document.getElementById("logoutBox")
+      .style.display = "block";
 
-document.getElementById("miningTimer").style.display =
-"none";
+      document.getElementById("balanceValue")
+      .innerText = "0";
+
+      document.getElementById("statusText")
+      .innerText = "READY";
+
+      document.getElementById("mineBtn")
+      .innerHTML = "⛏ START MINING";
+
+      document.getElementById("mineBtn")
+      .disabled = false;
+
+      document.getElementById("miningTimer")
+      .style.display = "none";
+
       const uid = user.uid;
       const data = await window.loadUserData(uid);
-realBalance = data.balance;
 
-document.getElementById("balanceValue")
-.innerText = realBalance.toFixed(2);
+      realBalance = data.balance;
+
+      document.getElementById("balanceValue")
+      .innerText = realBalance.toFixed(2);
+
+      // lanjutkan kode mining recovery milikmu di sini...
       if(
    data.miningActive &&
    typeof data.miningStart?.toMillis === "function"
