@@ -743,21 +743,18 @@ window.onload = async ()=>{
 
    console.log(data);
 
-};
+   document.getElementById("balanceValue").innerText =
+   localStorage.getItem("lexaBalance") || 0;
 
-    // Load balance
-    document.getElementById("balanceValue").innerText =
-    localStorage.getItem("lexaBalance") || 0;
+   const finishTime =
+   localStorage.getItem("lexaFinishTime");
 
-    // Ambil waktu selesai mining
-    const finishTime =
-    localStorage.getItem("lexaFinishTime");
+   if(!finishTime) return;
 
-    if(!finishTime) return;
+   const now = Date.now();
 
-    const now = Date.now();
-    let remaining =
-    Math.floor((finishTime - now) / 1000);
+   let remaining =
+   Math.floor((finishTime - now) / 1000);
 
     // Jika mining sudah selesai saat app ditutup
     if(remaining <= 0){
@@ -871,7 +868,7 @@ function startMiningTimer(){
 
         if(miningSeconds <= 0){
 
-            clearInterval(timer);
+            clearInterval(miningTimer);
 
             let balance =
             parseInt(
@@ -941,9 +938,6 @@ from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import { getAuth }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-import { getFirestore }
-from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
 import {
   getFirestore,
   doc,
@@ -990,6 +984,8 @@ async function loadUserData(uid){
 
   return snap.data();
 }
+window.loadUserData = loadUserData;
+
 console.log("Firebase Connected");
 
 </script>
