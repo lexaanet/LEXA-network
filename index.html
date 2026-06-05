@@ -6,7 +6,7 @@
 
 <title>LEXA</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Michroma&display=swap&family=Space+Grotesk:wght@400;500;600;700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 
 :root{
@@ -298,14 +298,14 @@ box-shadow:
 }
 .live-badge{
  position:absolute;
- top:18px;
- left:18px;
+ top:12px;
+ left:12px;
 
  display:flex;
  align-items:center;
  gap:6px;
 
- padding:6px 12px;
+ padding:6px 10px;
 
  font-size:13px;
 
@@ -341,8 +341,8 @@ box-shadow:
  pointer-events:none;
 }
 .live-dot{
- width:8px;
- height:8px;
+ width:6px;
+ height:6px;
 
  border-radius:50%;
 
@@ -359,9 +359,9 @@ box-shadow:
  align-items:center;
  gap:6px;
 
- font-family:'Michroma',sans-serif;
- font-size:22px;
- font-weight:400;
+ font-family:'Rajdhani',sans-serif;
+ font-size:30px;
+ font-weight:700;
 }
 .mine-btn:active{
  transform:scale(.98);
@@ -489,66 +489,50 @@ box-shadow:
 <section class="mining-card">
 
   <div class="live-badge">
-
-<span class="live-dot"></span>
-
-LIVE
-
-</div>
+    <span class="live-dot"></span>
+    LIVE
+  </div>
 
   <div class="balance-row">
 
-<img src="lexa-token.png"
-class="token">
+    <img src="lexa-token.png" class="token">
 
-<div class="balance-box">
+    <div class="balance-box">
 
-<div class="balance-label">
-LEXA
-</div>
+      <div class="balance-label">LEXA</div>
 
-<div class="balance">
-<img src="lexa-token.png"
-class="token-mini">
+      <div class="balance">
+        <img src="lexa-token.png" class="token-mini">
+        12,450
+      </div>
 
-12,450
-</div>
+      <div class="stats">
 
-<div class="stats">
+        <div class="stat">
+          <div class="stat-icon">⚡</div>
+          <div>
+            <div class="stat-label">RATE</div>
+            <b>50 / H</b>
+          </div>
+        </div>
 
-<div class="stat">
+        <div class="stat">
+          <div class="stat-icon shield">🛡️</div>
+          <div>
+            <div class="stat-label">STATUS</div>
+            <b style="color:#00ff88;">READY</b>
+          </div>
+        </div>
 
-<div class="stat-icon">
-⚡
-</div>
+      </div>
 
-<div>
-<div class="stat-label">RATE</div>
-<b>50 / H</b>
-</div>
+    </div>
 
-</div>
-
-<div class="stat">
-
-<div class="stat-icon shield">
-🛡️
-</div>
-
-<div>
-<div class="stat-label">STATUS</div>
-<b style="color:#00ff88;">READY</b>
-</div>
-
-</div>
-
-</div>
-
-</div>
+  </div> <!-- TUTUP balance-row -->
 
   <button class="mine-btn">
- ⛏ START MINING
-</button>
+    ⛏ START MINING
+  </button>
 
 </section>
 <section class="menu-grid">
