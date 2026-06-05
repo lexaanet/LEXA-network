@@ -756,67 +756,51 @@ window.onload = async ()=>{
       let remaining =
       Math.floor((finishTime - now) / 1000);
 
-    // Jika mining sudah selesai saat app ditutup
-    if(remaining <= 0){
+      if(remaining <= 0){
 
-        let balance =
-        parseInt(
-        localStorage.getItem("lexaBalance")
-        ) || 0;
+         const data =
+         await window.loadUserData("testuser");
 
-        balance += 120;
+         const balance =
+         (data.balance || 0) + 120;
 
-        localStorage.setItem(
-        "lexaBalance",
-        balance
-        );
+         await window.updateDoc(
+            window.doc(window.db,"users","testuser"),
+            {
+               balance: balance,
+               miningEnd: 0,
+               miningActive: false
+            }
+         );
 
-        document.getElementById("balanceValue").innerText =
-        balance;
+         document.getElementById("balanceValue").innerText =
+         balance;
 
-        document.getElementById("statusText").innerText =
-        "READY";
+         return;
+      }
 
-        document.getElementById("mineBtn").innerHTML =
-        "⛏ START MINING";
+      miningActive = true;
+      miningSeconds = remaining;
 
-        document.getElementById("mineBtn").disabled =
-        false;
+      document.getElementById("statusText").innerText =
+      "MINING";
 
-        document.getElementById("progressBar").style.width =
-        "0%";
+      document.getElementById("mineBtn").innerHTML =
+      "⏳ MINING ACTIVE";
 
-        document.getElementById("miningTimer").innerHTML =
-        "Mining Time: 12:00:00";
+      document.getElementById("mineBtn").disabled =
+      true;
 
-        localStorage.removeItem(
-        "lexaFinishTime"
-        );
+      startMiningTimer();
 
-        return;
-    }
-
-    // Jika mining masih berjalan
-    miningActive = true;
-    miningSeconds = remaining;
-
-    document.getElementById("statusText").innerText =
-    "MINING";
-
-    document.getElementById("mineBtn").innerHTML =
-    "⏳ MINING ACTIVE";
-
-    document.getElementById("mineBtn").disabled =
-    true;
-
-    startMiningTimer();
-
-}catch(err){
+   }catch(err){
 
       alert("ERROR : " + err.message);
       console.error(err);
 
    }
+
+};   // <<< INI YANG KURANG
 
 async function startMining(){
 
@@ -827,13 +811,13 @@ async function startMining(){
     const finishTime =
     Date.now() + (43200 * 1000);
 
-    await updateDoc(
-      doc(window.db,"users","testuser"),
-      {
-        miningEnd: finishTime,
-        miningActive: true
-      }
-    );
+    await window.updateDoc(
+  window.doc(window.db,"users","testuser"),
+  {
+    miningEnd: finishTime,
+    miningActive: true
+  }
+);
 
     document.getElementById("statusText").innerText =
     "MINING";
@@ -848,6 +832,7 @@ async function startMining(){
 
     startMiningTimer();
 }
+window.startMining = startMining;
 function startMiningTimer(){
 
     miningTimer = setInterval(async ()=>{
@@ -885,14 +870,14 @@ function startMiningTimer(){
             const balance =
             (data.balance || 0) + 120;
 
-            await updateDoc(
-              doc(window.db,"users","testuser"),
-              {
-                balance: balance,
-                miningEnd: 0,
-                miningActive: false
-              }
-            );
+            await window.updateDoc(
+  window.doc(window.db,"users","testuser"),
+  {
+    balance: balance,
+    miningEnd: 0,
+    miningActive: false
+  }
+);
 
             document.getElementById("balanceValue").innerText =
             balance;
@@ -996,9 +981,6 @@ async function loadUserData(uid){
   return snap.data();
 }
 window.loadUserData = loadUserData;
-
-
-</script>
 
 </script>
 </body>
