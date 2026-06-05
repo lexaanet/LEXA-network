@@ -741,7 +741,7 @@ window.onload = async ()=>{
    const data =
    await loadUserData("testuser");
 
-   console.log(data);
+   alert(JSON.stringify(data));
 
    document.getElementById("balanceValue").innerText =
    localStorage.getItem("lexaBalance") || 0;
