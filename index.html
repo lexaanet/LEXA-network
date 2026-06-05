@@ -743,29 +743,18 @@ window.onload = async ()=>{
       const data =
       await window.loadUserData("testuser");
 
-      alert(JSON.stringify(data));
+      document.getElementById("balanceValue").innerText =
+      data.balance;
 
-   }catch(err){
+      const finishTime =
+      data.miningEnd;
 
-      alert("ERROR : " + err.message);
-      console.error(err);
+      if(!finishTime) return;
 
-   }
+      const now = Date.now();
 
-};
-
-   document.getElementById("balanceValue").innerText =
-   localStorage.getItem("lexaBalance") || 0;
-
-   const finishTime =
-   localStorage.getItem("lexaFinishTime");
-
-   if(!finishTime) return;
-
-   const now = Date.now();
-
-   let remaining =
-   Math.floor((finishTime - now) / 1000);
+      let remaining =
+      Math.floor((finishTime - now) / 1000);
 
     // Jika mining sudah selesai saat app ditutup
     if(remaining <= 0){
@@ -821,9 +810,15 @@ window.onload = async ()=>{
     true;
 
     startMiningTimer();
-};
 
-function startMining(){
+}catch(err){
+
+      alert("ERROR : " + err.message);
+      console.error(err);
+
+   }
+
+async function startMining(){
 
     if(miningActive) return;
 
@@ -832,9 +827,12 @@ function startMining(){
     const finishTime =
     Date.now() + (43200 * 1000);
 
-    localStorage.setItem(
-    "lexaFinishTime",
-    finishTime
+    await updateDoc(
+      doc(window.db,"users","testuser"),
+      {
+        miningEnd: finishTime,
+        miningActive: true
+      }
     );
 
     document.getElementById("statusText").innerText =
@@ -852,7 +850,7 @@ function startMining(){
 }
 function startMiningTimer(){
 
-    miningTimer = setInterval(()=>{
+    miningTimer = setInterval(async ()=>{
 
         miningSeconds--;
 
@@ -881,16 +879,19 @@ function startMiningTimer(){
 
             clearInterval(miningTimer);
 
-            let balance =
-            parseInt(
-            localStorage.getItem("lexaBalance")
-            ) || 0;
+            const data =
+            await window.loadUserData("testuser");
 
-            balance += 120;
+            const balance =
+            (data.balance || 0) + 120;
 
-            localStorage.setItem(
-            "lexaBalance",
-            balance
+            await updateDoc(
+              doc(window.db,"users","testuser"),
+              {
+                balance: balance,
+                miningEnd: 0,
+                miningActive: false
+              }
             );
 
             document.getElementById("balanceValue").innerText =
@@ -910,10 +911,6 @@ function startMiningTimer(){
 
             document.getElementById("miningTimer").innerHTML =
             "Mining Time: 12:00:00";
-
-            localStorage.removeItem(
-            "lexaFinishTime"
-            );
 
             miningActive = false;
         }
@@ -970,6 +967,9 @@ const app = initializeApp(firebaseConfig);
 
 window.auth = getAuth(app);
 window.db = getFirestore(app);
+
+window.doc = doc;
+window.updateDoc = updateDoc;
 async function loadUserData(uid){
 
   const userRef =
@@ -996,16 +996,6 @@ async function loadUserData(uid){
   return snap.data();
 }
 window.loadUserData = loadUserData;
-
-loadUserData("testuser")
-.then(data=>{
-   alert("DATA : " + JSON.stringify(data));
-})
-.catch(err=>{
-   alert("FIRESTORE ERROR : " + err.message);
-});
-
-alert("Firebase Connected");
 
 
 </script>
