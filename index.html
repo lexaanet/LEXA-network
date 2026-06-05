@@ -738,10 +738,21 @@ let miningTimer = null;
 
 window.onload = async ()=>{
 
-   const data =
-   await loadUserData("testuser");
+   try{
 
-   alert(JSON.stringify(data));
+      const data =
+      await window.loadUserData("testuser");
+
+      alert(JSON.stringify(data));
+
+   }catch(err){
+
+      alert("ERROR : " + err.message);
+      console.error(err);
+
+   }
+
+};
 
    document.getElementById("balanceValue").innerText =
    localStorage.getItem("lexaBalance") || 0;
@@ -986,7 +997,16 @@ async function loadUserData(uid){
 }
 window.loadUserData = loadUserData;
 
+loadUserData("testuser")
+.then(data=>{
+   alert("DATA : " + JSON.stringify(data));
+})
+.catch(err=>{
+   alert("FIRESTORE ERROR : " + err.message);
+});
+
 alert("Firebase Connected");
+
 
 </script>
 
