@@ -6,8 +6,7 @@
 
 <title>LEXA</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Michroma&display=swap&family=Space+Grotesk:wght@400;500;600;700" rel="stylesheet">
 <style>
 
 :root{
@@ -19,8 +18,8 @@
  --muted:#9FB3D9;
 }
 .token{
- width:110px;
-height:110px;
+ width:130px;
+height:130px;
  object-fit:contain;
 
  filter:
@@ -67,7 +66,7 @@ pointer-events:none;
 
  background:
  linear-gradient(
- 90deg,
+ 135deg,
  #2347ff,
  #00d4ff
  );
@@ -113,7 +112,7 @@ body{
  position:relative;
  overflow:hidden;
 
- margin-top:20px;
+ margin-top:15px;
  padding:25px;
 
  border-radius:35px;
@@ -144,14 +143,16 @@ body::before{
 .menu-card{
  display:flex;
  align-items:center;
- gap:15px;
+ gap:12px;
 
  background:#081A38;
-
- padding:20px;
- border-radius:24px;
+ padding:16px;
+ border-radius:20px;
 
  border:1px solid rgba(255,255,255,.06);
+
+ transition:.25s;
+ cursor:pointer;
 }
 .mine-btn:hover{
 transform:translateY(-2px);
@@ -160,16 +161,16 @@ box-shadow:
 0 0 35px rgba(0,212,255,.55);
 }
 .menu-icon{
- width:56px;
- height:56px;
+ width:46px;
+ height:46px;
 
- border-radius:18px;
+ border-radius:14px;
 
  display:flex;
  align-items:center;
  justify-content:center;
 
- font-size:28px;
+ font-size:22px;
 
  background:
  linear-gradient(
@@ -192,53 +193,49 @@ box-shadow:
  border-bottom:
  1px solid rgba(255,255,255,.05);
 }
-.menu-card{
- transition:.25s;
+.page h2{
+ font-size:24px;
+ margin-bottom:15px;
 }
-
-.menu-card:hover{
- transform:translateY(-3px);
+.shield{
+ background:rgba(0,255,136,.12);
 }
 .notif{
- width:52px;
- height:52px;
+ width:46px;
+ height:46px;
 
  position:relative;
-
  display:flex;
  align-items:center;
  justify-content:center;
 
  border-radius:50%;
-
  background:rgba(255,255,255,.04);
-
  border:1px solid rgba(255,255,255,.08);
-
  backdrop-filter:blur(12px);
 }
-.menu-card{
- cursor:pointer;
+.stats{
+ display:flex;
+ gap:14px;
+ margin-top:20px;
 }
-
+.notif svg{
+ width:22px;
+ height:22px;
+}
 .menu-card:hover{
  transform:translateY(-3px);
  box-shadow:
  0 0 20px rgba(0,212,255,.15);
 }
-.notif svg{
- width:28px;
- height:28px;
-}
-
 .notif-dot{
  position:absolute;
 
- top:10px;
- right:10px;
+ top:8px;
+ right:8px;
 
- width:10px;
- height:10px;
+ width:8px;
+ height:8px;
 
  border-radius:50%;
 
@@ -249,7 +246,7 @@ box-shadow:
  0 0 20px #00D4FF;
 }
 .menu-title{
- font-weight:700;
+ font-size:18px;
 }
 .card{
  background:#081A38;
@@ -261,7 +258,7 @@ box-shadow:
 }
 .menu-sub{
  color:#8da6d9;
- font-size:13px;
+ font-size:12px;
  margin-top:4px;
 }
 .page{
@@ -269,36 +266,51 @@ box-shadow:
  padding:20px;
  padding-bottom:90px;
 }
-.stats{
- display:flex;
- gap:14px;
- margin-top:20px;
-}
 .stat{
- flex:1;
- padding:18px;
- border-radius:20px;
+ display:flex;
+ align-items:center;
+ gap:8px;
+ padding:14px;
+}
 
- background:rgba(0,0,0,.18);
- backdrop-filter:blur(10px);
+.stat-icon{
+ width:36px;
+ height:36px;
 
- border:1px solid rgba(255,255,255,.08);
+ display:flex;
+ align-items:center;
+ justify-content:center;
 
- text-align:center;
+ border-radius:12px;
+
+ background:rgba(255,255,255,.08);
+ font-size:18px;
+}
+
+.stat-label{
+ font-size:9px;
+ color:#9FB3D9;
+ letter-spacing:1.5px;
+ margin-bottom:4px;
+}
+.stat b{
+ display:block;
+ font-size:14px;
+ margin-top:2px;
 }
 .live-badge{
  display:flex;
  align-items:center;
- gap:10px;
+ gap:8px;
 
  width:max-content;
 
- padding:10px 18px;
+ padding:6px 8px;
 
  border-radius:999px;
 
  background:
- rgba(0,0,0,.15);
+ rgba(0,0,0,.12);
 
  border:
  1px solid rgba(255,255,255,.08);
@@ -348,15 +360,16 @@ box-shadow:
  align-items:center;
  gap:10px;
 
- font-size:32px;
- font-weight:700;
+ font-family:'Michroma',sans-serif;
+ font-size:36px;
+ font-weight:400;
 }
 .mine-btn:active{
  transform:scale(.98);
 }
 .token-mini{
- width:38px;
- height:38px;
+ width:34px;
+ height:34px;
 
  filter:
  drop-shadow(0 0 10px rgba(0,212,255,.5));
@@ -412,7 +425,7 @@ box-shadow:
 }
 
 .mining{
- transform:translateY(-12px);
+ transform:translateY(-8px);
 
  background:
  linear-gradient(
@@ -505,15 +518,27 @@ class="token-mini">
 <div class="stats">
 
 <div class="stat">
-RATE
-<b>50/H</b>
+
+<div class="stat-icon">
+⚡
+</div>
+
+<div>
+<div class="stat-label">RATE</div>
+<b>50 / H</b>
+</div>
+
 </div>
 
 <div class="stat">
-STATUS
-<b style="color:#00ff88;">
-READY
-</b>
+
+<div class="stat-icon shield">
+🛡️
+</div>
+
+<div>
+<div class="stat-label">STATUS</div>
+<b style="color:#00ff88;">READY</b>
 </div>
 
 </div>
@@ -587,19 +612,19 @@ Lihat update terbaru
 <div class="card">
 📢 Follow Telegram
 <br>
-Reward: +50 LEXA
+Reward: +10 LEXA
 </div>
 
 <div class="card">
 🐦 Follow X
 <br>
-Reward: +50 LEXA
+Reward: +10 LEXA
 </div>
 
 <div class="card">
 📘 Join Facebook
 <br>
-Reward: +50 LEXA
+Reward: +10 LEXA
 </div>
 
 </div>
