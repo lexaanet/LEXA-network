@@ -1,5 +1,3 @@
-<script type="module">
-
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 
@@ -117,7 +115,7 @@ window.onAuthStateChanged(
    document.getElementById("logoutBox")
    .style.display = "none";
 
-   realBalance = 0;
+   window.realBalance = 0;
 
    document.getElementById("balanceValue")
    .innerText = "0.00";
@@ -146,7 +144,7 @@ window.onAuthStateChanged(
 
    return;
 }
-showPage(
+window.showPage(
 "home",
 document.querySelector(".nav-item")
 );
@@ -206,7 +204,7 @@ document.getElementById("homeReferralCount")
 .innerText =
 data.referrals || 0;
 
-realBalance = data.balance;
+window.realBalance = data.balance || 0;
 
 document.getElementById("userName")
 .innerText =
@@ -214,7 +212,7 @@ data.username || "Member";
 
 document.getElementById("balanceValue")
 .innerText =
-window.formatLEXA(realBalance);
+window.formatLEXA(window.realBalance);
 const list =
 document.getElementById("referralList");
 
@@ -267,12 +265,12 @@ if(
         const updatedData =
         await window.loadUserData(uid);
 
-        realBalance =
+        window.realBalance =
         updatedData.balance;
 
         document.getElementById("balanceValue")
 .innerText =
-formatLEXA(realBalance);
+window.formatLEXA(window.realBalance);
        document.getElementById("statusText")
 .innerText = "READY";
 
@@ -290,10 +288,8 @@ document.getElementById("progressBar")
 
     }else{
 
-    miningActive = true;
-
-    miningSeconds =
-    MAX_SECONDS - elapsedSeconds;
+    window.miningActive = true;
+window.miningSeconds = MAX_SECONDS - elapsedSeconds;
 
     const percent =
     (elapsedSeconds / MAX_SECONDS) * 100;

@@ -1,8 +1,8 @@
-let miningActive = false;
-let miningSeconds = 43200;
-let miningTimer = null;
+window.miningActive = false;
+window.miningSeconds = 43200;
+window.miningTimer = null;
 
-let realBalance = 0;
+window.realBalance = 0;
 const totalReward = 120;
 const totalDuration = 43200;
 
@@ -15,9 +15,9 @@ async function startMining(){
 
    }
 
-   if(miningActive) return;
+   if(window.miningActive) return;
 
-    miningActive = true;
+    window.miningActive = true;
 
     const uid =
 window.auth.currentUser.uid;
@@ -39,7 +39,7 @@ await window.updateDoc(
     document.getElementById("mineBtn").disabled =
     true;
 
-    miningSeconds = 43200;
+    window.miningSeconds = 43200;
 
 document.getElementById("miningTimer").style.display =
 "block";
@@ -48,24 +48,24 @@ document.getElementById("miningTimer").style.display =
 }
 window.startMining = startMining;
 function startMiningTimer(){
-clearInterval(miningTimer);
-    miningTimer = setInterval(async ()=>{
+clearInterval(window.miningTimer);
+    window.miningTimer = setInterval(async ()=>{
 
-        miningSeconds--;
+        window.miningSeconds--;
 
         let h =
-        Math.floor(miningSeconds / 3600);
+        Math.floor(window.miningSeconds / 3600);
 
         let m =
-        Math.floor((miningSeconds % 3600) / 60);
+        Math.floor((window.miningSeconds % 3600) / 60);
 
         let s =
-        miningSeconds % 60;
+        window.miningSeconds % 60;
 
         let percent =
-        ((43200 - miningSeconds) / 43200) * 100;
+        ((43200 - window.miningSeconds) / 43200) * 100;
 const earned =
-((totalDuration - miningSeconds) / totalDuration)
+((totalDuration - window.miningSeconds) / totalDuration)
 * totalReward;
 document.getElementById("earningText")
 .innerText =
@@ -80,11 +80,11 @@ maximumFractionDigits:2
 " Ⱡ";
 
 const displayBalance =
-realBalance + earned;
+window.realBalance + earned;
 
 document.getElementById("balanceValue")
 .innerText =
-formatLEXA(displayBalance);
+window.formatLEXA(displayBalance);
         document.getElementById("progressBar").style.width =
         percent + "%";
 
@@ -94,11 +94,11 @@ formatLEXA(displayBalance);
         String(m).padStart(2,"0") + ":" +
         String(s).padStart(2,"0");
 
-        if(miningSeconds <= 0){
+        if(window.miningSeconds <= 0){
 document.getElementById("earningText")
 .innerText =
 "+0.00 LEXA";
-            clearInterval(miningTimer);
+            clearInterval(window.miningTimer);
 
             const uid =
 window.auth.currentUser.uid;
@@ -110,26 +110,26 @@ document.getElementById("userName")
 .innerText =
 data.username || "Member";
 
-realBalance = data.balance;
+window.realBalance = data.balance;
 
 await window.updateDoc(
    window.doc(window.db,"users",uid),
    {
-   balance: window.increment(totalReward),
-   miningStart:0,
-   miningActive:false
+  balance: window.increment(totalReward),
+  miningStart:0,
+  miningActive:false
 }
 );
 
 const updatedData =
 await window.loadUserData(uid);
 
-realBalance =
+window.realBalance =
 updatedData.balance;
 
 document.getElementById("balanceValue")
 .innerText =
-formatLEXA(realBalance);
+window.formatLEXA(window.realBalance);
 
             document.getElementById("statusText").innerText =
             "READY";
@@ -147,7 +147,7 @@ formatLEXA(realBalance);
             "Mining Time: 12:00:00";
 document.getElementById("miningTimer").style.display =
 "none";
-            miningActive = false;
+            window.miningActive = false;
         }
 
     },1000);
@@ -387,11 +387,11 @@ toast.style.display="none";
 }
 async function logoutUser(){
 
-   clearInterval(miningTimer);
+   clearInterval(window.miningTimer);
 
-   miningActive = false;
-   miningSeconds = 43200;
-   realBalance = 0;
+   window.miningActive = false;
+   window.miningSeconds = 43200;
+   window.realBalance = 0;
 document.getElementById("earningText")
 .innerText =
 "+0.00 LEXA";
@@ -524,8 +524,11 @@ function showPage(id,el){
    }
 
 }
-window.startMining = startMining;
+window.showToast = showToast;
+window.formatLEXA = formatLEXA;
+window.startMiningTimer = startMiningTimer;
 
+window.startMining = startMining;
 window.registerUser = registerUser;
 window.loginUser = loginUser;
 window.logoutUser = logoutUser;
@@ -542,6 +545,3 @@ window.changeEmail = changeEmail;
 
 window.copyReferral = copyReferral;
 window.showPage = showPage;
-
-window.showToast = showToast;
-window.formatLEXA = formatLEXA;
