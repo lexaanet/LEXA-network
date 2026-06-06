@@ -399,7 +399,148 @@ body::before{
  inset 0 3px 10px rgba(0,0,0,.25),
  0 0 10px rgba(0,212,255,.25);
 }
+.profile-btn{
 
+width:46px;
+height:46px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:50%;
+
+font-size:22px;
+
+cursor:pointer;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(12px);
+
+transition:.25s;
+
+}
+
+.profile-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 0 20px rgba(0,212,255,.25);
+
+}
+
+.profile-header{
+
+padding:25px;
+
+border-radius:30px;
+
+background:
+linear-gradient(
+135deg,
+#072B78,
+#0E47C6,
+#00BFFF
+);
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.profile-name{
+
+font-size:26px;
+font-weight:700;
+
+}
+
+.profile-email{
+
+margin-top:5px;
+
+color:rgba(255,255,255,.8);
+
+}
+
+.profile-id{
+
+margin-top:15px;
+
+display:inline-block;
+
+padding:8px 14px;
+
+border-radius:999px;
+
+background:rgba(255,255,255,.12);
+
+font-size:13px;
+
+}
+
+.profile-item{
+
+background:#081A38;
+
+padding:18px;
+
+border-radius:20px;
+
+margin-top:15px;
+
+border:1px solid rgba(255,255,255,.05);
+
+}
+
+.profile-title{
+
+font-size:15px;
+font-weight:600;
+
+}
+
+.profile-sub{
+
+margin-top:4px;
+
+font-size:12px;
+
+color:#9FB3D9;
+
+}
+
+.profile-action{
+
+margin-top:12px;
+
+padding:12px;
+
+width:100%;
+
+border:none;
+
+border-radius:14px;
+
+cursor:pointer;
+
+font-weight:700;
+
+color:white;
+
+background:
+linear-gradient(
+135deg,
+#2347ff,
+#00d4ff
+);
+
+}
 .mine-btn::before{
  content:"";
  position:absolute;
@@ -625,15 +766,24 @@ linear-gradient(
 
   </div>
 
-  <div class="notif">
+  <div style="display:flex;gap:12px;align-items:center;">
+
+<div class="notif">
 
 <svg viewBox="0 0 24 24" fill="none">
-  <path
-    d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.63 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16Z"
-    fill="white"/>
+<path
+d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.63 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16Z"
+fill="white"/>
 </svg>
 
 <span class="notif-dot"></span>
+
+</div>
+
+<div class="profile-btn"
+onclick="showPage('profile')">
+⚙️
+</div>
 
 </div>
 <div id="toast" class="toast"></div>
@@ -940,6 +1090,99 @@ Buat Akun
     Logout
   </button>
 </div>
+</div>
+<div class="page" id="profile">
+
+<h2>Account Center</h2>
+
+<div class="profile-header">
+
+<div class="profile-name"
+id="profileName">
+Member
+</div>
+
+<div class="profile-email"
+id="profileEmail">
+-
+</div>
+
+<div class="profile-id"
+id="profileId">
+LEXA ID
+</div>
+
+</div>
+
+<div class="profile-item">
+
+<div class="profile-title">
+👤 Username
+</div>
+
+<div class="profile-sub"
+id="profileUsername">
+-
+</div>
+
+<button
+class="profile-action"
+onclick="changeUsername()">
+
+Edit Username
+
+</button>
+
+</div>
+
+<div class="profile-item">
+
+<div class="profile-title">
+📧 Email
+</div>
+
+<div class="profile-sub"
+id="profileEmailText">
+-
+</div>
+
+<button
+class="profile-action">
+
+Perubahan Email Segera Hadir
+
+</button>
+
+</div>
+
+<div class="profile-item">
+
+<div class="profile-title">
+💳 Wallet
+</div>
+
+<div class="profile-sub">
+
+Wallet LEXA sedang dipersiapkan
+
+</div>
+
+</div>
+
+<div class="profile-item">
+
+<div class="profile-title">
+🔒 Security
+</div>
+
+<div class="profile-sub">
+
+Fitur keamanan akun akan segera hadir
+
+</div>
+
+</div>
+
 </div>
 <!-- NAVBAR -->
 
@@ -1258,6 +1501,53 @@ type === "register"
 );
 
 }
+async function changeUsername(){
+
+const newName =
+prompt("Masukkan username baru");
+
+if(!newName) return;
+
+const uid =
+window.auth.currentUser.uid;
+
+const data =
+await window.loadUserData(uid);
+
+if(data.usernameChanged){
+
+showToast(
+"Username hanya bisa diubah 1 kali"
+);
+
+return;
+}
+
+await window.updateDoc(
+window.doc(window.db,"users",uid),
+{
+username:newName,
+usernameChanged:true
+}
+);
+
+document.getElementById("userName")
+.innerText =
+newName;
+
+document.getElementById("profileName")
+.innerText =
+newName;
+
+document.getElementById("profileUsername")
+.innerText =
+newName;
+
+showToast(
+"Username berhasil diperbarui"
+);
+
+}
 function showToast(message){
 
 const toast =
@@ -1450,25 +1740,41 @@ window.onAuthStateChanged(
    document.getElementById("authPage")
    .style.display = "block";
 
-         document.getElementById("logoutBox")
-         .style.display = "none";
+   document.getElementById("logoutBox")
+   .style.display = "none";
 
-         realBalance = 0;
+   realBalance = 0;
 
-         document.getElementById("balanceValue")
-         .innerText = "0.00";
+   document.getElementById("balanceValue")
+   .innerText = "0.00";
 
-         document.getElementById("statusText")
-         .innerText = "GUEST";
+   document.getElementById("statusText")
+   .innerText = "GUEST";
 
-         document.getElementById("mineBtn")
-         .innerHTML = "⛏ LOGIN TO START";
+   document.getElementById("mineBtn")
+   .innerHTML = "⛏ LOGIN TO START";
 
-         document.getElementById("mineBtn")
-         .disabled = false;
+   document.getElementById("mineBtn")
+   .disabled = false;
 
-         return;
-      }
+   // reset halaman profile
+   document.getElementById("profileName")
+   .innerText = "Guest";
+
+   document.getElementById("profileUsername")
+   .innerText = "-";
+
+   document.getElementById("profileEmail")
+   .innerText = "-";
+
+   document.getElementById("profileEmailText")
+   .innerText = "-";
+
+   document.getElementById("profileId")
+   .innerText = "LEXA ID";
+
+   return;
+}
 showPage(
 "home",
 document.querySelector(".nav-item")
@@ -1498,7 +1804,28 @@ showToast("Selamat datang kembali");
       .style.display = "none";
 
       const uid = user.uid;
-      const data = await window.loadUserData(uid);
+const data = await window.loadUserData(uid);
+
+document.getElementById("profileName")
+.innerText =
+data.username || "Member";
+
+document.getElementById("profileUsername")
+.innerText =
+data.username || "-";
+
+document.getElementById("profileEmail")
+.innerText =
+user.email || "-";
+
+document.getElementById("profileEmailText")
+.innerText =
+user.email || "-";
+
+document.getElementById("profileId")
+.innerText =
+"LEXA ID • " +
+user.uid.substring(0,8).toUpperCase();
 
 document.getElementById("referralCode")
 .innerText =
