@@ -207,8 +207,8 @@ body::before{
  background:rgba(0,255,136,.12);  
 }  
 .notif{  
- width:46px;  
- height:46px;  
+ width:26px;  
+ height:26px;  
   
  position:relative;  
  display:flex;  
@@ -226,8 +226,8 @@ body::before{
  margin-top:14px;  
 }  
 .notif svg{  
- width:22px;  
- height:22px;  
+ width:14px;  
+ height:14px;  
 }  
 .menu-card:hover{  
  transform:translateY(-3px);  
@@ -399,30 +399,35 @@ body::before{
  inset 0 3px 10px rgba(0,0,0,.25),  
  0 0 10px rgba(0,212,255,.25);  
 }  
-.profile-btn{  
-  
-width:46px;  
-height:46px;  
-  
-display:flex;  
-align-items:center;  
-justify-content:center;  
-  
-border-radius:50%;  
-  
-font-size:22px;  
-  
-cursor:pointer;  
-  
-background:rgba(255,255,255,.05);  
-  
-border:1px solid rgba(255,255,255,.08);  
-  
-backdrop-filter:blur(12px);  
-  
-transition:.25s;  
-  
-}  
+.profile-btn{
+width:26px;
+height:26px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:50%;
+
+background:linear-gradient(
+135deg,
+#0f172a,
+#020617
+);
+
+box-shadow:
+0 0 10px rgba(0,0,0,.4),
+inset 0 1px 0 rgba(255,255,255,.08);
+
+color:#fff;
+
+font-size:14px;
+font-weight:700;
+letter-spacing:.5px;
+
+cursor:pointer;
+transition:.25s;
+}
   
 .profile-btn:hover{  
   
@@ -971,8 +976,7 @@ fill="white"/>
   
 <div class="profile-btn"
 onclick="showPage('profile')">
-⬢ ◎
-LX
+⬢ LX
 </div>
   
 </div>  
