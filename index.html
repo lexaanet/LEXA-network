@@ -1949,5 +1949,12 @@ document.getElementById("progressBar")
 );
 
 </script>
+<script>
+document.querySelectorAll("button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    console.log("TOMBOL DIKLIK:", btn.innerText);
+  });
+});
+</script>
 </body>
 </html>
