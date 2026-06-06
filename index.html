@@ -858,6 +858,57 @@ linear-gradient(
 #00d4ff  
 );  
 }  
+.profile-btn{
+width:52px;
+height:52px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+clip-path:polygon(
+25% 6.7%,
+75% 6.7%,
+100% 50%,
+75% 93.3%,
+25% 93.3%,
+0% 50%
+);
+
+background:
+linear-gradient(
+135deg,
+#1f4fff,
+#00cfff
+);
+
+color:#fff;
+
+font-family:'Orbitron',sans-serif;
+font-size:14px;
+font-weight:700;
+
+box-shadow:
+0 0 15px rgba(0,212,255,.35);
+
+cursor:pointer;
+transition:.25s;
+}
+
+.profile-btn:hover{
+transform:scale(1.05);
+}
+.profile-btn::before{
+content:"";
+
+position:absolute;
+inset:-3px;
+
+clip-path:inherit;
+
+border:1px solid
+rgba(0,212,255,.4);
+}
 .nav-item{  
  text-align:center;  
  font-size:12px;  
@@ -929,10 +980,9 @@ fill="white"/>
   
 </div>  
   
-<div class="profile-btn"  
-onclick="showPage('profile')">  
-⚙️  
-</div>  
+<div class="profile-btn">
+  LX
+</div>
   
 </div>  
 </header>  
