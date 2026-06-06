@@ -541,7 +541,7 @@ body::before{
 </header>
 
 <section class="welcome">
-  Halo, 👋
+  Halo, <span id="userName">Guest</span> 👋
 </section>
 
 <section class="mining-card">
@@ -618,24 +618,17 @@ Mining Time: 12:00:00
 </section>
 <section class="menu-grid">
 
-  <div class="menu-card">
+<div class="menu-card">
+  <div class="menu-icon">👥</div>
 
-<div class="menu-icon">
-👥
-</div>
+  <div>
+    <div class="menu-title">Referral Team</div>
 
-<div>
-<div class="menu-title">
-Referral Team
+    <div class="menu-sub">
+      <span id="homeReferralCount">0</span> Referral Aktif
+    </div>
+  </div>
 </div>
-
-<div class="menu-sub">
-0 Referral Aktif
-</div>
-</div>
-
-</div>
-
 <div class="menu-card" onclick="showPage('missions',this)">
 
 <div class="menu-icon">
@@ -657,6 +650,16 @@ Selesaikan tugas harian
 </div>
 
 </section>
+
+<div class="card">
+
+<h3>Team Referral</h3>
+
+<div id="referralList">
+Belum ada referral
+</div>
+
+</div>
 </div>
 <div class="page" id="news">
 
@@ -699,9 +702,33 @@ Reward: +10 LEXA
 <h2>Referral</h2>
 
 <div class="card">
+
 Kode Referral:
+
 <br><br>
-<b>LEXA123ABC</b>
+
+<b id="referralCode">
+-
+</b>
+
+<br><br>
+
+<button onclick="copyReferral()">
+Copy Code
+</button>
+
+</div>
+
+<div class="card">
+
+Referral Aktif
+
+<br><br>
+
+<b id="referralCount">
+0
+</b>
+
 </div>
 
 </div>
@@ -719,6 +746,12 @@ Kode Referral:
    <div id="authPage" class="card">
 
       <h3>Login Akun</h3>
+<input
+id="username"
+type="text"
+placeholder="Username">
+
+      <br><br>
 
       <input
       id="email"
@@ -733,6 +766,12 @@ Kode Referral:
       placeholder="Password">
 
       <br><br>
+<input
+id="referralInput"
+type="text"
+placeholder="Kode Referral (Opsional)">
+
+<br><br>
 
       <button onclick="registerUser()">
          Register
@@ -874,6 +913,12 @@ window.auth.currentUser.uid;
 const data =
 await window.loadUserData(uid);
 
+document.getElementById("userName")
+.innerText =
+data.username || "Member";
+
+realBalance = data.balance;
+
 await window.updateDoc(
    window.doc(window.db,"users",uid),
    {
@@ -933,19 +978,68 @@ async function registerUser(){
 
       const uid =
       result.user.uid;
-
+const referralUsed =
+document.getElementById("referralInput")
+.value.trim().toUpperCase();
       alert("Register berhasil");
 
       const userRef =
       window.doc(window.db,"users",uid);
 
-      await window.setDoc(userRef,{
-  balance: 0,
-  miningStart: 0,
-  miningActive: false
-});
+      const referralCode =
+uid.substring(0,8).toUpperCase();
 
-   }catch(err){
+await window.setDoc(userRef,{
+   username:
+   document.getElementById("username").value,
+
+   balance:0,
+   miningStart:0,
+   miningActive:false,
+
+   referredBy: referralUsed || "",
+   referralCode: referralCode,
+
+   referrals:0,
+   referredUsers:[]
+});
+if(referralUsed){
+
+   const q = window.query(
+      window.collection(window.db,"users"),
+      window.where(
+         "referralCode",
+         "==",
+         referralUsed
+      )
+   );
+
+   const snap =
+   await window.getDocs(q);
+
+   if(snap.empty){
+
+      alert("Kode referral tidak ditemukan");
+      return;
+   }
+
+   snap.forEach(async(refUser)=>{
+
+   await window.updateDoc(
+      refUser.ref,
+      {
+         referrals: window.increment(1),
+         balance: window.increment(25),
+         referredUsers: window.arrayUnion(
+            document.getElementById("username").value
+         )
+      }
+   );
+
+});
+}
+
+}catch(err){
 
       alert(err.message);
 
@@ -1000,7 +1094,16 @@ document.getElementById("mineBtn")
 .innerHTML = "⛏ LOGIN TO START";
    await window.signOut(window.auth);
 }
+function copyReferral(){
 
+ const code =
+ document.getElementById("referralCode")
+ .innerText;
+
+ navigator.clipboard.writeText(code);
+
+ alert("Referral berhasil disalin");
+}
 function showPage(id,el){
 
 document.querySelectorAll('.page')
@@ -1039,12 +1142,17 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  increment
+ getFirestore,
+ doc,
+ getDoc,
+ setDoc,
+ updateDoc,
+ increment,
+ query,
+ where,
+ getDocs,
+ collection,
+ arrayUnion
 }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 const firebaseConfig = {
@@ -1077,6 +1185,11 @@ window.getDoc = getDoc;
 window.setDoc = setDoc;
 window.updateDoc = updateDoc;
 window.increment = increment;
+window.collection = collection;
+window.arrayUnion = arrayUnion;
+window.query = query;
+window.where = where;
+window.getDocs = getDocs;
 window.serverTimestamp =
 serverTimestamp;
 async function loadUserData(uid){
@@ -1094,7 +1207,6 @@ async function loadUserData(uid){
    miningStart:0,
    miningActive:false
 });
-
     return {
    balance:0,
    miningStart:0,
@@ -1111,8 +1223,11 @@ window.onAuthStateChanged(
 
       if(!user){
 
-         document.getElementById("authPage")
-         .style.display = "block";
+   document.getElementById("userName")
+   .innerText = "Guest";
+
+   document.getElementById("authPage")
+   .style.display = "block";
 
          document.getElementById("logoutBox")
          .style.display = "none";
@@ -1158,11 +1273,48 @@ window.onAuthStateChanged(
       const uid = user.uid;
       const data = await window.loadUserData(uid);
 
-      realBalance = data.balance;
+document.getElementById("referralCode")
+.innerText =
+data.referralCode || "-";
 
-      document.getElementById("balanceValue")
-      .innerText = realBalance.toFixed(2);
+document.getElementById("referralCount")
+.innerText =
+data.referrals || 0;
 
+document.getElementById("homeReferralCount")
+.innerText =
+data.referrals || 0;
+
+realBalance = data.balance;
+
+document.getElementById("userName")
+.innerText =
+data.username || "Member";
+
+document.getElementById("balanceValue")
+.innerText =
+realBalance.toFixed(2);
+const list =
+document.getElementById("referralList");
+
+if(
+   data.referredUsers &&
+   data.referredUsers.length
+){
+
+   list.innerHTML =
+   data.referredUsers
+   .map(name =>
+      "👤 " + name
+   )
+   .join("<br>");
+
+}else{
+
+   list.innerHTML =
+   "Belum ada referral";
+
+}
       // lanjutkan kode mining recovery milikmu di sini...
       if(
    data.miningActive &&
@@ -1217,24 +1369,31 @@ document.getElementById("progressBar")
 
     }else{
 
-        miningActive = true;
+    miningActive = true;
 
-        miningSeconds =
-        MAX_SECONDS - elapsedSeconds;
+    miningSeconds =
+    MAX_SECONDS - elapsedSeconds;
 
-        document.getElementById("statusText")
-        .innerText = "MINING";
+    const percent =
+    (elapsedSeconds / MAX_SECONDS) * 100;
 
-        document.getElementById("mineBtn")
-        .innerHTML = "⏳ MINING ACTIVE";
+    document.getElementById("progressBar")
+    .style.width = percent + "%";
 
-        document.getElementById("mineBtn")
-        .disabled = true;
+    document.getElementById("statusText")
+    .innerText = "MINING";
 
-        document.getElementById("miningTimer")
-        .style.display = "block";
+    document.getElementById("mineBtn")
+    .innerHTML = "⏳ MINING ACTIVE";
 
-        startMiningTimer();
+    document.getElementById("mineBtn")
+    .disabled = true;
+
+    document.getElementById("miningTimer")
+    .style.display = "block";
+
+    startMiningTimer();
+
     }
 }
       document.getElementById("authPage")
