@@ -134,6 +134,10 @@ body::before{
  radial-gradient(circle at 80% 10%,rgba(79,70,229,.15),transparent 25%);
  pointer-events:none;
 }
+#authPage,
+#logoutBox {
+    display: none;
+}
 .menu-card{
  display:flex;
  align-items:center;
@@ -266,6 +270,9 @@ body::before{
  padding:20px;
  padding-bottom:90px;
 }
+.page.active{
+ display:block;
+}
 .stat{
  flex:1;
  padding:10px;
@@ -368,9 +375,6 @@ body::before{
 
  box-shadow:
  0 0 10px #00ff66;
-}
-.page.active{
- display:block;
 }
 .balance{
  display:flex;

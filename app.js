@@ -408,15 +408,23 @@ document.getElementById("mineBtn")
 .innerHTML = "⛏ LOGIN TO START";
    await window.signOut(window.auth);
 }
-function copyReferral(){
+async function copyReferral(){
 
- const code =
- document.getElementById("referralCode")
- .innerText;
+   const code =
+   document.getElementById("referralCode").innerText;
 
- navigator.clipboard.writeText(code);
+   try{
 
- showToast("Referral berhasil disalin");
+      await navigator.clipboard.writeText(code);
+
+      showToast("Referral berhasil disalin");
+
+   }catch(err){
+
+      showToast("Clipboard tidak didukung");
+
+   }
+
 }
 function formatLEXA(amount){
 
