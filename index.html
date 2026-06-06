@@ -1042,7 +1042,8 @@ maximumFractionDigits:2
 }
 )
 +
-" Ⱡ"
+" Ⱡ";
+
 const displayBalance =
 realBalance + earned;
 
@@ -1313,21 +1314,6 @@ function copyReferral(){
 
  showToast("Referral berhasil disalin");
 }
-function showPage(id,el){
-
-document.querySelectorAll('.page')
-.forEach(p=>p.classList.remove('active'));
-
-document.getElementById(id)
-.classList.add('active');
-
-if(el.classList.contains('nav-item')){
-
-document.querySelectorAll('.nav-item')
-.forEach(i=>i.classList.remove('active'));
-
-el.classList.add('active');
-}
 function formatLEXA(amount){
 
    return "Ⱡ " +
@@ -1339,11 +1325,25 @@ function formatLEXA(amount){
       }
    );
 
-
 }
 
-}
+function showPage(id,el){
 
+   document.querySelectorAll(".page")
+   .forEach(p=>p.classList.remove("active"));
+
+   document.getElementById(id)
+   .classList.add("active");
+
+   if(el && el.classList.contains("nav-item")){
+
+      document.querySelectorAll(".nav-item")
+      .forEach(i=>i.classList.remove("active"));
+
+      el.classList.add("active");
+   }
+
+}
 </script>
 <script type="module">
 
@@ -1577,8 +1577,8 @@ if(
         updatedData.balance;
 
         document.getElementById("balanceValue")
-        .innerText =
-        realBalance.toFixed(2);
+.innerText =
+formatLEXA(realBalance);
        document.getElementById("statusText")
 .innerText = "READY";
 
