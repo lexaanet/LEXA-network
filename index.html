@@ -1034,13 +1034,21 @@ const earned =
 * totalReward;
 document.getElementById("earningText")
 .innerText =
-"+" + earned.toFixed(2) + " LEXA";
+"+" +
+Number(earned).toLocaleString(
+"id-ID",
+{
+maximumFractionDigits:2
+}
+)
++
+" Ⱡ"
 const displayBalance =
 realBalance + earned;
 
 document.getElementById("balanceValue")
 .innerText =
-displayBalance.toFixed(2);
+formatLEXA(displayBalance);
         document.getElementById("progressBar").style.width =
         percent + "%";
 
@@ -1085,7 +1093,7 @@ updatedData.balance;
 
 document.getElementById("balanceValue")
 .innerText =
-realBalance.toFixed(2);
+formatLEXA(realBalance);
 
             document.getElementById("statusText").innerText =
             "READY";
@@ -1319,6 +1327,18 @@ document.querySelectorAll('.nav-item')
 .forEach(i=>i.classList.remove('active'));
 
 el.classList.add('active');
+}
+function formatLEXA(amount){
+
+   return "Ⱡ " +
+   Number(amount).toLocaleString(
+      "id-ID",
+      {
+         minimumFractionDigits: 0,
+         maximumFractionDigits: 2
+      }
+   );
+
 
 }
 
@@ -1500,7 +1520,7 @@ data.username || "Member";
 
 document.getElementById("balanceValue")
 .innerText =
-realBalance.toFixed(2);
+formatLEXA(realBalance);
 const list =
 document.getElementById("referralList");
 
