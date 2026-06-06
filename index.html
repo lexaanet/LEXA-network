@@ -1694,6 +1694,13 @@ type === "register"
 );
 
 }
+function openUsernameModal(){
+
+document.getElementById(
+"usernameModal"
+).classList.add("show");
+
+}
 function closeUsernameModal(){
 
 document.getElementById(
@@ -1898,21 +1905,6 @@ showToast(
 showToast(
 "Gagal: " + err.message
 );
-
-}
-function openUsernameModal(){
-
-document.getElementById(
-"usernameModal"
-).classList.add("show");
-
-}
-
-function closeUsernameModal(){
-
-document.getElementById(
-"usernameModal"
-).classList.remove("show");
 
 }
 
