@@ -1598,11 +1598,11 @@ function copyReferral(){
  const code =
  document.getElementById("referralCode").innerText;
 
- alert("SEBELUM COPY");
-
  navigator.clipboard.writeText(code);
 
- alert("SETELAH COPY");
+ showToast("Referral berhasil disalin");
+
+ alert("LEWAT SHOWTOAST");
 }
 function formatLEXA(amount){
 
