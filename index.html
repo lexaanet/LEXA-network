@@ -962,39 +962,7 @@ READY
       </div>  
   
     </div>  
-  <div id="confirmModal" class="confirm-overlay">
-
-  <div class="confirm-box">
-
-    <div class="confirm-icon">⚠️</div>
-
-    <div id="confirmTitle" class="confirm-title">
-      Konfirmasi
-    </div>
-
-    <div id="confirmMessage" class="confirm-message">
-      Apakah Anda yakin?
-    </div>
-
-    <div class="confirm-actions">
-
-      <button
-      id="confirmCancel"
-      class="confirm-btn cancel-btn">
-        Batal
-      </button>
-
-      <button
-      id="confirmOk"
-      class="confirm-btn ok-btn">
-        Lanjutkan
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
+  
   </div> <!-- TUTUP balance-row -->  
 <div id="earningText"  
 style="  
@@ -1355,6 +1323,39 @@ Fitur keamanan akun akan segera hadir
 </div>  
   
 </div>  
+<div id="confirmModal" class="confirm-overlay">
+
+  <div class="confirm-box">
+
+    <div class="confirm-icon">⚠️</div>
+
+    <div id="confirmTitle" class="confirm-title">
+      Konfirmasi
+    </div>
+
+    <div id="confirmMessage" class="confirm-message">
+      Apakah Anda yakin?
+    </div>
+
+    <div class="confirm-actions">
+
+      <button
+      id="confirmCancel"
+      class="confirm-btn cancel-btn">
+        Batal
+      </button>
+
+      <button
+      id="confirmOk"
+      class="confirm-btn ok-btn">
+        Lanjutkan
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 <script>  
 let miningActive = false;  
 let miningSeconds = 43200;  
@@ -1723,23 +1724,18 @@ toast.style.display="none";
 }  
 async function logoutUser(){
 
-const yes =
-await showConfirm(
-"Logout",
-"Yakin ingin keluar dari akun LEXA?"
-);
+  console.log("1. tombol logout ditekan");
 
-if(!yes) return;
+  const yes = await showConfirm(
+    "Logout",
+    "Yakin ingin keluar dari akun LEXA?"
+  );
 
-clearInterval(miningTimer);
+  console.log("2. hasil confirm", yes);
 
-miningActive = false;
-miningSeconds = 43200;
-realBalance = 0;
+  if(!yes) return;
 
-await window.signOut(window.auth);
-
-showToast("👋 Sampai jumpa");
+  await window.signOut(window.auth);
 
 }
 function copyReferral(){  
