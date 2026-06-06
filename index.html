@@ -1580,19 +1580,12 @@ document.getElementById("mineBtn")
 function copyReferral(){
 
  const code =
- document.getElementById("referralCode").innerText;
+ document.getElementById("referralCode")
+ .innerText;
 
- navigator.clipboard.writeText(code)
- .then(()=>{
+ navigator.clipboard.writeText(code);
 
-   document.getElementById("toast")
-   .style.display = "block";
-
-   document.getElementById("toast")
-   .innerText = "TES TOAST";
-
- });
-
+ showToast("Referral berhasil disalin");
 }
 function formatLEXA(amount){
 
@@ -1943,13 +1936,6 @@ document.getElementById("progressBar")
    }
 );
 
-</script>
-<script>
-document.querySelectorAll("button").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    console.log("TOMBOL DIKLIK:", btn.innerText);
-  });
-});
 </script>
 </body>
 </html>
