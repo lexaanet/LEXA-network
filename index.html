@@ -1594,7 +1594,15 @@ document.getElementById("mineBtn")
    await window.signOut(window.auth);
 }
 function copyReferral(){
-  alert("MASUK FUNCTION");
+
+ const code =
+ document.getElementById("referralCode").innerText;
+
+ alert("SEBELUM COPY");
+
+ navigator.clipboard.writeText(code);
+
+ alert("SETELAH COPY");
 }
 function formatLEXA(amount){
 
