@@ -749,6 +749,7 @@ linear-gradient(
 </style>
 </head>
 <body>
+<div id="toast" class="toast"></div>
 <!-- BERANDA -->
 <div class="page active" id="home">
 
@@ -786,7 +787,7 @@ onclick="showPage('profile')">
 </div>
 
 </div>
-<div id="toast" class="toast"></div>
+
 </header>
 
 <section class="welcome">
@@ -1600,11 +1601,13 @@ function copyReferral(){
 
  navigator.clipboard.writeText(code)
  .then(()=>{
-    alert("COPY BERHASIL");
-    showToast("Referral berhasil disalin");
- })
- .catch(err=>{
-    alert(err);
+
+   document.getElementById("toast")
+   .style.display = "block";
+
+   document.getElementById("toast")
+   .innerText = "TES TOAST";
+
  });
 
 }
