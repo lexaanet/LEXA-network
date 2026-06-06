@@ -562,17 +562,12 @@ linear-gradient(
  transition:.6s;
 }
 .toast{
-
 position:fixed;
-
 left:50%;
 bottom:100px;
-
-transform:
-translateX(-50%);
+transform:translateX(-50%);
 
 padding:14px 22px;
-
 border-radius:14px;
 
 background:#0E47C6;
@@ -580,20 +575,8 @@ color:white;
 
 font-weight:600;
 
-display:none;
+z-index:999999;
 
-z-index:9999;
-
-box-shadow:
-0 0 25px rgba(0,212,255,.3);
-
-}
-.toast{
-opacity:0;
-transition:.3s;
-}
-
-.toast.show{
 display:block;
 opacity:1;
 }
