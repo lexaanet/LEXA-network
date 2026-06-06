@@ -1245,10 +1245,8 @@ id="profileUsername">
 
 <button
 class="profile-action"
-onclick="changeUsername()">
-
+onclick="openUsernameModal()">
 Edit Username
-
 </button>
 
 </div>
@@ -1710,7 +1708,12 @@ document.getElementById(
 "newUsernameInput"
 ).value.trim();
 
-if(!newName) return;
+if(!newName){
+
+showToast("Masukkan username baru");
+return;
+
+}
 
 const uid =
 window.auth.currentUser.uid;
@@ -1884,11 +1887,6 @@ document.getElementById(
 ).innerText =
 newEmail;
 
-document.getElementById(
-"profileEmailText"
-).innerText =
-newEmail;
-
 closeEmailModal();
 
 showToast(
@@ -1902,8 +1900,22 @@ showToast(
 );
 
 }
+function openUsernameModal(){
+
+document.getElementById(
+"usernameModal"
+).classList.add("show");
 
 }
+
+function closeUsernameModal(){
+
+document.getElementById(
+"usernameModal"
+).classList.remove("show");
+
+}
+
 function showPage(id,el){
 
    document.querySelectorAll(".page")
