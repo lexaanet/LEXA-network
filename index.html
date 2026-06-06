@@ -420,7 +420,42 @@ body::before{
 
  transition:.6s;
 }
+.toast{
 
+position:fixed;
+
+left:50%;
+bottom:100px;
+
+transform:
+translateX(-50%);
+
+padding:14px 22px;
+
+border-radius:14px;
+
+background:#0E47C6;
+color:white;
+
+font-weight:600;
+
+display:none;
+
+z-index:9999;
+
+box-shadow:
+0 0 25px rgba(0,212,255,.3);
+
+}
+.toast{
+opacity:0;
+transition:.3s;
+}
+
+.toast.show{
+display:block;
+opacity:1;
+}
 .mine-btn:hover::before{
  left:140%;
 }
@@ -469,7 +504,71 @@ body::before{
  justify-content:space-around;
  padding:12px 0;
 }
+.auth-tabs{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+}
 
+.auth-tab{
+flex:1;
+padding:12px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+
+background:#0a224a;
+color:#9FB3D9;
+
+font-weight:700;
+}
+
+.auth-tab.active{
+background:
+linear-gradient(
+135deg,
+#2347ff,
+#00d4ff
+);
+
+color:white;
+}
+
+.auth-card input{
+width:100%;
+padding:14px;
+
+border-radius:14px;
+border:none;
+
+background:#06162f;
+color:white;
+
+outline:none;
+}
+
+.auth-btn{
+width:100%;
+
+padding:14px;
+
+border:none;
+border-radius:14px;
+
+font-weight:700;
+font-size:15px;
+
+cursor:pointer;
+
+color:white;
+
+background:
+linear-gradient(
+135deg,
+#2347ff,
+#00d4ff
+);
+}
 .nav-item{
  text-align:center;
  font-size:12px;
@@ -537,7 +636,7 @@ body::before{
 <span class="notif-dot"></span>
 
 </div>
-
+<div id="toast" class="toast"></div>
 </header>
 
 <section class="welcome">
@@ -743,29 +842,83 @@ Referral Aktif
       Profil, Wallet
    </div>
 
-   <div id="authPage" class="card">
+   <div id="authPage" class="card auth-card">
 
-      <h3>Login Akun</h3>
+<div class="auth-tabs">
+
+<button
+id="loginTab"
+class="auth-tab active"
+onclick="switchAuthTab('login')">
+Login
+</button>
+
+<button
+id="registerTab"
+class="auth-tab"
+onclick="switchAuthTab('register')">
+Register
+</button>
+
+</div>
+
+<div id="loginForm">
+
+<h3>🔐 Welcome Back</h3>
+
+<br>
+
+<input
+id="loginEmail"
+type="email"
+placeholder="Email">
+
+<br><br>
+
+<input
+id="loginPassword"
+type="password"
+placeholder="Password">
+
+<br><br>
+
+<button
+class="auth-btn"
+onclick="loginUser()">
+Masuk
+</button>
+
+</div>
+
+<div
+id="registerForm"
+style="display:none;">
+
+<h3>✨ Create Account</h3>
+
+<br>
+
 <input
 id="username"
 type="text"
 placeholder="Username">
 
-      <br><br>
+<br><br>
 
-      <input
-      id="email"
-      type="email"
-      placeholder="Email">
+<input
+id="email"
+type="email"
+placeholder="Email">
 
-      <br><br>
+<br><br>
 
-      <input
-      id="password"
-      type="password"
-      placeholder="Password">
+<input
+id="password"
+type="password"
+placeholder="Password">
 
-      <br><br>
+<br><br>
+
 <input
 id="referralInput"
 type="text"
@@ -773,24 +926,20 @@ placeholder="Kode Referral (Opsional)">
 
 <br><br>
 
-      <button onclick="registerUser()">
-         Register
-      </button>
+<button
+class="auth-btn"
+onclick="registerUser()">
+Buat Akun
+</button>
 
-      <button onclick="loginUser()">
-         Login
-      </button>
+</div>
 
-   </div>
-
-   <div id="logoutBox" class="card">
-
-      <button onclick="logoutUser()">
-         Logout
-      </button>
-
-   </div>
-
+</div>
+<div id="logoutBox" class="card">
+  <button class="auth-btn" onclick="logoutUser()">
+    Logout
+  </button>
+</div>
 </div>
 <!-- NAVBAR -->
 
@@ -826,7 +975,7 @@ async function startMining(){
 
    if(!window.auth.currentUser){
 
-      alert("Silakan login terlebih dahulu");
+      showToast("Silakan login terlebih dahulu");
       return;
 
    }
@@ -962,10 +1111,10 @@ document.getElementById("miningTimer").style.display =
 async function registerUser(){
 
    const email =
-   document.getElementById("email").value;
+document.getElementById("email").value;
 
-   const password =
-   document.getElementById("password").value;
+const password =
+document.getElementById("password").value;
 
    try{
 
@@ -981,7 +1130,9 @@ async function registerUser(){
 const referralUsed =
 document.getElementById("referralInput")
 .value.trim().toUpperCase();
-      alert("Register berhasil");
+      showToast("🎉 Akun berhasil dibuat");
+
+switchAuthTab("login");
 
       const userRef =
       window.doc(window.db,"users",uid);
@@ -1019,7 +1170,7 @@ if(referralUsed){
 
    if(snap.empty){
 
-      alert("Kode referral tidak ditemukan");
+      showToast("Kode referral tidak ditemukan");
       return;
    }
 
@@ -1041,7 +1192,7 @@ if(referralUsed){
 
 }catch(err){
 
-      alert(err.message);
+      showToast(err.message);
 
    }
 
@@ -1049,10 +1200,10 @@ if(referralUsed){
 async function loginUser(){
 
    const email =
-   document.getElementById("email").value;
+document.getElementById("loginEmail").value;
 
-   const password =
-   document.getElementById("password").value;
+const password =
+document.getElementById("loginPassword").value;
 
    try{
 
@@ -1062,13 +1213,63 @@ async function loginUser(){
          password
       );
 
-      alert("Login berhasil");
+      showToast("✅ Login berhasil");
 
    }catch(err){
 
-      alert(err.message);
+      showToast(err.message);
 
    }
+
+}
+function switchAuthTab(type){
+
+document.getElementById("loginForm")
+.style.display =
+type === "login"
+? "block"
+: "none";
+
+document.getElementById("registerForm")
+.style.display =
+type === "register"
+? "block"
+: "none";
+
+document.getElementById("loginTab")
+.classList.toggle(
+"active",
+type === "login"
+);
+
+document.getElementById("registerTab")
+.classList.toggle(
+"active",
+type === "register"
+);
+
+}
+function showToast(message){
+
+const toast =
+document.getElementById("toast");
+
+toast.innerText = message;
+
+toast.style.display = "block";
+
+setTimeout(()=>{
+toast.classList.add("show");
+},10);
+
+setTimeout(()=>{
+toast.classList.remove("show");
+
+setTimeout(()=>{
+toast.style.display="none";
+},300);
+
+},2500);
 
 }
 async function logoutUser(){
@@ -1102,7 +1303,7 @@ function copyReferral(){
 
  navigator.clipboard.writeText(code);
 
- alert("Referral berhasil disalin");
+ showToast("Referral berhasil disalin");
 }
 function showPage(id,el){
 
@@ -1248,6 +1449,12 @@ window.onAuthStateChanged(
 
          return;
       }
+showPage(
+"home",
+document.querySelector(".nav-item")
+);
+
+showToast("Selamat datang kembali");
 
       document.getElementById("authPage")
       .style.display = "none";
