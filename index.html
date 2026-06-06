@@ -716,7 +716,125 @@ linear-gradient(
  cursor:pointer;
  color:#b8c8e5;
 }
+.modal{
 
+position:fixed;
+inset:0;
+
+display:none;
+
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,.65);
+
+backdrop-filter:blur(8px);
+
+z-index:99999;
+
+}
+
+.modal.show{
+display:flex;
+}
+
+.modal-box{
+
+width:90%;
+max-width:350px;
+
+background:#081A38;
+
+border-radius:24px;
+
+padding:25px;
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 0 40px rgba(0,212,255,.15);
+
+}
+
+.modal-box h3{
+
+margin-bottom:10px;
+
+}
+
+.modal-box p{
+
+color:#9FB3D9;
+font-size:13px;
+
+margin-bottom:15px;
+
+}
+
+.modal-box input{
+
+width:100%;
+
+padding:14px;
+
+border:none;
+
+border-radius:14px;
+
+background:#06162f;
+
+color:white;
+
+outline:none;
+
+}
+
+.modal-actions{
+
+display:flex;
+
+gap:10px;
+
+margin-top:15px;
+
+}
+
+.modal-cancel,
+.modal-save{
+
+flex:1;
+
+padding:12px;
+
+border:none;
+
+border-radius:14px;
+
+font-weight:700;
+
+cursor:pointer;
+
+}
+
+.modal-cancel{
+
+background:#10284f;
+color:white;
+
+}
+
+.modal-save{
+
+background:
+linear-gradient(
+135deg,
+#2347ff,
+#00d4ff
+);
+
+color:white;
+
+}
 .nav-item.active{
  color:white;
 }
@@ -1142,16 +1260,20 @@ Edit Username
 </div>
 
 <div class="profile-sub"
-id="profileEmailText">
--
+style="margin-top:8px;">
+Email digunakan untuk login
+dan pemulihan akun.
 </div>
 
 <button
-class="profile-action">
+class="profile-action"
+onclick="openEmailModal()">
 
-Perubahan Email Segera Hadir
+Ubah Email
 
 </button>
+
+</div>
 
 </div>
 
@@ -1178,6 +1300,81 @@ Wallet LEXA sedang dipersiapkan
 <div class="profile-sub">
 
 Fitur keamanan akun akan segera hadir
+
+</div>
+
+</div>
+
+</div>
+<div id="usernameModal" class="modal">
+
+<div class="modal-box">
+
+<h3>✏️ Ubah Username</h3>
+
+<p>
+Username hanya dapat diubah 1 kali.
+</p>
+
+<input
+id="newUsernameInput"
+type="text"
+placeholder="Masukkan username baru">
+
+<div class="modal-actions">
+
+<button
+class="modal-cancel"
+onclick="closeUsernameModal()">
+Batal
+</button>
+
+<button
+class="modal-save"
+onclick="saveUsername()">
+Simpan
+</button>
+
+</div>
+
+</div>
+
+</div>
+<div id="emailModal" class="modal">
+
+<div class="modal-box">
+
+<h3>📧 Ubah Email</h3>
+
+<p>
+Masukkan email baru dan password akun.
+</p>
+
+<input
+id="newEmailInput"
+type="email"
+placeholder="Email baru">
+
+<br><br>
+
+<input
+id="confirmPasswordInput"
+type="password"
+placeholder="Password akun">
+
+<div class="modal-actions">
+
+<button
+class="modal-cancel"
+onclick="closeEmailModal()">
+Batal
+</button>
+
+<button
+class="modal-save"
+onclick="changeEmail()">
+Simpan
+</button>
 
 </div>
 
@@ -1501,10 +1698,19 @@ type === "register"
 );
 
 }
-async function changeUsername(){
+function closeUsernameModal(){
+
+document.getElementById(
+"usernameModal"
+).classList.remove("show");
+
+}
+async function saveUsername(){
 
 const newName =
-prompt("Masukkan username baru");
+document.getElementById(
+"newUsernameInput"
+).value.trim();
 
 if(!newName) return;
 
@@ -1520,7 +1726,9 @@ showToast(
 "Username hanya bisa diubah 1 kali"
 );
 
+closeUsernameModal();
 return;
+
 }
 
 await window.updateDoc(
@@ -1532,19 +1740,18 @@ usernameChanged:true
 );
 
 document.getElementById("userName")
-.innerText =
-newName;
+.innerText = newName;
 
 document.getElementById("profileName")
-.innerText =
-newName;
+.innerText = newName;
 
 document.getElementById("profileUsername")
-.innerText =
-newName;
+.innerText = newName;
+
+closeUsernameModal();
 
 showToast(
-"Username berhasil diperbarui"
+"✅ Username berhasil diperbarui"
 );
 
 }
@@ -1616,7 +1823,89 @@ function formatLEXA(amount){
    );
 
 }
+function openEmailModal(){
 
+document.getElementById(
+"emailModal"
+).classList.add("show");
+
+}
+
+function closeEmailModal(){
+
+document.getElementById(
+"emailModal"
+).classList.remove("show");
+
+}
+async function changeEmail(){
+
+const newEmail =
+document.getElementById(
+"newEmailInput"
+).value.trim();
+
+const password =
+document.getElementById(
+"confirmPasswordInput"
+).value;
+
+if(!newEmail || !password){
+
+showToast(
+"Lengkapi semua data"
+);
+
+return;
+
+}
+
+try{
+
+const user =
+window.auth.currentUser;
+
+const credential =
+window.EmailAuthProvider.credential(
+user.email,
+password
+);
+
+await window.reauthenticateWithCredential(
+user,
+credential
+);
+
+await window.updateEmail(
+user,
+newEmail
+);
+
+document.getElementById(
+"profileEmail"
+).innerText =
+newEmail;
+
+document.getElementById(
+"profileEmailText"
+).innerText =
+newEmail;
+
+closeEmailModal();
+
+showToast(
+"✅ Email berhasil diperbarui"
+);
+
+}catch(err){
+
+showToast(
+"Gagal: " + err.message
+);
+
+}
+
+}
 function showPage(id,el){
 
    document.querySelectorAll(".page")
@@ -1645,7 +1934,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  updateEmail,
+  EmailAuthProvider,
+  reauthenticateWithCredential
 }
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import {
@@ -1703,6 +1995,14 @@ window.where = where;
 window.getDocs = getDocs;
 window.serverTimestamp =
 serverTimestamp;
+window.updateEmail =
+updateEmail;
+
+window.EmailAuthProvider =
+EmailAuthProvider;
+
+window.reauthenticateWithCredential =
+reauthenticateWithCredential;
 async function loadUserData(uid){
 
   const userRef =
@@ -1767,9 +2067,6 @@ window.onAuthStateChanged(
    document.getElementById("profileEmail")
    .innerText = "-";
 
-   document.getElementById("profileEmailText")
-   .innerText = "-";
-
    document.getElementById("profileId")
    .innerText = "LEXA ID";
 
@@ -1815,10 +2112,6 @@ document.getElementById("profileUsername")
 data.username || "-";
 
 document.getElementById("profileEmail")
-.innerText =
-user.email || "-";
-
-document.getElementById("profileEmailText")
 .innerText =
 user.email || "-";
 
