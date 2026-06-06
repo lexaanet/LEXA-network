@@ -543,39 +543,5 @@ window.changeEmail = changeEmail;
 window.copyReferral = copyReferral;
 window.showPage = showPage;
 
-const app = initializeApp(firebaseConfig);
-
-window.auth = getAuth(app);
-window.createUserWithEmailAndPassword =
-createUserWithEmailAndPassword;
-
-window.signInWithEmailAndPassword =
-signInWithEmailAndPassword;
-
-window.signOut =
-signOut;
-
-window.onAuthStateChanged =
-onAuthStateChanged;
-window.db = getFirestore(app);
-
-window.doc = doc;
-window.getDoc = getDoc;
-window.setDoc = setDoc;
-window.updateDoc = updateDoc;
-window.increment = increment;
-window.collection = collection;
-window.arrayUnion = arrayUnion;
-window.query = query;
-window.where = where;
-window.getDocs = getDocs;
-window.serverTimestamp =
-serverTimestamp;
-window.updateEmail =
-updateEmail;
-
-window.EmailAuthProvider =
-EmailAuthProvider;
-
-window.reauthenticateWithCredential =
-reauthenticateWithCredential;
+window.showToast = showToast;
+window.formatLEXA = formatLEXA;

@@ -41,7 +41,42 @@ const firebaseConfig = {
   appId: "1:471101991726:web:7ba21aee8b3d64337e28bf"
 };
 
+const app = initializeApp(firebaseConfig);
 
+window.auth = getAuth(app);
+window.createUserWithEmailAndPassword =
+createUserWithEmailAndPassword;
+
+window.signInWithEmailAndPassword =
+signInWithEmailAndPassword;
+
+window.signOut =
+signOut;
+
+window.onAuthStateChanged =
+onAuthStateChanged;
+window.db = getFirestore(app);
+
+window.doc = doc;
+window.getDoc = getDoc;
+window.setDoc = setDoc;
+window.updateDoc = updateDoc;
+window.increment = increment;
+window.collection = collection;
+window.arrayUnion = arrayUnion;
+window.query = query;
+window.where = where;
+window.getDocs = getDocs;
+window.serverTimestamp =
+serverTimestamp;
+window.updateEmail =
+updateEmail;
+
+window.EmailAuthProvider =
+EmailAuthProvider;
+
+window.reauthenticateWithCredential =
+reauthenticateWithCredential;
 async function loadUserData(uid){
 
   const userRef =
@@ -116,7 +151,7 @@ showPage(
 document.querySelector(".nav-item")
 );
 
-showToast("Selamat datang kembali");
+window.showToast("Selamat datang kembali");
 
       document.getElementById("authPage")
       .style.display = "none";
@@ -179,7 +214,7 @@ data.username || "Member";
 
 document.getElementById("balanceValue")
 .innerText =
-formatLEXA(realBalance);
+window.formatLEXA(realBalance);
 const list =
 document.getElementById("referralList");
 
@@ -278,7 +313,7 @@ document.getElementById("progressBar")
     document.getElementById("miningTimer")
     .style.display = "block";
 
-    startMiningTimer();
+    window.startMiningTimer();
 
     }
 }
