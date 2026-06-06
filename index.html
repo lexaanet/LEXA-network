@@ -416,7 +416,7 @@ color:#fff;
 
 font-size:10px;
 font-weight:700;
-letter-spacing:.5px;
+letter-spacing:.4px;
 
 cursor:pointer;
 transition:.25s;
@@ -1793,19 +1793,41 @@ toast.style.display = "none";
 }
 async function logoutUser(){
 
-  console.log("1. tombol logout ditekan");
+const yes =
+await showConfirm(
+"Logout",
+"Yakin ingin keluar dari akun LEXA?"
+);
 
-  const yes = await showConfirm(
-    "Logout",
-    "Yakin ingin keluar dari akun LEXA?"
-  );
+if(!yes) return;
 
-  console.log("2. hasil confirm", yes);
+clearInterval(miningTimer);
 
-  if(!yes) return;
+miningActive = false;
+miningSeconds = 43200;
+realBalance = 0;
 
-  await window.signOut(window.auth);
+document.getElementById("earningText")
+.innerText = "+0.00 LEXA";
 
+document.getElementById("progressBar")
+.style.width = "0%";
+
+document.getElementById("miningTimer")
+.style.display = "none";
+
+document.getElementById("statusText")
+.innerText = "GUEST";
+
+document.getElementById("mineBtn")
+.innerHTML = "⛏ LOGIN TO START";
+
+document.getElementById("mineBtn")
+.disabled = false;
+
+await window.signOut(window.auth);
+
+showToast("👋 Sampai jumpa");
 }
 function copyReferral(){  
   
@@ -1879,27 +1901,6 @@ resolve(false);
 };
 
 });
-
-}
-function resetMiningUI(){
-
-  clearInterval(miningTimer);
-
-  miningActive = false;
-  miningSeconds = 43200;
-  realBalance = 0;
-
-  document.getElementById("earningText")
-  .innerText = "+0.00 LEXA";
-
-  document.getElementById("progressBar")
-  .style.width = "0%";
-
-  document.getElementById("miningTimer")
-  .innerText = "Mining Time: 12:00:00";
-
-  document.getElementById("miningTimer")
-  .style.display = "none";
 
 }
 
