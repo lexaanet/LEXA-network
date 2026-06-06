@@ -898,17 +898,6 @@ transition:.25s;
 .profile-btn:hover{
 transform:scale(1.05);
 }
-.profile-btn::before{
-content:"";
-
-position:absolute;
-inset:-3px;
-
-clip-path:inherit;
-
-border:1px solid
-rgba(0,212,255,.4);
-}
 .nav-item{  
  text-align:center;  
  font-size:12px;  
@@ -980,8 +969,10 @@ fill="white"/>
   
 </div>  
   
-<div class="profile-btn">
-  LX
+<div class="profile-btn"
+onclick="showPage('profile')">
+⬢ ◎
+LX
 </div>
   
 </div>  
