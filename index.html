@@ -617,7 +617,6 @@ align-items:center;
 color:#fff;
 }
 .nav{
-
 position:fixed;
 bottom:0;
 left:0;
@@ -633,17 +632,41 @@ justify-content:space-around;
 align-items:center;
 
 background:
-rgba(5,21,45,.95);
+linear-gradient(
+180deg,
+rgba(7,43,120,.95),
+rgba(5,21,45,.98)
+);
 
 backdrop-filter:blur(20px);
 
 border-top:
-1px solid rgba(255,255,255,.08);
+1px solid rgba(0,212,255,.15);
 
-overflow:visible;
+box-shadow:
+0 -10px 30px rgba(0,212,255,.08);
 
 z-index:9999;
 }
+.nav::before{
+content:"";
+
+position:absolute;
+top:0;
+left:10%;
+right:10%;
+
+height:1px;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(0,212,255,.6),
+transparent
+);
+}
+
 .auth-tabs{    
 display:flex;    
 gap:10px;    
@@ -669,7 +692,53 @@ transition:.25s;
 z-index:9999999;  
   
 }  
-  
+  .notif{
+
+ width:26px;
+ height:26px;
+
+ position:relative;
+
+ display:flex;
+ align-items:center;
+ justify-content:center;
+
+ border-radius:50%;
+
+ background:rgba(255,255,255,.04);
+
+ border:1px solid rgba(255,255,255,.08);
+
+ backdrop-filter:blur(12px);
+
+}
+
+.notif svg{
+
+ width:14px;
+ height:14px;
+
+}
+
+.notif-dot{
+
+ position:absolute;
+
+ top:8px;
+ right:8px;
+
+ width:8px;
+ height:8px;
+
+ border-radius:50%;
+
+ background:#00D4FF;
+
+ box-shadow:
+ 0 0 10px #00D4FF,
+ 0 0 20px #00D4FF;
+
+}
 .confirm-overlay.show{  
   
 opacity:1;  
@@ -917,9 +986,12 @@ text-shadow:
  color:#b8c8e5;    
 }    
     
-.nav-item.active{    
- color:white;    
-}    
+.nav-item.active{
+color:#65d7ff;
+
+text-shadow:
+0 0 12px rgba(0,212,255,.5);
+}
     
 .logo{    
  font-size:28px;    
