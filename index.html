@@ -768,7 +768,26 @@ cursor:pointer;
 font-weight:700;  
   
 }  
-  
+  #referralCode{
+color:#65d7ff;
+text-shadow:
+0 0 15px rgba(0,212,255,.4);
+}
+
+#referralList{
+line-height:2;
+color:#d5e4ff;
+}
+
+#referralList .member{
+padding:10px;
+margin-bottom:8px;
+
+background:
+rgba(255,255,255,.04);
+
+border-radius:12px;
+}
 .cancel-btn{  
   
 background:rgba(255,255,255,.08);  
@@ -886,7 +905,15 @@ box-shadow:
 cursor:pointer;  
 transition:.25s;  
 }  
-  
+  #referralLevel{
+
+font-size:18px;
+font-weight:700;
+
+text-shadow:
+0 0 15px rgba(0,212,255,.4);
+
+}
 .nav-item{    
  text-align:center;    
  font-size:12px;    
@@ -1117,41 +1144,91 @@ Reward: +10 LEXA
 </div>    
 <!-- REFERRAL -->    
     
-<div class="page" id="referral">    
-    
-<h2>Referral</h2>    
-    
-<div class="card">    
-    
-Kode Referral:    
-    
-<br><br>    
-    
-<b id="referralCode">    
--    
-</b>    
-    
-<br><br>    
-    
-<button onclick="copyReferral()">    
-Copy Code    
-</button>    
-    
-</div>    
-    
-<div class="card">    
-    
-Referral Aktif    
-    
-<br><br>    
-    
-<b id="referralCount">    
-0    
-</b>    
-    
-</div>    
-    
-</div>    
+<div class="page" id="referral">
+
+<h2>👥 Referral Team</h2>
+
+<div class="love-glow"
+style="
+font-size:13px;
+margin-top:-8px;
+margin-bottom:15px;
+">
+❤️ Loved by Community
+</div>
+
+<div style="
+font-size:13px;
+color:#9FB3D9;
+">
+Kode Referral
+</div>
+
+<div id="referralCode"
+style="
+font-size:28px;
+font-weight:700;
+letter-spacing:2px;
+margin-top:5px;
+">
+-
+</div>
+
+</div>
+
+<div style="font-size:40px;">
+🎁
+</div>
+
+</div>
+
+<button
+class="auth-btn"
+onclick="copyReferral()">
+📋 Copy Referral Code
+</button>
+
+</div>
+
+<div class="card">
+
+<div class="menu-grid">
+
+<div class="menu-card">
+<div class="menu-icon">🏆</div>
+<div>
+<div class="menu-title" id="totalReferral">0</div>
+<div class="menu-sub">Total Referral</div>
+</div>
+</div>
+
+<div class="menu-card">
+<div class="menu-icon">💰</div>
+<div>
+<div class="menu-title" id="totalRewardReferral">0</div>
+<div class="menu-sub">Reward Referral</div>
+</div>
+</div>
+
+<div class="menu-card">
+<div class="menu-icon">👥</div>
+<div>
+<div class="menu-title" id="activeReferral">0</div>
+<div class="menu-sub">Active Members</div>
+</div>
+</div>
+
+<div class="menu-card">
+<div class="menu-icon">📈</div>
+<div>
+<div class="menu-title" id="referralLevel">Bronze</div>
+<div class="menu-sub">Referral Level</div>
+</div>
+</div>
+
+</div>
+
+</div>
     
 <!-- SETTINGS -->    
     
@@ -2180,13 +2257,46 @@ document.getElementById("referralCode")
 .innerText =    
 data.referralCode || "-";    
     
-document.getElementById("referralCount")    
-.innerText =    
-data.referrals || 0;    
-    
-document.getElementById("homeReferralCount")    
-.innerText =    
-data.referrals || 0;    
+document.getElementById("referralCount")
+.innerText = referralCount;
+
+document.getElementById("homeReferralCount")
+.innerText = referralCount;
+
+document.getElementById("totalReferral")
+.innerText = referralCount;
+
+document.getElementById("activeReferral")
+.innerText = referralCount;
+
+document.getElementById("totalRewardReferral")
+.innerText = referralCount * 25;
+
+// LEVEL REFERRAL
+let level = "🔹 Explorer";
+
+if(referralCount >= 10){
+   level = "⚡ Builder";
+}
+
+if(referralCount >= 50){
+   level = "🚀 Pioneer";
+}
+
+if(referralCount >= 100){
+   level = "👑 Ambassador";
+}
+
+if(referralCount >= 500){
+   level = "💎 Legend";
+}
+
+if(referralCount >= 1000){
+   level = "🌌 Genesis";
+}
+
+document.getElementById("referralLevel")
+.innerText = level;
     
 realBalance = data.balance;    
     
@@ -2201,12 +2311,14 @@ if(
    data.referredUsers.length    
 ){    
     
-   list.innerHTML =    
-   data.referredUsers    
-   .map(name =>    
-      "👤 " + name    
-   )    
-   .join("<br>");    
+   list.innerHTML =
+data.referredUsers
+.map(name=>`
+<div class="member">
+👤 ${name}
+</div>
+`)
+.join("");
     
 }else{    
     
