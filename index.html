@@ -1429,8 +1429,12 @@ const earned =
 ((totalDuration - miningSeconds) / totalDuration)  
 * totalReward;  
 
-  document.getElementById("earnedRate").innerText =
-"+" + earned.toFixed(2) + " Ł";
+  const earnedEl =
+document.getElementById("earnedRate");
+
+if(earnedEl){
+   earnedEl.innerText =
+   "+" + earned.toFixed(2) + " Ł";
 
 const displayBalance =  
 realBalance + earned;  
@@ -1448,7 +1452,7 @@ formatLEXA(displayBalance);
         String(s).padStart(2,"0");  
   
         if(miningSeconds <= 0){
-
+clearInterval(miningTimer);
 const uid = window.auth.currentUser.uid;
 
 const updatedData =
@@ -1922,8 +1926,6 @@ speedPerSecond.toFixed(4) +
 " Ł/s • " +
 (totalReward / 12).toFixed(0) +
 "/H";
-   document.getElementById("userName")  
-   .innerText = "Guest";  
   
    document.getElementById("authPage")  
    .style.display = "block";  
@@ -1943,11 +1945,6 @@ speedPerSecond.toFixed(4) +
 .innerHTML = "🔒<br>Login";
   
    // reset halaman profile  
-   document.getElementById("profileName")  
-   .innerText = "Guest";  
-  
-   document.getElementById("profileUsername")  
-   .innerText = "-";  
 
   document.getElementById("cardUserName")
 .innerText = "Guest";
