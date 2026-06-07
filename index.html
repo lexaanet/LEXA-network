@@ -17,14 +17,6 @@
  --text:#fff;  
  --muted:#9FB3D9;  
 }  
-.token{  
- width:110px;  
-height:110px;  
- object-fit:contain;  
-  
- filter:  
- drop-shadow(0 0 35px rgba(0,212,255,.6));  
-}  
 *{  
  margin:0;  
  padding:0;  
@@ -85,16 +77,6 @@ pointer-events:none;
  overflow:hidden;  
   
  transition:.25s ease;  
-}  
-.balance-row{  
- display:flex;  
- align-items:center;  
- gap:25px;  
- margin-top:18px;  
- margin-bottom:12px;  
-}  
-.balance-box{  
- flex:1;  
 }  
 .menu-grid{  
  display:grid;  
@@ -220,11 +202,7 @@ body::before{
  border:1px solid rgba(255,255,255,.08);  
  backdrop-filter:blur(12px);  
 }  
-.stats{  
- display:flex;  
- gap:12px;  
- margin-top:14px;  
-}  
+
 .notif svg{  
  width:14px;  
  height:14px;  
@@ -277,26 +255,11 @@ body::before{
  padding:20px;  
  padding-bottom:90px;  
 }  
-.stat{  
- flex:1;  
- padding:10px;  
-}  
+
 #balanceValue{  
  text-shadow:0 0 15px rgba(0,212,255,.5);  
 }  
-.stat-icon{  
- width:22px;  
- height:22px;  
-  
- display:flex;  
- align-items:center;  
- justify-content:center;  
-  
- border-radius:12px;  
-  
- background:rgba(255,255,255,.08);  
- font-size:18px;  
-}  
+
 .progress{  
  width:100%;  
  height:8px;  
@@ -314,35 +277,7 @@ body::before{
  background:#00ff88;  
  transition:width 1s linear;  
 }  
-.stat-label{  
- font-size:9px;  
- color:#9FB3D9;  
- letter-spacing:1.5px;  
- margin-bottom:4px;  
-}  
-.stat b{  
- display:block;  
- font-size:14px;  
- margin-top:2px;  
-}  
-.live-badge{  
- position:absolute;  
- top:12px;  
- left:12px;  
-  
- display:flex;  
- align-items:center;  
- gap:6px;  
-  
- padding:6px 10px;  
-  
- font-size:13px;  
-  
- border-radius:999px;  
-  
- background:rgba(0,0,0,.12);  
- border:1px solid rgba(255,255,255,.08);  
-}  
+
 .mining-card::before{  
  content:"";  
   
@@ -369,17 +304,7 @@ body::before{
   
  pointer-events:none;  
 }  
-.live-dot{  
- width:6px;  
- height:6px;  
-  
- border-radius:50%;  
-  
- background:#00ff66;  
-  
- box-shadow:  
- 0 0 10px #00ff66;  
-}  
+
 .page.active{  
  display:block;  
 }  
@@ -399,29 +324,7 @@ body::before{
  inset 0 3px 10px rgba(0,0,0,.25),  
  0 0 10px rgba(0,212,255,.25);  
 }  
-.profile-btn{
-width:16px;
-height:16px;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-border-radius:50%;
-
-background:#111827;
-border:1px solid rgba(255,255,255,.08);
-
-color:#fff;
-
-font-size:10px;
-font-weight:700;
-letter-spacing:.4px;
-
-cursor:pointer;
-transition:.25s;
-}
-  
+ 
 .profile-btn:hover{  
   
 transform:translateY(-2px);  
@@ -609,16 +512,19 @@ translateY(0);
 .mine-btn:hover::before{  
  left:140%;  
 }  
-.token-mini{  
- width:34px;  
- height:34px;  
-  
- filter:  
- drop-shadow(0 0 10px rgba(0,212,255,.5));  
-}  
+.token-mini{
+width:26px;
+height:26px;
+
+opacity:.8;
+
+filter:
+drop-shadow(
+0 0 8px rgba(0,212,255,.4)
+);
+}
 .logo{  
  font-family:'Orbitron',sans-serif;  
- font-size:34px;  
  font-weight:700;  
  letter-spacing:4px;  
   
@@ -912,13 +818,7 @@ transform:scale(1.05);
   
  box-shadow:none;  
 }  
-@media(max-width:480px){  
-  
-.token{  
- width:80px;  
- height:80px;  
-}  
-  
+
 .balance{  
  font-size:24px;  
 }  
@@ -931,7 +831,6 @@ transform:scale(1.05);
  font-size:15px;  
 }  
   
-}  
 </style>  
 </head>  
 <body>
@@ -975,80 +874,106 @@ onclick="showPage('profile')">
 </div>  
 </header>  
   
-<section class="welcome">  
-  Halo, <span id="userName">Guest</span> 👋  
-</section>  
-  
-<section class="mining-card">  
-  
-  <div class="live-badge">  
-    <span class="live-dot"></span>  
-    LIVE  
-  </div>  
-  
-  <div class="balance-row">  
-  
-    <img src="lexa-token.png" class="token">  
-  
-    <div class="balance-box">  
-  
-      <div class="balance-label">LEXA</div>  
-  
-      <div class="balance">  
-<img src="lexa-token.png" class="token-mini">  
-  
-<span id="balanceValue">  
-0  
-</span>  
-  
-</div>  
-<div class="progress">  
-  <div id="progressBar"></div>  
-</div>  
-      <div class="stats">  
-  
-        <div class="stat">  
-          <div class="stat-icon">⚡</div>  
-          <div>  
-            <div class="stat-label">RATE</div>  
-            <b>10 / H</b>  
-          </div>  
-        </div>  
-  
-        <div class="stat">  
-          <div class="stat-icon shield">🛡️</div>  
-          <div>  
-            <div class="stat-label">STATUS</div>  
-            <b  
-id="statusText"  
-style="color:#00ff88;">  
-READY  
-</b>  
-          </div>  
-        </div>  
-  
-      </div>  
-  
-    </div>  
-  
-  </div> <!-- TUTUP balance-row -->  
-<div id="earningText"  
-style="  
-margin-top:8px;  
-font-size:13px;  
-color:#65d7ff;">  
-+0.00 LEXA  
-</div>  
-<div id="miningTimer"  
-style="margin-top:10px;color:#65d7ff;display:none;">  
-Mining Time: 12:00:00  
-</div>  
-  <button  
- id="mineBtn"  
- class="mine-btn"  
- onclick="startMining()">  
- ⛏ START MINING  
-</button>  
+<span id="userName">Guest</span>👋
+ 
+<section class="mining-card">
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+">
+
+<div>
+
+<div style="font-size:18px;font-weight:700;">
+Halo,
+<span id="cardUserName">Fans</span>
+</div>
+
+<div style="
+margin-top:6px;
+font-size:13px;
+color:#9FB3D9;
+">
+ID :
+<span id="userIdShort">
+LX-1A7F92B
+</span>
+📋
+</div>
+
+</div>
+
+<div style="
+font-size:13px;
+color:#65d7ff;
+font-weight:700;
+">
+RATE 10/H
+</div>
+
+</div>
+
+<div style="
+margin-top:24px;
+font-size:34px;
+font-weight:700;
+font-family:'Rajdhani',sans-serif;
+">
+
+<span id="balanceValue">
+0
+</span>
+
+<span style="
+font-size:18px;
+color:#9FB3D9;
+">
+LEXA
+</span>
+
+</div>
+
+<div style="
+margin-top:18px;
+font-size:14px;
+">
+
+<span style="color:#00ff88;">●</span>
+
+<span id="statusText">
+READY
+</span>
+
+</div>
+
+<div class="progress">
+  <div id="progressBar"></div>
+</div>
+
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:8px;
+">
+
+<div
+id="miningTimer"
+style="
+display:none;
+font-size:20px;
+font-weight:700;
+">
+12:00:00
+</div>
+
+<img
+src="lexa-token.png"
+class="token-mini">
+
+</div>
   
 </section>  
 <section class="menu-grid">  
@@ -1381,7 +1306,16 @@ Fitur keamanan akun akan segera hadir
 <div class="nav-item" onclick="showPage('news',this)">  
 📰<br>Berita  
 </div>  
-  
+  <div
+id="mineBtn"
+class="nav-item"
+onclick="startMining()">
+
+⛏️
+<br>
+Mine
+
+</div>
 <div class="nav-item" onclick="showPage('referral',this)">  
 👥<br>Referral  
 </div>  
@@ -1457,14 +1391,14 @@ await window.updateDoc(
 }  
 );  
   
-    document.getElementById("statusText").innerText =  
-    "MINING";  
+    document.getElementById("mineBtn").innerHTML =
+"⚡<br>Mining";
   
-    document.getElementById("mineBtn").innerHTML =  
-    "⏳ MINING ACTIVE";  
+    document.getElementById("mineBtn").innerHTML =
+"⏳<br>Active";
   
-    document.getElementById("mineBtn").disabled =  
-    true;  
+    document.getElementById("mineBtn")
+.style.pointerEvents = "none";
   
     miningSeconds = 43200;  
   
@@ -1494,17 +1428,6 @@ clearInterval(miningTimer);
 const earned =  
 ((totalDuration - miningSeconds) / totalDuration)  
 * totalReward;  
-document.getElementById("earningText")  
-.innerText =  
-"+" +  
-Number(earned).toLocaleString(  
-"id-ID",  
-{  
-maximumFractionDigits:2  
-}  
-)  
-+  
-" Ⱡ";  
   
 const displayBalance =  
 realBalance + earned;  
@@ -1521,35 +1444,12 @@ formatLEXA(displayBalance);
         String(m).padStart(2,"0") + ":" +  
         String(s).padStart(2,"0");  
   
-        if(miningSeconds <= 0){  
-document.getElementById("earningText")  
-.innerText =  
-"+0.00 LEXA";  
-            clearInterval(miningTimer);  
-  
-            const uid =  
-window.auth.currentUser.uid;  
-  
-const data =  
-await window.loadUserData(uid);  
-  
-document.getElementById("userName")  
-.innerText =  
-data.username || "Member";  
-  
-realBalance = data.balance;  
-  
-await window.updateDoc(  
-   window.doc(window.db,"users",uid),  
-   {  
-   balance: window.increment(totalReward),  
-   miningStart:0,  
-   miningActive:false  
-}  
-);  
-  
-const updatedData =  
-await window.loadUserData(uid);  
+        if(miningSeconds <= 0){
+
+const uid = window.auth.currentUser.uid;
+
+const updatedData =
+await window.loadUserData(uid);
   
 realBalance =  
 updatedData.balance;  
@@ -1561,11 +1461,11 @@ formatLEXA(realBalance);
             document.getElementById("statusText").innerText =  
             "READY";  
   
-            document.getElementById("mineBtn").innerHTML =  
-            "⛏ START MINING";  
+            document.getElementById("mineBtn").innerHTML =
+"⛏️<br>Mine";
   
-            document.getElementById("mineBtn").disabled =  
-            false;  
+            document.getElementById("mineBtn")
+.style.pointerEvents = "auto";
   
             document.getElementById("progressBar").style.width =  
             "0%";  
@@ -1613,7 +1513,7 @@ uid.substring(0,8).toUpperCase();
   
 await window.setDoc(userRef,{  
    username:  
-   document.getElementById("username").value,  
+   document.getElementById("username").value, 
   
    balance:0,  
    miningStart:0,  
@@ -1653,7 +1553,7 @@ if(referralUsed){
          referrals: window.increment(1),  
          balance: window.increment(25),  
          referredUsers: window.arrayUnion(  
-            document.getElementById("username").value  
+            document.getElementById("username").value
          )  
       }  
    );  
@@ -1807,9 +1707,6 @@ miningActive = false;
 miningSeconds = 43200;
 realBalance = 0;
 
-document.getElementById("earningText")
-.innerText = "+0.00 LEXA";
-
 document.getElementById("progressBar")
 .style.width = "0%";
 
@@ -1818,12 +1715,6 @@ document.getElementById("miningTimer")
 
 document.getElementById("statusText")
 .innerText = "GUEST";
-
-document.getElementById("mineBtn")
-.innerHTML = "⛏ LOGIN TO START";
-
-document.getElementById("mineBtn")
-.disabled = false;
 
 await window.signOut(window.auth);
 
@@ -2038,8 +1929,8 @@ window.onAuthStateChanged(
    document.getElementById("statusText")  
    .innerText = "GUEST";  
   
-   document.getElementById("mineBtn")  
-   .innerHTML = "⛏ LOGIN TO START";  
+   document.getElementById("mineBtn")
+.innerHTML = "🔒<br>Login";
   
    document.getElementById("mineBtn")  
    .disabled = false;  
@@ -2050,7 +1941,10 @@ window.onAuthStateChanged(
   
    document.getElementById("profileUsername")  
    .innerText = "-";  
-  
+
+  document.getElementById("cardUserName")
+.innerText = "Guest";
+
    document.getElementById("profileEmail")  
    .innerText = "-";  
   
@@ -2081,8 +1975,8 @@ showToast("Selamat datang kembali");
       document.getElementById("statusText")  
       .innerText = "READY";  
   
-      document.getElementById("mineBtn")  
-      .innerHTML = "⛏ START MINING";  
+      document.getElementById("mineBtn")
+.innerHTML = "⛏️<br>Mine";
   
       document.getElementById("mineBtn")  
       .disabled = false;  
@@ -2224,8 +2118,8 @@ document.getElementById("progressBar")
     document.getElementById("statusText")  
     .innerText = "MINING";  
   
-    document.getElementById("mineBtn")  
-    .innerHTML = "⏳ MINING ACTIVE";  
+    document.getElementById("mineBtn")
+.innerHTML = "⏳<br>Active";
   
     document.getElementById("mineBtn")  
     .disabled = true;  
