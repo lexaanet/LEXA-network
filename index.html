@@ -879,8 +879,7 @@ align-items:flex-start;
 
 <div style="font-size:18px;font-weight:700;">
 ME,
-<span id="cardUserName">Fans</span>
-</div>
+<span id="cardUserName"></span>
 
 <div style="
 margin-top:6px;
@@ -1430,10 +1429,13 @@ const earned =
 ((totalDuration - miningSeconds) / totalDuration)  
 * totalReward;  
 
+const earnedEl =
+document.getElementById("earnedRate");
+
 if(earnedEl){
    earnedEl.innerText =
    "+" + earned.toFixed(2) + " Ł";
-
+}
 const displayBalance =  
 realBalance + earned;  
   
@@ -1455,7 +1457,14 @@ const uid = window.auth.currentUser.uid;
 
 const updatedData =
 await window.loadUserData(uid);
-  
+  await window.updateDoc(
+window.doc(window.db,"users",uid),
+{
+   balance: window.increment(120),
+   miningStart: 0,
+   miningActive: false
+}
+);
 realBalance =  
 updatedData.balance;  
   
@@ -1518,20 +1527,16 @@ switchAuthTab("login");
       const referralCode =  
 uid.substring(0,8).toUpperCase();  
   
-await window.setDoc(userRef,{  
-   username:  
-   document.getElementById("username").value, 
-  
-   balance:0,  
-   miningStart:0,  
-   miningActive:false,  
-  
-   referredBy: referralUsed || "",  
-   referralCode: referralCode,  
-  
-   referrals:0,  
-   referredUsers:[]  
-});  
+await setDoc(userRef,{
+   username: document.getElementById("username").value,
+   balance:0,
+   miningStart:0,
+   miningActive:false,
+   referredBy: referralUsed || "",
+   referralCode: referralCode,
+   referrals:0,
+   referredUsers:[]
+});
 if(referralUsed){  
   
    const q = window.query(  
@@ -1717,8 +1722,8 @@ document.getElementById("progressBar")
 document.getElementById("miningTimer")
 .style.display = "none";
 
-document.getElementById("statusText")
-.innerText = "GUEST";
+document.getElementById("balanceValue")
+.innerText = "0";
 
 await window.signOut(window.auth);
 
@@ -1983,7 +1988,15 @@ showToast("Selamat datang kembali");
   
       const uid = user.uid;  
 const data = await window.loadUserData(uid);  
-  
+  document.getElementById("cardUserName").innerText =
+data.username || "Member";
+
+document.getElementById("profileName").innerText =
+data.username || "Member";
+
+document.getElementById("userIdShort").innerText =
+user.uid.substring(0,8).toUpperCase();
+
 document.getElementById("profileUsername")  
 .innerText =  
 data.username || "-";  
