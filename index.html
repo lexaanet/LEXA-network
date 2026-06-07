@@ -1488,6 +1488,12 @@ document.getElementById("earnedRate");
 if(earnedEl){
    earnedEl.innerText =
    "+" + earned.toFixed(2) + " Ł";
+document.getElementById("speedRate").innerText =
+"≈ +" +
+speedPerSecond.toFixed(4) +
+" Ł/s • " +
+earned.toFixed(2) +
+"/120 Ł";
 }
 const displayBalance =  
 realBalance + earned;  
@@ -1776,7 +1782,7 @@ document.getElementById("miningTimer")
 .style.display = "none";
 
 document.getElementById("balanceValue")
-.innerText = "0";
+.innerText = formatLEXA(0);
 
 await window.signOut(window.auth);
 
@@ -1792,12 +1798,11 @@ function copyReferral(){
   
  showToast("Referral berhasil disalin");  
 }  
-function formatLEXA(amount){  
-  
-   return "Ⱡ " +  
-   Number(amount).toLocaleString(  
-      "id-ID",  
-      {  
+function formatLEXA(amount){
+
+return "Ł " + shortNumber(Number(amount));
+
+{
          minimumFractionDigits: 0,  
          maximumFractionDigits: 2  
       }  
