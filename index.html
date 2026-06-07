@@ -1671,8 +1671,8 @@ await window.updateDoc(
 }    
 );    
     
-    document.getElementById("mineBtn").innerHTML =  
-"⚡<br>Active";  
+    document.getElementById("mineText")
+.innerText = "Core";
     
     document.getElementById("mineBtn")  
 .style.pointerEvents = "none";  
@@ -2324,9 +2324,6 @@ showToast("Selamat datang kembali");
     
       document.getElementById("statusText")    
       .innerText = "READY";    
-    
-      document.getElementById("mineText")
-.innerText = "Core";
     
       document.getElementById("miningTimer")    
       .style.display = "none";    
