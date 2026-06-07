@@ -1488,13 +1488,7 @@ document.getElementById("earnedRate");
 if(earnedEl){
    earnedEl.innerText =
    "+" + earned.toFixed(2) + " Ł";
-document.getElementById("speedRate").innerText =
-"≈ +" +
-speedPerSecond.toFixed(4) +
-" Ł/s • " +
-earned.toFixed(2) +
-"/120 Ł";
-}
+
 const displayBalance =  
 realBalance + earned;  
   
@@ -1503,7 +1497,13 @@ document.getElementById("balanceValue")
 formatLEXA(displayBalance);  
         document.getElementById("progressBar").style.width =  
         percent + "%";  
-  
+  document.getElementById("speedRate").innerText =
+"≈ +" +
+speedPerSecond.toFixed(4) +
+" Ł/s • " +
+earned.toFixed(2) +
+"/120 Ł";
+
         document.getElementById("miningTimer").innerHTML =  
         "Mining Time: " +  
         String(h).padStart(2,"0") + ":" +  
@@ -1801,14 +1801,8 @@ function copyReferral(){
 function formatLEXA(amount){
 
 return "Ł " + shortNumber(Number(amount));
-
-{
-         minimumFractionDigits: 0,  
-         maximumFractionDigits: 2  
-      }  
-   );  
-  
-}  
+}
+         
   function showConfirm(
 title,
 message
