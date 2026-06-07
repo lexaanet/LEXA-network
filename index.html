@@ -1546,8 +1546,8 @@ await window.updateDoc(
 }    
 );    
     
-    document.getElementById("mineBtn")
-.innerHTML = "⛏Mine";
+    document.querySelector("#mineBtn span")
+.innerText = "ACTIVE";
     
     document.getElementById("mineBtn")  
 .style.pointerEvents = "none";  
@@ -2378,8 +2378,8 @@ document.getElementById("progressBar")
     document.getElementById("statusText")    
     .innerText = "MINING";    
     
-    document.getElementById("mineBtn")
-.innerHTML = "Active";
+    document.querySelector("#mineBtn span")
+.innerText = "ACTIVE";
 
     document.getElementById("miningTimer")    
     .style.display = "block";    
