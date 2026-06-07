@@ -1685,7 +1685,15 @@ String(s).padStart(2,"0");
         if(miningSeconds <= 0){  
   
    clearInterval(miningTimer);  
-  
+  const mineLabel =
+document.querySelector("#mineBtn span");
+
+if(mineLabel){
+   mineLabel.innerText = "MINE";
+}
+
+document.getElementById("mineBtn")
+.style.pointerEvents = "auto";
    const uid =  
    window.auth.currentUser.uid;  
   
@@ -2231,9 +2239,6 @@ window.onAuthStateChanged(
     
    document.getElementById("statusText")    
    .innerText = "GUEST";    
-    
-   document.getElementById("mineBtn")
-.innerHTML = "🔒<br>Login";
 
    // reset halaman profile    
   
@@ -2278,6 +2283,15 @@ showToast("Selamat datang kembali");
     
       const uid = user.uid;
 const data = await window.loadUserData(uid);
+
+const mineLabel =
+document.querySelector("#mineBtn span");
+
+if(mineLabel){
+   mineLabel.innerText = "MINE";
+}
+document.getElementById("mineBtn")
+.style.pointerEvents = "auto";
 
 const referralCount = data.referrals || 0;
 
@@ -2434,31 +2448,38 @@ document.getElementById("miningTimer")
 document.getElementById("progressBar")    
 .style.width = "0%";    
     
-    }else{    
-    
-    miningActive = true;    
-    
-    miningSeconds =    
-    MAX_SECONDS - elapsedSeconds;    
-    
-    const percent =    
-    (elapsedSeconds / MAX_SECONDS) * 100;    
-    
-    document.getElementById("progressBar")    
-    .style.width = percent + "%";    
-    
-    document.getElementById("statusText")    
-    .innerText = "MINING";    
-    
-    document.querySelector("#mineBtn span")
-.innerText = "ACTIVE";
+}else{
 
-    document.getElementById("miningTimer")    
-    .style.display = "block";    
-    
-    startMiningTimer();    
-    
-    }    
+    miningActive = true;
+
+    miningSeconds =
+    MAX_SECONDS - elapsedSeconds;
+
+    const percent =
+    (elapsedSeconds / MAX_SECONDS) * 100;
+
+    document.getElementById("progressBar")
+    .style.width = percent + "%";
+
+    document.getElementById("statusText")
+    .innerText = "MINING";
+
+    const mineLabel =
+    document.querySelector("#mineBtn span");
+
+    if(mineLabel){
+       mineLabel.innerText = "ACTIVE";
+    }
+
+    document.getElementById("mineBtn")
+    .style.pointerEvents = "none";
+
+    document.getElementById("miningTimer")
+    .style.display = "block";
+
+    startMiningTimer();
+
+}
 }    
       document.getElementById("authPage")    
       .style.display = "none";    
