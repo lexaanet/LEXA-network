@@ -1503,7 +1503,7 @@ percent + "%";
 document.getElementById("speedRate").innerText =
 "≈ +" +
 earned.toFixed(4) +
-" Ł";
+" Ł/s";
 
 document.getElementById("miningTimer").innerHTML =
 "Mining Time: " +
@@ -2076,8 +2076,8 @@ const data = await window.loadUserData(uid);
 
 document.getElementById("speedRate").innerText =
 "≈ +" +
-earned.toFixed(4) +
-" Ł";
+speedPerSecond.toFixed(4) +
+" Ł/s";
 
   document.getElementById("cardUserName").innerText =
 data.username || "Member";
