@@ -22,11 +22,7 @@
  padding:0;    
  box-sizing:border-box;    
 }    
-.tagline{    
- color:#9FB3D9;    
- font-size:13px;    
- margin-top:4px;    
-}    
+
 .mining-card::after{    
 content:"";    
     
@@ -41,43 +37,7 @@ box-shadow:
     
 pointer-events:none;    
 }    
-.welcome{    
- margin-top:20px;    
- font-size:18px;    
- color:#d5e4ff;    
-}    
-.mine-btn{    
- width:80%;    
- margin:18px auto 0;    
- display:block;    
-    
- padding:14px 18px;    
-    
- border:none;    
- border-radius:999px;    
-    
- color:white;    
-    
- background:    
- linear-gradient(    
- 135deg,    
- #2347ff,    
- #00d4ff    
- );    
-    
- font-size:15px;    
- font-weight:700;    
-    
- box-shadow:    
- 0 0 20px rgba(0,212,255,.35);    
-    
- cursor:pointer;    
-    
- position:relative;    
- overflow:hidden;    
-    
- transition:.25s ease;    
-}    
+
 .menu-grid{    
  display:grid;    
  grid-template-columns:1fr 1fr;    
@@ -141,13 +101,7 @@ body::before{
  transition:.25s;    
  cursor:pointer;    
 }    
-.mine-btn:hover{    
- transform:translateY(-3px);    
-    
- box-shadow:    
- 0 0 25px rgba(0,212,255,.5),    
- 0 0 45px rgba(0,212,255,.25);    
-}    
+
 .menu-icon{    
  width:46px;    
  height:46px;    
@@ -185,50 +139,13 @@ body::before{
  font-size:24px;    
  margin-bottom:15px;    
 }    
-.shield{    
- background:rgba(0,255,136,.12);    
-}    
-.notif{    
- width:26px;    
- height:26px;    
-    
- position:relative;    
- display:flex;    
- align-items:center;    
- justify-content:center;    
-    
- border-radius:50%;    
- background:rgba(255,255,255,.04);    
- border:1px solid rgba(255,255,255,.08);    
- backdrop-filter:blur(12px);    
-}    
-  
-.notif svg{    
- width:14px;    
- height:14px;    
-}    
+
 .menu-card:hover{    
  transform:translateY(-3px);    
  box-shadow:    
  0 0 20px rgba(0,212,255,.15);    
 }    
-.notif-dot{    
- position:absolute;    
-    
- top:8px;    
- right:8px;    
-    
- width:8px;    
- height:8px;    
-    
- border-radius:50%;    
-    
- background:#00D4FF;    
-    
- box-shadow:    
- 0 0 10px #00D4FF,    
- 0 0 20px #00D4FF;    
-}    
+
 .menu-title{    
  font-size:18px;    
 }    
@@ -356,12 +273,6 @@ font-weight:700;
 color:#65d7ff;  
 }  
   
-.token-mini{  
-width:42px;  
-height:42px;  
-flex-shrink:0;  
-}  
-  
 #speedRate{  
 font-size:12px;  
 color:#9FB3D9;  
@@ -405,13 +316,7 @@ color:#9FB3D9;
  font-size:30px;    
  font-weight:700;    
 }    
-.mine-btn:active{    
- transform:translateY(2px) scale(.97);    
-    
- box-shadow:    
- inset 0 3px 10px rgba(0,0,0,.25),    
- 0 0 10px rgba(0,212,255,.25);    
-}    
+
    
 .profile-btn:hover{  
 transform:  
@@ -530,26 +435,7 @@ linear-gradient(
 );    
     
 }    
-.mine-btn::before{    
- content:"";    
- position:absolute;    
-    
- top:0;    
- left:-120%;    
-    
- width:80%;    
- height:100%;    
-    
- background:    
- linear-gradient(    
- 90deg,    
- transparent,    
- rgba(255,255,255,.35),    
- transparent    
- );    
-    
- transition:.6s;    
-}    
+
 .toast{  
 position:fixed;  
   
@@ -597,12 +483,10 @@ transform:
 translateX(-50%)  
 translateY(0);  
 }  
-.mine-btn:hover::before{    
- left:140%;    
-}    
+
 .token-mini{  
-width:36px;  
-height:36px;  
+width:46px;  
+height:46px;  
   
 opacity:.8;  
   
@@ -1036,20 +920,11 @@ text-shadow:
 .nav-item.active{    
  color:white;    
 }    
-.mine-btn:disabled{    
- opacity:.7;    
- cursor:not-allowed;    
-    
- box-shadow:none;    
-}    
     
 .logo{    
  font-size:28px;    
 }    
     
-.menu-title{    
- font-size:15px;    
-}    
   @media (max-width:380px){  
   
 #balanceValue{  
