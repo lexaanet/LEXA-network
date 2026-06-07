@@ -634,7 +634,13 @@ drop-shadow(
 }    
 .card p{    
  color:#9FB3D9;    
-}    
+} 
+ .nav{
+   display:flex !important;
+   position:fixed !important;
+   bottom:0 !important;
+   z-index:99999 !important;
+}  
 .nav{    
  position:fixed;    
  bottom:0;    
@@ -2260,10 +2266,13 @@ user.uid.substring(0,8).toUpperCase();
 document.getElementById("referralCode")    
 .innerText =    
 data.referralCode || "-";    
-    
-document.getElementById("referralCount")
-.innerText = referralCount;
 
+const referralCountEl =
+document.getElementById("referralCount");
+
+if(referralCountEl){
+   referralCountEl.innerText = referralCount;
+}
 document.getElementById("homeReferralCount")
 .innerText = referralCount;
 
