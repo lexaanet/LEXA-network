@@ -325,14 +325,14 @@ body::before{
  0 0 10px rgba(0,212,255,.25);  
 }  
  
-.profile-btn:hover{  
-  
-transform:translateY(-2px);  
-  
-box-shadow:  
-0 0 20px rgba(0,212,255,.25);  
-  
-}  
+.profile-btn:hover{
+transform:
+translateY(-2px)
+scale(1.05);
+
+box-shadow:
+0 0 20px rgba(0,212,255,.25);
+}
   
 .profile-header{  
   
@@ -799,9 +799,6 @@ cursor:pointer;
 transition:.25s;
 }
 
-.profile-btn:hover{
-transform:scale(1.05);
-}
 .nav-item{  
  text-align:center;  
  font-size:12px;  
@@ -817,10 +814,6 @@ transform:scale(1.05);
  cursor:not-allowed;  
   
  box-shadow:none;  
-}  
-
-.balance{  
- font-size:24px;  
 }  
   
 .logo{  
@@ -896,7 +889,7 @@ color:#9FB3D9;
 ">
 LEXA ID :
 <span id="userIdShort">
-◎LX-1A7F92B
+LX-1A7F92B
 </span>
 ◈
 </div>
@@ -904,12 +897,24 @@ LEXA ID :
 </div>
 
 <div style="
+text-align:right;
+">
+
+<div style="
 font-size:13px;
 color:#65d7ff;
 font-weight:700;
 ">
-⚡RATE
-10/H
+⚡ RATE 10/H
+</div>
+
+<div id="speedRate"
+style="
+margin-top:4px;
+font-size:12px;
+color:#9FB3D9;
+">
+≈ +0.0028 Ł/s
 </div>
 
 </div>
@@ -1099,8 +1104,7 @@ Referral Aktif
   
 <div class="page" id="settings">  
   
-   <h2>Profile</h2>  
-   </div>  
+   <h2>Profile◈</h2> 
    <div id="authPage" class="card auth-card">  
   
 <div class="auth-tabs">  
@@ -1364,7 +1368,8 @@ let miningTimer = null;
 let realBalance = 0;  
 const totalReward = 120;  
 const totalDuration = 43200;  
-  
+ const speedPerSecond =
+totalReward / totalDuration; 
 async function startMining(){  
   
    if(!window.auth.currentUser){  
@@ -1388,9 +1393,6 @@ await window.updateDoc(
   miningActive: true  
 }  
 );  
-  
-    document.getElementById("mineBtn").innerHTML =
-"⚡<br>Mining";
   
     document.getElementById("mineBtn").innerHTML =
 "⚡<br>Active";
@@ -1456,8 +1458,8 @@ document.getElementById("balanceValue")
 .innerText =  
 formatLEXA(realBalance);  
   
-            document.getElementById("statusText").innerText =  
-            "READY";  
+            document.getElementById("statusText").innerText =
+"READY";
   
             document.getElementById("mineBtn").innerHTML =
 "⚡️<br>Mine";
@@ -1909,7 +1911,13 @@ window.onAuthStateChanged(
    async(user)=>{  
   
       if(!user){  
-  
+  document.getElementById("speedRate")
+.innerText =
+"≈ +" +
+speedPerSecond.toFixed(4) +
+" Ł/s • " +
+(totalReward / 12).toFixed(0) +
+"/H";
    document.getElementById("userName")  
    .innerText = "Guest";  
   
@@ -1929,9 +1937,6 @@ window.onAuthStateChanged(
   
    document.getElementById("mineBtn")
 .innerHTML = "🔒<br>Login";
-  
-   document.getElementById("mineBtn")  
-   .disabled = false;  
   
    // reset halaman profile  
    document.getElementById("profileName")  
@@ -1975,9 +1980,6 @@ showToast("Selamat datang kembali");
   
       document.getElementById("mineBtn")
 .innerHTML = "⛏️<br>Mine";
-  
-      document.getElementById("mineBtn")  
-      .disabled = false;  
   
       document.getElementById("miningTimer")  
       .style.display = "none";  
@@ -2088,9 +2090,6 @@ formatLEXA(realBalance);
        document.getElementById("statusText")  
 .innerText = "READY";  
   
-document.getElementById("mineBtn")  
-.disabled = false;  
-  
 document.getElementById("miningTimer")  
 .style.display = "none";  
   
@@ -2115,9 +2114,6 @@ document.getElementById("progressBar")
   
     document.getElementById("mineBtn")
 .innerHTML = "⏳<br>Active";
-  
-    document.getElementById("mineBtn")  
-    .disabled = true;  
   
     document.getElementById("miningTimer")  
     .style.display = "block";  
