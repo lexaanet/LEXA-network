@@ -634,20 +634,132 @@ drop-shadow(
 }    
 .card p{    
  color:#9FB3D9;    
-} 
-.nav{    
- position:fixed;    
- bottom:0;    
- left:0;    
- right:0;    
- max-width:480px;    
- margin:auto;    
- background:#05152d;    
- border-top:1px solid rgba(255,255,255,.08);    
- display:flex;    
- justify-content:space-around;    
- padding:12px 0;    
-}    
+}
+.mine-core::before{
+
+content:"";
+
+position:absolute;
+
+width:110px;
+height:110px;
+
+border-radius:50%;
+
+background:
+radial-gradient(
+rgba(0,212,255,.25),
+transparent 70%
+);
+
+z-index:-1;
+}
+.mine-core{
+
+width:78px;
+height:78px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:30px;
+font-weight:700;
+
+clip-path:polygon(
+25% 6.7%,
+75% 6.7%,
+100% 50%,
+75% 93.3%,
+25% 93.3%,
+0% 50%
+);
+
+background:
+linear-gradient(
+135deg,
+#2347ff,
+#00d4ff
+);
+
+box-shadow:
+0 0 25px rgba(0,212,255,.5),
+0 0 50px rgba(0,212,255,.2);
+
+border:
+1px solid rgba(255,255,255,.2);
+
+animation:
+corePulse 2.5s infinite;
+}
+@keyframes corePulse{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.08);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+.mine-center span{
+
+margin-top:8px;
+
+font-size:11px;
+font-weight:700;
+
+letter-spacing:1px;
+
+color:#d7f3ff;
+}
+ .mine-center{
+
+position:relative;
+
+margin-top:-42px;
+
+width:90px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+
+color:#fff;
+}
+.nav{
+
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+
+max-width:480px;
+margin:auto;
+
+height:72px;
+
+display:flex;
+justify-content:space-around;
+align-items:center;
+
+background:
+rgba(5,21,45,.95);
+
+backdrop-filter:blur(20px);
+
+border-top:
+1px solid rgba(255,255,255,.08);
+
+overflow:visible;
+
+z-index:9999;
+}
 .auth-tabs{    
 display:flex;    
 gap:10px;    
@@ -1473,16 +1585,16 @@ Fitur keamanan akun akan segera hadir
 <div class="nav-item" onclick="showPage('news',this)">    
 📰<br>Berita    
 </div>    
-  <div  
-id="mineBtn"  
-class="nav-item"  
-onclick="startMining()">  
-  
-⛏️  
-<br>  
-Mine  
-  
-</div>  
+<div
+id="mineBtn"
+class="nav-item mine-center"
+onclick="startMining()">
+
+<div class="mine-core">◈</div>
+
+<span>Core</span>
+
+</div>
 <div class="nav-item" onclick="showPage('referral',this)">    
 👥<br>Referral    
 </div>    
