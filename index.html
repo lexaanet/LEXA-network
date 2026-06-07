@@ -2212,9 +2212,11 @@ showToast("Selamat datang kembali");
       document.getElementById("miningTimer")    
       .style.display = "none";    
     
-      const uid = user.uid;  
-const data = await window.loadUserData(uid);  
-  
+      const uid = user.uid;
+const data = await window.loadUserData(uid);
+
+const referralCount = data.referrals || 0;
+
 document.getElementById("speedRate").innerText =  
 "≈ +" +  
 speedPerSecond.toFixed(4) +  
