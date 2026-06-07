@@ -2285,8 +2285,9 @@ window.onAuthStateChanged(
    document.getElementById("statusText")    
    .innerText = "GUEST";    
     
-   document.getElementById("mineText")
-.innerText = "Login";
+   document.getElementById("mineBtn")
+.innerHTML = "🔒<br>Login";
+
    // reset halaman profile    
   
   document.getElementById("cardUserName")  
@@ -2502,9 +2503,9 @@ document.getElementById("progressBar")
     document.getElementById("statusText")    
     .innerText = "MINING";    
     
-    document.getElementById("mineText")
-.innerText = "Active";
-    
+    document.getElementById("mineBtn")
+.innerHTML = "Active";
+
     document.getElementById("miningTimer")    
     .style.display = "block";    
     
