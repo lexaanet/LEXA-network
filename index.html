@@ -277,7 +277,95 @@ body::before{
  background:#00ff88;  
  transition:width 1s linear;  
 }  
+.mine-top{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:12px;
+}
 
+.user-info{
+flex:1;
+min-width:0;
+}
+
+.user-name{
+font-size:20px;
+font-weight:700;
+}
+
+.user-id{
+margin-top:6px;
+font-size:13px;
+color:#9FB3D9;
+
+overflow:hidden;
+text-overflow:ellipsis;
+white-space:nowrap;
+}
+
+.balance-box{
+margin-top:22px;
+
+display:flex;
+align-items:flex-end;
+gap:8px;
+
+flex-wrap:wrap;
+}
+
+#balanceValue{
+font-size:52px;
+font-weight:700;
+line-height:1;
+}
+
+.balance-unit{
+font-size:18px;
+color:#9FB3D9;
+margin-bottom:6px;
+}
+
+.mine-info{
+margin-top:18px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+font-size:14px;
+}
+
+.mine-footer{
+margin-top:12px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+gap:10px;
+}
+
+.rate-badge{
+font-size:13px;
+font-weight:700;
+color:#65d7ff;
+}
+
+.token-mini{
+width:42px;
+height:42px;
+flex-shrink:0;
+}
+
+#speedRate{
+font-size:12px;
+color:#9FB3D9;
+}
 .mining-card::before{  
  content:"";  
   
@@ -823,7 +911,25 @@ transition:.25s;
 .menu-title{  
  font-size:15px;  
 }  
-  
+  @media (max-width:380px){
+
+#balanceValue{
+font-size:42px;
+}
+
+.user-name{
+font-size:18px;
+}
+
+.mine-info{
+font-size:12px;
+}
+
+.rate-badge{
+font-size:12px;
+}
+
+}
 </style>  
 </head>  
 <body>
@@ -869,116 +975,63 @@ onclick="showPage('profile')">
  
 <section class="mining-card">
 
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:flex-start;
-">
+<div class="mine-top">
 
-<div>
+  <div class="user-info">
+    <div class="user-name">
+      ME, <span id="cardUserName"></span>
+    </div>
 
-<div style="font-size:18px;font-weight:700;">
-ME,
-<span id="cardUserName"></span>
+    <div class="user-id">
+      LEXA ID :
+      <span id="userIdShort">LX-1A7F92B</span>
+    </div>
+  </div>
 
-<div style="
-margin-top:6px;
-font-size:13px;
-color:#9FB3D9;
-">
-LEXA ID :
-<span id="userIdShort">
-LX-1A7F92B
-</span>
-◈
-</div>
+  <img
+  src="lexa-token.png"
+  class="token-mini">
 
 </div>
 
-<div style="
-text-align:right;
-">
+<div class="balance-box">
 
-<div style="
-font-size:13px;
-color:#65d7ff;
-font-weight:700;
-">
-⚡ RATE 10/H
-</div>
+  <span id="balanceValue">0</span>
 
-<div id="speedRate"
-style="
-margin-top:4px;
-font-size:12px;
-color:#9FB3D9;
-">
-≈ +0.0028 Ł/s
-</div>
-
-</div>
-</div> 
-<div style="
-margin-top:24px;
-font-size:34px;
-font-weight:700;
-font-family:'Rajdhani',sans-serif;
-">
-
-<span id="balanceValue">
-0
-</span>
-
-<span style="
-font-size:18px;
-color:#9FB3D9;
-">
-LEXA
-</span>
+  <span class="balance-unit">
+    LEXA
+  </span>
 
 </div>
 
-<div style="
-margin-top:18px;
-font-size:14px;
-display:flex;
-gap:6px;
-align-items:center;
-">
+<div class="mine-info">
 
-<span style="color:#9FB3D9;">
-◈STATUS
-</span>
+  <div>
+    ◈ STATUS
+    <span style="color:#00ff88;">●</span>
+    <span id="statusText">READY</span>
+  </div>
 
-<span style="color:#00ff88;">●</span>
-
-<span id="statusText">
-READY
-</span>
+  <div id="speedRate">
+    ≈ +0.0028 Ł/s
+  </div>
 
 </div>
+
 <div class="progress">
   <div id="progressBar"></div>
 </div>
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-top:8px;
-">
 
-<div
-id="miningTimer"
-style="
-display:none;
-font-size:20px;
-font-weight:700;
-">
-12:00:00
-</div>
-<img
-src="lexa-token.png"
-class="token-mini">
+<div class="mine-footer">
+
+  <div id="miningTimer">
+    12:00:00
+  </div>
+
+  <div class="rate-badge">
+    ⚡ RATE 10/H
+  </div>
+
 </div>
   
 </section>  
