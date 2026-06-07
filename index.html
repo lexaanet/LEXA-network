@@ -1765,9 +1765,6 @@ String(s).padStart(2,"0");
    .innerText = "READY";  
   
    document.getElementById("mineBtn")  
-   .innerHTML = "⛏️<br>Mine";  
-  
-   document.getElementById("mineBtn")  
    .style.pointerEvents = "auto";  
   
    document.getElementById("progressBar")  
@@ -2288,9 +2285,8 @@ window.onAuthStateChanged(
    document.getElementById("statusText")    
    .innerText = "GUEST";    
     
-   document.getElementById("mineBtn")  
-.innerHTML = "🔒<br>Login";  
-    
+   document.getElementById("mineText")
+.innerText = "Login";
    // reset halaman profile    
   
   document.getElementById("cardUserName")  
@@ -2329,8 +2325,8 @@ showToast("Selamat datang kembali");
       document.getElementById("statusText")    
       .innerText = "READY";    
     
-      document.getElementById("mineBtn")  
-.innerHTML = "⛏️<br>Mine";  
+      document.getElementById("mineText")
+.innerText = "Core";
     
       document.getElementById("miningTimer")    
       .style.display = "none";    
@@ -2509,8 +2505,8 @@ document.getElementById("progressBar")
     document.getElementById("statusText")    
     .innerText = "MINING";    
     
-    document.getElementById("mineBtn")  
-.innerHTML = "⏳<br>Active";  
+    document.getElementById("mineText")
+.innerText = "Active";
     
     document.getElementById("miningTimer")    
     .style.display = "block";    
