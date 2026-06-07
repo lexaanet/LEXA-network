@@ -1279,7 +1279,10 @@ Buat Akun
 </div>    
     
 </div>    
-<div id="logoutBox" class="card">    
+<div
+id="logoutBox"
+class="card"
+style="display:none;">  
   <button class="auth-btn" onclick="logoutUser()">    
     Logout    
   </button>    
@@ -2066,22 +2069,23 @@ window.onAuthStateChanged(
    window.auth,    
    async(user)=>{    
     
-      if(!user){    
-  document.getElementById("speedRate")  
-.innerText =  
-"≈ +" +  
-speedPerSecond.toFixed(4) +  
-" Ł/s • " +  
-(totalReward / 12).toFixed(0) +  
-"/H";  
-    document.getElementById("guestCard")
-.style.display = "block";
+      if(!user){
 
-   document.getElementById("authPage")    
-   .style.display = "block";    
-    
-   document.getElementById("logoutBox")    
-   .style.display = "none";    
+  document.getElementById("speedRate").innerText =
+  "≈ +" +
+  speedPerSecond.toFixed(4) +
+  " Ł/s • " +
+  (totalReward / 12).toFixed(0) +
+  "/H";
+
+  document.getElementById("guestCard")
+  .style.display = "block";
+
+  document.getElementById("authPage")
+  .style.display = "none";
+
+  document.getElementById("logoutBox")
+  .style.display = "none";
     
    realBalance = 0;    
     
