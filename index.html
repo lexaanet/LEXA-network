@@ -513,8 +513,8 @@ translateY(0);
  left:140%;  
 }  
 .token-mini{
-width:26px;
-height:26px;
+width:36px;
+height:36px;
 
 opacity:.8;
 
@@ -873,8 +873,6 @@ onclick="showPage('profile')">
   
 </div>  
 </header>  
-  
-<span id="userName">Guest</span>👋
  
 <section class="mining-card">
 
@@ -947,9 +945,9 @@ READY
 </span>
 
 </div>
-
-<div class="progress">
-  <div id="progressBar"></div>
+<img
+src="lexa-token.png"
+class="token-mini">
 </div>
 
 <div style="
@@ -968,11 +966,8 @@ font-weight:700;
 ">
 12:00:00
 </div>
-
-<img
-src="lexa-token.png"
-class="token-mini">
-
+<div class="progress">
+  <div id="progressBar"></div>
 </div>
   
 </section>  
@@ -2089,9 +2084,6 @@ if(
 formatLEXA(realBalance);  
        document.getElementById("statusText")  
 .innerText = "READY";  
-  
-document.getElementById("mineBtn")  
-.innerHTML = "⛏ START MINING";  
   
 document.getElementById("mineBtn")  
 .disabled = false;  
