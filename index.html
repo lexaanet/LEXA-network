@@ -1520,9 +1520,6 @@ String(s).padStart(2,"0");
    const uid =
    window.auth.currentUser.uid;
 
-   const updatedData =
-   await window.loadUserData(uid);
-
    await window.updateDoc(
       window.doc(window.db,"users",uid),
       {
@@ -1532,8 +1529,11 @@ String(s).padStart(2,"0");
       }
    );
 
+   const updatedData =
+   await window.loadUserData(uid);
+
    realBalance =
-   updatedData.balance + 120;
+   updatedData.balance;
 
    document.getElementById("balanceValue")
    .innerText =
@@ -1543,7 +1543,7 @@ String(s).padStart(2,"0");
    .innerText = "READY";
 
    document.getElementById("mineBtn")
-   .innerHTML = "⚡️<br>Mine";
+   .innerHTML = "⛏️<br>Mine";
 
    document.getElementById("mineBtn")
    .style.pointerEvents = "auto";
@@ -1551,8 +1551,17 @@ String(s).padStart(2,"0");
    document.getElementById("progressBar")
    .style.width = "0%";
 
+   document.getElementById("speedRate")
+   .innerText =
+   "≈ +" +
+   speedPerSecond.toFixed(4) +
+   " Ł/s • " +
+   (totalReward / 12).toFixed(0) +
+   "/H";
+
    document.getElementById("miningTimer")
-   .innerHTML = "Mining Time: 12:00:00";
+   .innerHTML =
+   "Mining Time: 12:00:00";
 
    document.getElementById("miningTimer")
    .style.display = "none";
