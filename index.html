@@ -918,7 +918,7 @@ color:#9FB3D9;
 </div>
 
 </div>
-
+</div> 
 <div style="
 margin-top:24px;
 font-size:34px;
@@ -1428,7 +1428,10 @@ clearInterval(miningTimer);
 const earned =  
 ((totalDuration - miningSeconds) / totalDuration)  
 * totalReward;  
-  
+
+  document.getElementById("earnedRate").innerText =
+"+" + earned.toFixed(2) + " Ł";
+
 const displayBalance =  
 realBalance + earned;  
   
@@ -1460,7 +1463,8 @@ formatLEXA(realBalance);
   
             document.getElementById("statusText").innerText =
 "READY";
-  
+  document.getElementById("earnedRate").innerText =
+"+0 Ł";
             document.getElementById("mineBtn").innerHTML =
 "⚡️<br>Mine";
   
