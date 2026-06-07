@@ -315,7 +315,7 @@ flex-wrap:wrap;
 }
 
 #balanceValue{
-font-size:52px;
+font-size:clamp(28px,8vw,52px);
 font-weight:700;
 line-height:1;
 }
@@ -1856,6 +1856,23 @@ resolve(false);
 });
 
 }
+function shortNumber(num){
+
+if(num >= 1e12)
+return (num/1e12).toFixed(2)+"T";
+
+if(num >= 1e9)
+return (num/1e9).toFixed(2)+"B";
+
+if(num >= 1e6)
+return (num/1e6).toFixed(2)+"M";
+
+if(num >= 1e3)
+return (num/1e3).toFixed(2)+"K";
+
+return num.toFixed(2);
+
+}
 
 function showPage(id,el){  
   
@@ -2039,8 +2056,16 @@ showToast("Selamat datang kembali");
       document.getElementById("miningTimer")  
       .style.display = "none";  
   
-      const uid = user.uid;  
-const data = await window.loadUserData(uid);  
+      const uid = user.uid;
+const data = await window.loadUserData(uid);
+
+document.getElementById("speedRate").innerText =
+"≈ +" +
+speedPerSecond.toFixed(4) +
+" Ł/s • " +
+(totalReward / 12).toFixed(0) +
+"/H";
+
   document.getElementById("cardUserName").innerText =
 data.username || "Member";
 
