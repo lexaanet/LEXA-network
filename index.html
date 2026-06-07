@@ -1502,10 +1502,8 @@ percent + "%";
 
 document.getElementById("speedRate").innerText =
 "≈ +" +
-speedPerSecond.toFixed(4) +
-" Ł/s • " +
-earned.toFixed(2) +
-"/120 Ł";
+earned.toFixed(4) +
+" Ł";
 
 document.getElementById("miningTimer").innerHTML =
 "Mining Time: " +
@@ -2078,10 +2076,8 @@ const data = await window.loadUserData(uid);
 
 document.getElementById("speedRate").innerText =
 "≈ +" +
-speedPerSecond.toFixed(4) +
-" Ł/s • " +
-(totalReward / 12).toFixed(0) +
-"/H";
+earned.toFixed(4) +
+" Ł";
 
   document.getElementById("cardUserName").innerText =
 data.username || "Member";
