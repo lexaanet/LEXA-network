@@ -985,7 +985,8 @@ class="token-mini">
 </section>  
 <section class="menu-grid">  
   
-<div class="menu-card">  
+<div class="menu-card"
+onclick="showPage('referral',this)">
   <div class="menu-icon">👥</div>  
   
   <div>  
@@ -1429,9 +1430,6 @@ const earned =
 ((totalDuration - miningSeconds) / totalDuration)  
 * totalReward;  
 
-  const earnedEl =
-document.getElementById("earnedRate");
-
 if(earnedEl){
    earnedEl.innerText =
    "+" + earned.toFixed(2) + " Ł";
@@ -1467,8 +1465,7 @@ formatLEXA(realBalance);
   
             document.getElementById("statusText").innerText =
 "READY";
-  document.getElementById("earnedRate").innerText =
-"+0 Ł";
+  
             document.getElementById("mineBtn").innerHTML =
 "⚡️<br>Mine";
   
@@ -1483,9 +1480,11 @@ formatLEXA(realBalance);
 document.getElementById("miningTimer").style.display =  
 "none";  
             miningActive = false;  
-        }  
+        
+}
   
     },1000);  
+
 }  
 async function registerUser(){  
   
@@ -1657,10 +1656,7 @@ username:newName,
 usernameChanged:true  
 }  
 );  
-  
-document.getElementById("userName")  
-.innerText =  
-newName;  
+ 
   
 document.getElementById("profileName")  
 .innerText =  
@@ -1988,10 +1984,6 @@ showToast("Selamat datang kembali");
       const uid = user.uid;  
 const data = await window.loadUserData(uid);  
   
-document.getElementById("profileName")  
-.innerText =  
-data.username || "Member";  
-  
 document.getElementById("profileUsername")  
 .innerText =  
 data.username || "-";  
@@ -2022,10 +2014,6 @@ document.getElementById("homeReferralCount")
 data.referrals || 0;  
   
 realBalance = data.balance;  
-  
-document.getElementById("userName")  
-.innerText =  
-data.username || "Member";  
   
 document.getElementById("balanceValue")  
 .innerText =  
