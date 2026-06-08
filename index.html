@@ -1810,66 +1810,92 @@ document.getElementById("password").value;
          password    
       );    
     
-      const uid =    
-      result.user.uid;    
-const referralUsed =    
-document.getElementById("referralInput")    
-.value.trim().toUpperCase();    
-      showToast("🎉 Akun berhasil dibuat");    
-    
-switchAuthTab("login");    
-    
-      const userRef =    
-      window.doc(window.db,"users",uid);    
-    
-      const referralCode =    
-uid.substring(0,8).toUpperCase();    
-    
-await setDoc(userRef,{  
-   username: document.getElementById("username").value,  
-   balance:0,  
-   miningStart:0,  
-   miningActive:false,  
-   referredBy: referralUsed || "",  
-   referralCode: referralCode,  
-   referrals:0,  
-   referredUsers:[]  
-});  
-if(referralUsed){    
-    
-   const q = window.query(    
-      window.collection(window.db,"users"),    
-      window.where(    
-         "referralCode",    
-         "==",    
-         referralUsed    
-      )    
-   );    
-    
-   const snap =    
-   await window.getDocs(q);    
-    
-   if(snap.empty){    
-    
-      showToast("Kode referral tidak ditemukan");    
-      return;    
-   }    
-    
-   snap.forEach(async(refUser)=>{    
-    
-   await window.updateDoc(    
-      refUser.ref,    
-      {    
-         referrals: window.increment(1),    
-         balance: window.increment(25),    
-         referredUsers: window.arrayUnion(    
-            document.getElementById("username").value  
-         )    
-      }    
-   );    
-    
-});    
-}    
+      const uid = result.user.uid;
+
+const referralUsed =
+document.getElementById("referralInput")
+.value.trim().toUpperCase();
+
+const userRef =
+window.doc(window.db,"users",uid);
+
+const referralCode =
+uid.substring(0,8).toUpperCase();
+
+await setDoc(userRef,{
+   username:
+   document.getElementById("username").value,
+
+   balance:10,
+
+   miningStart:0,
+   miningActive:false,
+
+   referredBy:
+   referralUsed || "",
+
+   referralCode:
+   referralCode,
+
+   referrals:0,
+
+   referredUsers:[]
+});
+
+
+// PROSES REFERRAL
+if(referralUsed){
+
+   const q = window.query(
+      window.collection(
+         window.db,
+         "users"
+      ),
+      window.where(
+         "referralCode",
+         "==",
+         referralUsed
+      )
+   );
+
+   const snap =
+   await window.getDocs(q);
+
+   if(!snap.empty){
+
+      const referrerDoc =
+      snap.docs[0];
+
+      const referrerData =
+      referrerDoc.data();
+
+      await window.updateDoc(
+         referrerDoc.ref,
+         {
+            referrals:
+            window.increment(1),
+
+            referredUsers:
+            window.arrayUnion(
+               document.getElementById("username").value
+            )
+         }
+      );
+
+   }
+
+}
+
+showToast(
+"🎉 Akun berhasil dibuat"
+);
+
+await showConfirm(
+   "🎁 Welcome Reward",
+   "Selamat datang di LEXA!\n\n+10 Ł berhasil ditambahkan ke akun Anda."
+);
+
+switchAuthTab("login");
     
 }catch(err){    
     
