@@ -1528,8 +1528,8 @@ Fitur keamanan akun akan segera hadir
     
 </div>   
     
-</div>    
-</div>            
+</div>
+</div> 
 <div id="usernameModal" class="confirm-overlay">
 
   <div class="confirm-box">
@@ -1602,7 +1602,7 @@ onclick="startMining()">
 </div>    
     
 <div class="nav-item" onclick="showPage('settings',this)">    
-⚙️<br>◈Profile◈  
+𡘏<br>◈VIP◈  
 </div>    
     
 </div>    
@@ -1657,7 +1657,12 @@ async function startMining(){
       return;    
     
    }    
-    
+    const yes = await showConfirm(
+   "◈ Mining Core",
+   "Mining akan berjalan selama 12 jam dan menghasilkan hingga 120 Ł.\n\nLanjutkan?"
+);
+
+if(!yes) return;
    if(miningActive) return;    
     
     miningActive = true;    
