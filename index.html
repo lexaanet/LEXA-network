@@ -38,12 +38,12 @@ box-shadow:
 pointer-events:none;    
 }    
 
-.menu-grid{    
- display:grid;    
- grid-template-columns:1fr 1fr;    
- gap:15px;    
- margin-top:18px;    
-}    
+.menu-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:18px;
+}
 body{    
  background:var(--bg);    
  color:var(--text);    
@@ -87,71 +87,34 @@ body::before{
  radial-gradient(circle at 80% 10%,rgba(79,70,229,.15),transparent 25%);    
  pointer-events:none;    
 }    
-.menu-card{    
- display:flex;    
- align-items:center;    
- gap:12px;    
-    
- background:#081A38;    
- padding:16px;    
- border-radius:20px;    
-    
- border:1px solid rgba(255,255,255,.06);    
-    
- transition:.25s;    
- cursor:pointer;    
-}    
-.premium-card{
-  position:relative;
+.menu-card{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  min-height:72px;
+
+  padding:12px;
+
+  border-radius:18px;
+
+  background:#081A38;
+  border:1px solid rgba(255,255,255,.06);
+
   overflow:hidden;
 }
+.menu-icon{
+  width:48px;
+  height:48px;
 
-.premium-card::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:-150%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-  width:100%;
-  height:100%;
+  border-radius:14px;
 
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(0,212,255,.25),
-    transparent
-  );
-
-  animation:shine 3s infinite;
+  font-size:24px;
 }
-
-@keyframes shine{
-  100%{
-    left:250%;
-  }
-}
-.menu-icon{    
- width:46px;    
- height:46px;    
-    
- border-radius:14px;    
-    
- display:flex;    
- align-items:center;    
- justify-content:center;    
-    
- font-size:22px;    
-    
- background:    
- linear-gradient(    
- 135deg,    
- #2347ff,    
- #00d4ff    
- );    
-    
- box-shadow:    
- 0 0 20px rgba(0,212,255,.2);    
-}    
 .topbar{    
  display:flex;    
  justify-content:space-between;    
@@ -173,9 +136,16 @@ body::before{
  box-shadow:    
  0 0 20px rgba(0,212,255,.15);    
 }    
-
-.menu-title{    
- font-size:18px;    
+.premium-card{
+  border:1px solid rgba(0,212,255,.4);
+  box-shadow:
+  0 0 10px rgba(0,212,255,.3),
+  0 0 20px rgba(0,212,255,.15);
+}
+.menu-title{
+  font-size:16px;
+  font-weight:600;
+  line-height:1.2;
 }
 .card{    
  background:var(--card);    
@@ -190,11 +160,11 @@ body::before{
 .card:hover{    
  transform:translateY(-2px);    
 }    
-.menu-sub{    
- color:#8da6d9;    
- font-size:12px;    
- margin-top:4px;    
-}    
+.menu-sub{
+  margin-top:3px;
+  font-size:12px;
+  opacity:.7;
+} 
 .page{    
  display:none;    
  padding:20px;    
