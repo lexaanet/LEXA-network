@@ -1308,25 +1308,8 @@ onclick="copyReferral()">
 <div class="page" id="profile">    
     
 <h2>Account Center</h2>    
-    
-<div class="profile-header">    
-    
-<div class="profile-name"    
-id="profileName">    
-Member    
-</div>    
-    
-<div class="profile-email"    
-id="profileEmail">    
--    
-</div>    
-    
-<div class="profile-id"    
-id="profileId">    
-LEXA ID    
-</div>    
-    
-</div>    
+
+<div id="guestProfile">
 
 <div id="guestCard" class="card">
 
@@ -1445,19 +1428,39 @@ class="auth-btn"
 onclick="registerUser()">    
 Buat Akun    
 </button>    
-    
+  </div>    
 </div>    
     
 </div>    
+<div id="memberProfile" style="display:none;">
+<div class="profile-header">    
+    
+<div class="profile-name"    
+id="profileName">    
+Member    
+</div>    
+    
+<div class="profile-email"    
+id="profileEmail">    
+-    
+</div>    
+    
+<div class="profile-id" id="profileId">
+LEXA ID
+</div>
+
+</div> <!-- profile-header -->
+
 <div
 id="logoutBox"
 class="card"
-style="display:none;">  
-  <button class="auth-btn" onclick="logoutUser()">    
-    Logout    
-  </button>    
+style="display:none;">
 
-</div>    
+  <button class="auth-btn" onclick="logoutUser()">
+    Logout
+  </button>
+
+</div>
 
 <div class="profile-item">    
     
@@ -1479,7 +1482,7 @@ Edit Username
 </button>    
     
 </div>    
-    
+  
 <div class="profile-item">    
     
 <div class="profile-title">    
@@ -1529,8 +1532,9 @@ Fitur keamanan akun akan segera hadir
 </div>    
     
 </div>
-
- <div id="usernameModal" class="confirm-overlay">
+<!-- TAMBAH INI -->
+</div>
+<div id="usernameModal" class="confirm-overlay">
 
   <div class="confirm-box">
 
@@ -1575,7 +1579,8 @@ Fitur keamanan akun akan segera hadir
 
   </div>
 
-</div> 
+</div>    
+
 <!-- NAVBAR -->    
     
 <div class="nav">    
@@ -1935,10 +1940,13 @@ async function loginUser(){
    try{
 
       await window.signInWithEmailAndPassword(
-         window.auth,
-         email,
-         password
-      );
+   window.auth,
+   email,
+   password
+);
+
+document.getElementById("guestProfile").style.display = "none";
+document.getElementById("memberProfile").style.display = "block";
 
       showToast("✅ Login berhasil");
 
@@ -2112,6 +2120,8 @@ document.getElementById("balanceValue")
 .innerText = formatLEXA(0);  
   
 await window.signOut(window.auth);  
+document.getElementById("guestProfile").style.display = "block";
+document.getElementById("memberProfile").style.display = "none";
 showToast("👋 Sampai jumpa");  
 }  
 function copyReferral(){    
