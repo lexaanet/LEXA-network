@@ -2307,12 +2307,16 @@ closeEmailModal();
 
 }catch(err){
 
-console.log(err);
+  if(err.code === "auth/requires-recent-login"){
 
-alert(
-err.code + "\n" +
-err.message
-);
+    showToast(
+      "🔐 Silakan login ulang terlebih dahulu"
+    );
+
+    return;
+  }
+
+  showToast(err.message);
 
 }
 
