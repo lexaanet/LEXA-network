@@ -1623,8 +1623,10 @@ Fitur keamanan akun akan segera hadir
       Batal
       </button>
 
-<button onclick="openEmailModal()">
-  Test Email
+<button
+class="confirm-btn ok-btn"
+onclick="changeEmail()">
+Simpan
 </button>
 
     </div>
@@ -2276,8 +2278,6 @@ return num.toFixed(2);
   
 }  
 async function changeEmail(){
-
-alert("MASUK FUNCTION");
 
 const newEmail =
 document.getElementById("newEmailInput")
