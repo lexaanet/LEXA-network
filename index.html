@@ -1313,9 +1313,8 @@ onclick="copyReferral()">
 <div class="page" id="profile">    
     
 <h2>Account Center</h2>    
-<p style="color:yellow;">SEBELUM CARD</p>
+
 <div id="guestProfile">
-<p style="color:yellow;">GUEST TEST</p>
 <div id="guestCard" class="card">
 
   <h3>🔐 Account Access</h3>
@@ -1437,10 +1436,10 @@ Buat Akun
 </div>    
     
 </div>  
-  <p style="color:lime;">SESUDAH CARD</p>
+
 <div id="memberProfile" style="display:none;">
 <div class="profile-header">    
-    <p style="color:lime;">MEMBER TEST</p>
+
 <div class="profile-name"    
 id="profileName">    
 Member    
@@ -1946,9 +1945,6 @@ async function loginUser(){
    password
 );
 
-document.getElementById("guestProfile").style.display = "none";
-document.getElementById("memberProfile").style.display = "block";
-
       showToast("✅ Login berhasil");
 
    }catch(err){
@@ -2121,8 +2117,7 @@ document.getElementById("balanceValue")
 .innerText = formatLEXA(0);  
   
 await window.signOut(window.auth);  
-document.getElementById("guestProfile").style.display = "block";
-document.getElementById("memberProfile").style.display = "none";
+
 showToast("👋 Sampai jumpa");  
 }  
 function copyReferral(){    
@@ -2341,7 +2336,8 @@ window.onAuthStateChanged(
    async(user)=>{    
     
       if(!user){
-
+document.getElementById("guestProfile").style.display = "block";
+document.getElementById("memberProfile").style.display = "none";
   document.getElementById("speedRate").innerText =
   "≈ +" +
   speedPerSecond.toFixed(4) +
@@ -2388,7 +2384,8 @@ document.querySelector(".nav-item")
 );    
     
 showToast("Selamat datang kembali");    
-
+document.getElementById("guestProfile").style.display = "none";
+document.getElementById("memberProfile").style.display = "block";
     document.getElementById("guestCard")
 .style.display = "none";
 
