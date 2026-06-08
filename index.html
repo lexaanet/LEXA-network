@@ -2307,7 +2307,12 @@ closeEmailModal();
 
 }catch(err){
 
-showToast(err.message);
+console.log(err);
+
+alert(
+err.code + "\n" +
+err.message
+);
 
 }
 
@@ -2402,6 +2407,7 @@ onAuthStateChanged;
 window.db = getFirestore(app);    
 window.verifyBeforeUpdateEmail =
 verifyBeforeUpdateEmail;    
+
 window.doc = doc;    
 window.getDoc = getDoc;    
 window.setDoc = setDoc;    
