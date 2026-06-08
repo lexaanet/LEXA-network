@@ -877,7 +877,16 @@ background:rgba(255,255,255,.08);
 color:white;  
   
 }  
-  
+  .mini-btn{
+  width:auto;
+  min-width:120px;
+
+  height:40px;
+
+  padding:0 16px;
+
+  margin-top:10px;
+}
 .ok-btn{  
   
 background:  
@@ -1485,13 +1494,13 @@ id="profileUsername">
 -    
 </div>    
     
-<button    
-class="profile-action"    
-onclick="openUsernameModal()">    
-    
-Edit Username    
-    
-</button>    
+<button
+class="profile-action mini-btn"
+onclick="openUsernameModal()">
+
+✏️ Edit
+
+</button>
     
 </div>    
   
@@ -1506,12 +1515,11 @@ id="profileEmailText">
 -    
 </div>    
     
-<button    
-class="profile-action">    
-    
-Perubahan Email Segera Hadir    
-    
-</button>    
+<button
+class="profile-action mini-btn"
+onclick="openEmailModal()">
+📧 Ganti Email
+</button>
     
 </div>    
     
@@ -1590,6 +1598,42 @@ Fitur keamanan akun akan segera hadir
   </div>
 
 </div>  
+<div id="emailModal" class="confirm-overlay">
+
+  <div class="confirm-box">
+
+    <div class="confirm-title">
+      📧 Ganti Email
+    </div>
+
+    <div class="confirm-message">
+      Masukkan email baru.
+    </div>
+
+    <input
+    id="newEmailInput"
+    type="email"
+    placeholder="emailbaru@gmail.com">
+
+    <div class="confirm-actions">
+
+      <button
+      class="confirm-btn cancel-btn"
+      onclick="closeEmailModal()">
+      Batal
+      </button>
+
+      <button
+      class="confirm-btn ok-btn"
+      onclick="changeEmail()">
+      Simpan
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 <!-- NAVBAR -->    
     
 <div class="nav">    
@@ -2233,7 +2277,55 @@ return (num/1e3).toFixed(2)+"K";
 return num.toFixed(2);  
   
 }  
-  
+async function changeEmail(){
+
+const newEmail =
+document.getElementById("newEmailInput")
+.value.trim();
+
+if(!newEmail){
+
+showToast("Masukkan email baru");
+return;
+
+}
+
+try{
+
+const user = window.auth.currentUser;
+
+await window.verifyBeforeUpdateEmail(
+user,
+newEmail
+);
+
+showToast(
+"📨 Link verifikasi dikirim ke email baru"
+);
+
+closeEmailModal();
+
+}catch(err){
+
+showToast(err.message);
+
+}
+
+}
+  function openEmailModal(){
+
+document.getElementById("emailModal")
+.style.display = "flex";
+
+}
+
+function closeEmailModal(){
+
+document.getElementById("emailModal")
+.style.display = "none";
+
+}
+
 function showPage(id,el){    
     
    document.querySelectorAll(".page")    
@@ -2262,7 +2354,8 @@ import {
   createUserWithEmailAndPassword,    
   signInWithEmailAndPassword,    
   signOut,    
-  onAuthStateChanged    
+  onAuthStateChanged, 
+  verifyBeforeUpdateEmail   
 }    
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";    
 import {    
