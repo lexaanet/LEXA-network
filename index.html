@@ -327,30 +327,33 @@ box-shadow:
 0 0 20px rgba(0,212,255,.25);  
 }  
     
-.profile-header{    
-    
-padding:25px;    
-    
-border-radius:30px;    
-    
-background:    
-linear-gradient(    
-135deg,    
-#072B78,    
-#0E47C6,    
-#00BFFF    
-);    
-    
-position:relative;    
-    
-overflow:hidden;    
-    
-}    
+.profile-header{
+  position:relative;
+}
+
+.logout-mini{
+  position:absolute;
+  top:16px;
+  right:16px;
+
+  padding:8px 12px;
+
+  border:none;
+  border-radius:12px;
+
+  background:rgba(255,255,255,.15);
+  color:#fff;
+
+  font-size:13px;
+  font-weight:600;
+
+  cursor:pointer;
+}
     
 .profile-name{    
     
-font-size:20px;    
-font-weight:400;    
+font-size:22px;    
+font-weight:500;    
     
 }    
     
@@ -1433,12 +1436,18 @@ Buat Akun
 </div>  
 
 <div id="memberProfile" style="display:none;">
-<div class="profile-header">    
+<div class="profile-header">
 
-<div class="profile-name"    
-id="profileName">    
-Member    
-</div>    
+<button
+class="logout-mini"
+onclick="logoutUser()">
+⎋ Logout
+</button>
+
+<div class="profile-name"
+id="profileName">
+Member
+</div>
     
 <div class="profile-email"    
 id="profileEmail">    
@@ -1448,16 +1457,6 @@ id="profileEmail">
 <div class="profile-id" id="profileId">
 LEXA ID
 </div>
-</div>
-<div
-id="logoutBox"
-class="card"
-style="display:none;">
-
-  <button class="auth-btn" onclick="logoutUser()">
-    Logout
-  </button>
-
 </div>
 
 <div class="profile-item">    
@@ -2350,9 +2349,6 @@ document.getElementById("memberProfile").style.display = "none";
 
   document.getElementById("authPage")
   .style.display = "none";
-
-  document.getElementById("logoutBox")
-  .style.display = "none";
     
    realBalance = 0;    
     
@@ -2391,9 +2387,6 @@ document.getElementById("memberProfile").style.display = "block";
 
       document.getElementById("authPage")    
       .style.display = "none";    
-    
-      document.getElementById("logoutBox")    
-      .style.display = "block";    
     
       document.getElementById("balanceValue")    
       .innerText = "0";    
