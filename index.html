@@ -2279,6 +2279,8 @@ return num.toFixed(2);
 }  
 async function changeEmail(){
 
+alert("MASUK FUNCTION");
+
 const newEmail =
 document.getElementById("newEmailInput")
 .value.trim();
@@ -2330,7 +2332,9 @@ document.getElementById("emailModal")
 .style.display = "none";
 
 }
-
+window.changeEmail = changeEmail;
+window.openEmailModal = openEmailModal;
+window.closeEmailModal = closeEmailModal;
 function showPage(id,el){    
     
    document.querySelectorAll(".page")    
