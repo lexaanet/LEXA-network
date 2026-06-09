@@ -2091,11 +2091,18 @@ Beli ${item.cost} LEXA
 
 });
 
-document.getElementById(
-"upgradeList"
-).innerHTML = html;
+document.getElementById("upgradeList")
+.innerHTML = `
+<h1 style="
+color:red;
+font-size:40px;
+">
+TEST
+</h1>
+`;
 
 }
+alert("sesudah render");
 const upgrades = [
 
 {
