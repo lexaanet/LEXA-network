@@ -2433,36 +2433,16 @@ toast.style.display = "none";
 },2200);  
   
 }  
-async function logoutUser(){  
-  
-const yes =  
-await showConfirm(  
-"Logout",  
-"Yakin ingin keluar dari akun LEXA?"  
-);  
-  
-if(!yes) return;  
-  
-clearInterval(miningTimer);  
-  
-miningActive = false;  
-miningSeconds = 43200;  
-realBalance = 0;  
-  
-document.getElementById("progressBar")  
-.style.width = "0%";  
-  
-document.getElementById("miningTimer")  
-.style.display = "none";  
-  
-document.getElementById("balanceValue")  
-.innerText = formatLEXA(0);  
-  
-await window.signOut(window.auth);  
+async function logoutUser(){
 
-showToast("👋 Sampai jumpa");  
-}  
-alert(typeof window.logoutUser);
+alert("MASUK LOGOUT");
+
+const yes = await showConfirm(
+"Logout",
+"Yakin ingin keluar?"
+);
+
+}
 function copyReferral(){    
     
  const code =    
