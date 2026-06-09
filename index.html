@@ -37,17 +37,6 @@ box-shadow:
     
 pointer-events:none;    
 }    
-.mine-stats{
-   display:flex;
-   justify-content:space-between;
-   margin-top:10px;
-}
-
-.mine-stats small{
-   opacity:.7;
-   display:block;
-   margin-bottom:4px;
-}
 .menu-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -184,7 +173,15 @@ body::before{
 #balanceValue{    
  text-shadow:0 0 15px rgba(0,212,255,.5);    
 }    
-  
+#miningRateText{
+   font-size:20px;
+   font-weight:700;
+}
+
+#upgradeBonusText{
+   font-size:14px;
+   opacity:.8;
+}
 .progress{    
  width:100%;    
  height:8px;    
@@ -1209,8 +1206,6 @@ onclick="showPage('profile')">
       <div class="label">Bonus</div>
       <div id="upgradeBonusText">+0 Ł</div>
    </div>
-</div>
-
 </div>
     
 </section>    
