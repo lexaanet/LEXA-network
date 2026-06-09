@@ -1807,157 +1807,117 @@ const totalDuration = 43200;
 
 let speedPerSecond =
 totalReward / totalDuration;
-async function startMining(){    
+async function startMining(){
 
-   if(!window.auth.currentUser){    
-    
-      showToast("Silakan login terlebih dahulu");    
-      return;    
-    
-   }    
-    const uid = window.auth.currentUser.uid;
+   if(!window.auth.currentUser){
+      showToast("Silakan login terlebih dahulu");
+      return;
+   }
 
-const yes = await showConfirm(...);
+   if(miningActive) return;
 
-if(!yes) return;
-if(miningActive) return;
+   miningActive = true;
 
-miningActive = true;
+   const uid =
+   window.auth.currentUser.uid;
 
-await window.updateDoc(
-  window.doc(window.db,"users",uid),
-  {
-    miningStart: window.serverTimestamp(),
-    miningActive: true
-  }
-);
-    
-    document.querySelector("#mineBtn span")
-.innerText = "ACTIVE";
-    
-    document.getElementById("mineBtn")  
-.style.pointerEvents = "none";  
-    
-    miningSeconds = 43200;    
-    
-document.getElementById("miningTimer").style.display =    
-"block";    
-    
-    startMiningTimer();    
-}     
-function startMiningTimer(){    
-clearInterval(miningTimer);    
-    miningTimer = setInterval(async ()=>{    
-    
-        miningSeconds--;    
-    
-        let h =    
-        Math.floor(miningSeconds / 3600);    
-    
-        let m =    
-        Math.floor((miningSeconds % 3600) / 60);    
-    
-        let s =    
-        miningSeconds % 60;    
-    
-        let percent =    
-        ((43200 - miningSeconds) / 43200) * 100;    
-const earned =    
-((totalDuration - miningSeconds) / totalDuration)    
-* totalReward;    
-  
-const earnedEl =  
-document.getElementById("earnedRate");  
-  
-if(earnedEl){  
-   earnedEl.innerText =  
-   "+" + earned.toFixed(2) + " Ł";  
-}  
-  
-const displayBalance =  
-realBalance + earned;  
-  
-document.getElementById("balanceValue")  
-.innerText =  
-formatLEXA(displayBalance);  
-  
-document.getElementById("progressBar").style.width =  
-percent + "%";  
-  
-document.getElementById("speedRate").innerText =  
-"≈ +" +  
-earned.toFixed(4) +  
-" Ł/s";  
-  
-document.getElementById("MiningTimer").innerText =
-String(h).padStart(2,"0") + ":" +
-String(m).padStart(2,"0") + ":" +
-String(s).padStart(2,"0");
-    
-        if(miningSeconds <= 0){  
-  
-   clearInterval(miningTimer);  
-  const mineLabel =
-document.querySelector("#mineBtn span");
-
-if(mineLabel){
-   mineLabel.innerText = "MINE";
-}
-
-document.getElementById("mineBtn")
-.style.pointerEvents = "auto";
-   const uid =  
-   window.auth.currentUser.uid;  
-  
    await window.updateDoc(
-window.doc(window.db,"users",uid),
-{
-   balance: window.increment(totalReward),
-   miningStart: 0,
-   miningActive: false
-}
-);
-  
-   const updatedData =  
-   await window.loadUserData(uid);  
-  
-   realBalance =  
-   updatedData.balance;  
-  
-   document.getElementById("balanceValue")  
-   .innerText =  
-   formatLEXA(realBalance);  
-  
-   document.getElementById("statusText")  
-   .innerText = "READY";  
-  
-   document.getElementById("mineBtn")  
-   .style.pointerEvents = "auto";  
-  
-   document.getElementById("progressBar")  
-   .style.width = "0%";  
-  
-   document.getElementById("speedRate")  
-   .innerText =  
-   "≈ +" +  
-   speedPerSecond.toFixed(4) +  
-   " Ł/s • " +  
-   (totalReward / 12).toFixed(0) +  
-   "/H";  
-  
-   document.getElementById("miningTimer")
-.innerText = "12:00:00";
-  
-   document.getElementById("miningTimer")  
-   .style.display = "none";  
-  
-   miningActive = false;  
-}  
-    
-    },1000);    
-  
-}    
+      window.doc(window.db,"users",uid),
+      {
+         miningStart: window.serverTimestamp(),
+         miningActive: true
+      }
+   );
 
+   document.querySelector("#mineBtn span")
+   .innerText = "ACTIVE";
+
+   document.getElementById("mineBtn")
+   .style.pointerEvents = "none";
+
+   miningSeconds = 43200;
+
+   document.getElementById("miningTimer")
+   .style.display = "block";
+
+   startMiningTimer();
+}
+function startMiningTimer(){
+
+   clearInterval(miningTimer);
+
+   miningTimer = setInterval(async ()=>{
+
+      miningSeconds--;
+
+      let h =
+      Math.floor(miningSeconds / 3600);
+
+      let m =
+      Math.floor((miningSeconds % 3600) / 60);
+
+      let s =
+      miningSeconds % 60;
+
+      let percent =
+      ((43200 - miningSeconds) / 43200) * 100;
+
+      document.getElementById("progressBar")
+      .style.width = percent + "%";
+
+      document.getElementById("miningTimer")
+      .innerText =
+      String(h).padStart(2,"0") + ":" +
+      String(m).padStart(2,"0") + ":" +
+      String(s).padStart(2,"0");
+
+      if(miningSeconds <= 0){
+
+         clearInterval(miningTimer);
+
+         const uid =
+         window.auth.currentUser.uid;
+
+         await window.updateDoc(
+            window.doc(window.db,"users",uid),
+            {
+               balance: window.increment(totalReward),
+               miningStart: 0,
+               miningActive: false
+            }
+         );
+
+         const updatedData =
+         await window.loadUserData(uid);
+
+         realBalance =
+         updatedData.balance;
+
+         document.getElementById("balanceValue")
+         .innerText =
+         formatLEXA(realBalance);
+
+         document.getElementById("statusText")
+         .innerText = "READY";
+
+         document.getElementById("progressBar")
+         .style.width = "0%";
+
+         document.getElementById("miningTimer")
+         .style.display = "none";
+
+         document.querySelector("#mineBtn span")
+         .innerText = "MINE";
+
+         document.getElementById("mineBtn")
+         .style.pointerEvents = "auto";
+
+         miningActive = false;
+      }
+
+   },1000);
+
+}
 async function registerUser(){    
     
    const email =    
@@ -2136,7 +2096,7 @@ Beli ${cost} LEXA
 
 document.getElementById("upgradeList")
 .innerHTML = html;
-}
+
 
 }
 const upgrades = [
