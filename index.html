@@ -265,15 +265,23 @@ flex-wrap:wrap;
 font-size:14px;  
 }  
   
-.mine-footer{  
-margin-top:12px;  
-  
-display:flex;  
-justify-content:space-between;  
-align-items:center;  
-  
-gap:10px;  
-}  
+.mine-footer{
+   display:flex;
+   justify-content:space-between;
+   gap:10px;
+}
+
+.mine-footer .label{
+   font-size:13px;
+   opacity:.7;
+}
+
+#miningTimer,
+#miningRateText,
+#upgradeBonusText{
+   font-size:18px;
+   font-weight:700;
+}
   
 .rate-badge{  
 font-size:13px;  
@@ -1186,27 +1194,22 @@ onclick="showPage('profile')">
   <div id="progressBar"></div>  
 </div>  
   
-<div class="mine-footer">  
-  
-  <div id="miningTimer">  
-    12:00:00  
-  </div>  
-  
-  <div class="mine-stats">
-
+<div class="mine-footer">
    <div>
-      <small>Rate</small>
-      <div id="miningRateText">
-         228 Ł / 12H
-      </div>
+      <div class="label">Mining Time</div>
+      <div id="miningTimer">12:00:00</div>
    </div>
 
    <div>
-      <small>Bonus</small>
-      <div id="upgradeBonusText">
-         +128 Ł
-      </div>
+      <div class="label">Rate</div>
+      <div id="miningRateText">100 Ł</div>
    </div>
+
+   <div>
+      <div class="label">Bonus</div>
+      <div id="upgradeBonusText">+0 Ł</div>
+   </div>
+</div>
 
 </div>
     
@@ -1817,9 +1820,17 @@ async function startMining(){
       return;    
     
    }    
-    const yes = await showConfirm(
-   "◈ Mining Core",
-   "Mining akan berjalan selama 12 jam dan menghasilkan hingga 120 Ł.\n\nLanjutkan?"
+    const reward =
+data.miningRate || 100;
+
+const yes = await showConfirm(
+   "⚡ Mining Core",
+   `Mining akan berjalan selama 12 jam
+
+Reward: ${reward} Ł
+Rate: ${(reward/12).toFixed(1)} Ł/jam
+
+Lanjutkan?`
 );
 
 if(!yes) return;
