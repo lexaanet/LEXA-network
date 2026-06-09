@@ -2072,37 +2072,8 @@ alert(el);
 if(el){
    el.innerHTML = "HALO DUNIA";
 
-
+}
 alert("SELESAI");
-let html = "";
-
-upgrades.forEach(item=>{
-
-html += `
-
-<div class="upgrade-card">
-
-<h3>${item.name}</h3>
-
-<p>${item.desc}</p>
-
-<p>
-⚡ +${item.rate}/H
-</p>
-
-<button onclick="buyUpgrade('${item.id}')">
-Beli ${item.cost} LEXA
-</button>
-
-</div>
-
-`;
-
-});
-
-document.getElementById(
-"upgradeList"
-).innerHTML = html;
 
 }
 
