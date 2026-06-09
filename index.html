@@ -1021,7 +1021,49 @@ text-shadow:
 .logo{    
  font-size:28px;    
 }    
-    
+ .upgrade-card{
+
+background:#081A38;
+
+padding:18px;
+
+border-radius:20px;
+
+margin-bottom:14px;
+
+border:1px solid
+rgba(255,255,255,.08);
+
+}
+
+.upgrade-card h3{
+margin-bottom:8px;
+}
+
+.upgrade-card button{
+
+width:100%;
+
+margin-top:10px;
+
+padding:12px;
+
+border:none;
+
+border-radius:12px;
+
+background:
+linear-gradient(
+90deg,
+#1a4cff,
+#00d4ff
+);
+
+color:white;
+
+font-weight:700;
+
+}   
   @media (max-width:380px){  
   
 #balanceValue{  
@@ -1165,6 +1207,27 @@ onclick="showPage('referral',this)">
   </div>
 
 </div>
+<div
+class="menu-card"
+onclick="showPage('improve',this)">
+
+<div class="menu-icon">
+⚡
+</div>
+
+<div>
+
+<div class="menu-title">
+Improve
+</div>
+
+<div class="menu-sub">
+Upgrade Mining Rate
+</div>
+
+</div>
+
+</div>
 <div class="menu-card" onclick="showPage('missions',this)">    
     
 <div class="menu-icon">    
@@ -1230,9 +1293,22 @@ Reward: +10 LEXA
 Reward: +10 LEXA    
 </div>    
     
-</div>    
-<!-- REFERRAL -->    
-    
+</div>
+
+<!-- IMPROVE -->
+
+<div class="page" id="improve">
+
+<h2>⚡ Improve</h2>
+
+<div id="upgradeList">
+
+</div>
+
+</div>
+
+<!-- REFERRAL -->
+
 <div class="page" id="referral">
 
 <h2>👥 Referral Team</h2>
@@ -1897,23 +1973,29 @@ const referralCode =
 uid.substring(0,8).toUpperCase();
 
 await setDoc(userRef,{
-   username:
-   document.getElementById("username").value,
+  username: document.getElementById("username").value,
 
-   balance:10,
+  balance:10,
 
-   miningStart:0,
-   miningActive:false,
+  miningRate:10,
 
-   referredBy:
-   referralUsed || "",
+  upgrades:{
+    miningNode:0,
+    networkRelay:0,
+    powerCore:0,
+    aiOptimizer:0
+  },
 
-   referralCode:
-   referralCode,
+  miningStart:0,
+  miningActive:false,
 
-   referrals:0,
+  referredBy: referralUsed || "",
 
-   referredUsers:[]
+  referralCode: referralCode,
+
+  referrals:0,
+
+  referredUsers:[]
 });
 
 
@@ -1978,6 +2060,87 @@ switchAuthTab("login");
    }    
     
 }    
+function renderUpgrades(){
+
+let html = "";
+
+upgrades.forEach(item=>{
+
+html += `
+
+<div class="upgrade-card">
+
+<h3>${item.name}</h3>
+
+<p>
++${item.rate} Rate
+</p>
+
+<button
+onclick="buyUpgrade('${item.id}')">
+
+Beli ${item.cost} LEXA
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"upgradeList"
+).innerHTML = html;
+
+}
+async function buyUpgrade(id){
+
+const user =
+window.auth.currentUser;
+
+const ref =
+doc(db,"users",user.uid);
+
+const snap =
+await getDoc(ref);
+
+const data =
+snap.data();
+
+const upgrade =
+upgrades.find(
+u=>u.id===id
+);
+
+if(data.balance < upgrade.cost){
+
+showToast(
+"LEXA tidak cukup"
+);
+
+return;
+
+}
+
+await updateDoc(ref,{
+
+balance:
+data.balance - upgrade.cost,
+
+miningRate:
+(data.miningRate||0)
++ upgrade.rate
+
+});
+
+showToast(
+"Upgrade berhasil!"
+);
+
+loadProfile();
+
+}
 async function loginUser(){
 
    const email =
@@ -2337,6 +2500,40 @@ function closeEmailModal(){
   .classList.remove("show");
 
 }
+function renderUpgrades(){
+
+let html = "";
+
+upgrades.forEach(item=>{
+
+html += `
+
+<div class="upgrade-card">
+
+<h3>${item.name}</h3>
+
+<p>${item.desc}</p>
+
+<p>
+⚡ +${item.rate}/H
+</p>
+
+<button onclick="buyUpgrade('${item.id}')">
+Beli ${item.cost} LEXA
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById(
+"upgradeList"
+).innerHTML = html;
+
+}
+
 function showPage(id,el){    
     
    document.querySelectorAll(".page")    
@@ -2356,7 +2553,41 @@ function showPage(id,el){
 }    
 </script>    
 <script type="module">    
-    
+   const upgrades = [
+
+{
+ id:"miningNode",
+ name:"🖥️ Mining Node",
+ desc:"Meningkatkan efisiensi node mining",
+ rate:1,
+ cost:100
+},
+
+{
+ id:"networkRelay",
+ name:"📡 Network Relay",
+ desc:"Mempercepat distribusi jaringan",
+ rate:2,
+ cost:250
+},
+
+{
+ id:"powerCore",
+ name:"🔋 Power Core",
+ desc:"Menambah daya pemrosesan",
+ rate:5,
+ cost:500
+},
+
+{
+ id:"aiOptimizer",
+ name:"🤖 AI Optimizer",
+ desc:"AI otomatis mengoptimalkan mining",
+ rate:10,
+ cost:1000
+}
+
+]; 
 import { initializeApp }    
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";    
     
