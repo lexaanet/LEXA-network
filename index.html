@@ -1797,9 +1797,6 @@ MARKER HTML AKHIR
 alert("SCRIPT 1");
 </script>
 <script>  
-window.showPage = function(id,el){
-   alert("showPage hidup");
-};
 let miningActive = false;    
 let miningSeconds = 43200;    
 let miningTimer = null;    
@@ -1892,7 +1889,7 @@ document.getElementById("speedRate").innerText =
 earned.toFixed(4) +  
 " Ł/s";  
   
-document.getElementById("miningTimer").innerText =
+document.getElementById("MiningTimer").innerText =
 String(h).padStart(2,"0") + ":" +
 String(m).padStart(2,"0") + ":" +
 String(s).padStart(2,"0");
@@ -2141,7 +2138,7 @@ document.getElementById("upgradeList")
 .innerHTML = html;
 }
 
-alert("SAMPAI SINI");
+}
 const upgrades = [
 
 {
