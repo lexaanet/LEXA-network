@@ -1790,6 +1790,7 @@ onclick="startMining()">
   </div>  
   
 </div>  
+alert("AKHIR SCRIPT");
 <script>  
 window.showPage = function(id,el){
    alert("showPage hidup");
@@ -1805,7 +1806,7 @@ const totalDuration = 43200;
 let speedPerSecond =
 totalReward / totalDuration;
 async function startMining(){    
-window.startMining = startMining;
+
    if(!window.auth.currentUser){    
     
       showToast("Silakan login terlebih dahulu");    
@@ -1814,31 +1815,20 @@ window.startMining = startMining;
    }    
     const uid = window.auth.currentUser.uid;
 
-const yes = await showConfirm(
-   "⚡ Mining Core",
-   `Mining akan berjalan selama 12 jam
-
-Reward: ${reward} Ł
-Rate: ${(reward/12).toFixed(1)} Ł/jam
-
-Lanjutkan?`
-);
+const yes = await showConfirm(...);
 
 if(!yes) return;
-   if(miningActive) return;    
-    
-    miningActive = true;    
-    
-    const uid =    
-window.auth.currentUser.uid;    
-    
-await window.updateDoc(    
-  window.doc(window.db,"users",uid),    
-  {    
-  miningStart: window.serverTimestamp(),    
-  miningActive: true    
-}    
-);    
+if(miningActive) return;
+
+miningActive = true;
+
+await window.updateDoc(
+  window.doc(window.db,"users",uid),
+  {
+    miningStart: window.serverTimestamp(),
+    miningActive: true
+  }
+);
     
     document.querySelector("#mineBtn span")
 .innerText = "ACTIVE";
@@ -2145,7 +2135,7 @@ Beli ${cost} LEXA
 document.getElementById("upgradeList")
 .innerHTML = html;
 }
-}
+
 alert("SAMPAI SINI");
 const upgrades = [
 
