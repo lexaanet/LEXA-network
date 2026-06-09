@@ -2685,7 +2685,7 @@ function showPage(id,el){
    }
 
 }
-window.showPage = showPage;
+
 </script>    
 <script type="module">    
    window.onerror = function(msg, src, line, col){
@@ -2751,7 +2751,7 @@ onAuthStateChanged;
 window.db = getFirestore(app);    
 window.verifyBeforeUpdateEmail =
 verifyBeforeUpdateEmail;    
-
+window.showPage = showPage;
 window.doc = doc;    
 window.getDoc = getDoc;    
 window.setDoc = setDoc;    
@@ -2833,7 +2833,7 @@ document.getElementById("memberProfile").style.display = "none";
     
    return;    
 }    
-window.showPage(
+showPage(
    "home",
    document.querySelector(".nav-item")
 );
