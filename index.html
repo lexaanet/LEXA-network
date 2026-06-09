@@ -1802,7 +1802,7 @@ const totalDuration = 43200;
 let speedPerSecond =
 totalReward / totalDuration;
 async function startMining(){    
-    
+window.startMining = startMining;
    if(!window.auth.currentUser){    
     
       showToast("Silakan login terlebih dahulu");    
@@ -1810,12 +1810,6 @@ async function startMining(){
     
    }    
     const uid = window.auth.currentUser.uid;
-
-const data =
-await window.loadUserData(uid);
-
-const reward =
-data.miningRate || 100;
 
 const yes = await showConfirm(
    "⚡ Mining Core",
@@ -2662,7 +2656,7 @@ function closeEmailModal(){
 
 }
 
-
+alert("sebelum showPage");
 window.showPage = function(id,el){
 
    document.querySelectorAll(".page")
@@ -2762,7 +2756,7 @@ window.where = where;
 window.getDocs = getDocs;    
 window.serverTimestamp =    
 serverTimestamp;
-window.startMining = startMining;   
+
 async function loadUserData(uid){    
     
   const userRef =    
