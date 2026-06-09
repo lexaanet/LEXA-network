@@ -1381,7 +1381,6 @@ onclick="copyReferral()">
 <div class="menu-icon">🏆</div>
 <div>
 <div class="menu-title" id="totalReferral">0</div>
-<div class="menu-title" id="referralCount" style="display:none;">0</div>
 <div class="menu-sub">Total Referral</div>
 </div>
 </div>
@@ -2891,13 +2890,6 @@ if(mineLabel){
 document.getElementById("mineBtn")
 .style.pointerEvents = "auto";
 
-const referralCount = data.referrals || 0;
-const referralCountEl =
-document.getElementById("referralCount");
-
-if(referralCountEl){
-   referralCountEl.innerText = referralCount;
-}
 document.getElementById("speedRate").innerText =  
 "≈ +" +  
 speedPerSecond.toFixed(4) +  
