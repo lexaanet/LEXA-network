@@ -2663,7 +2663,7 @@ function closeEmailModal(){
 }
 
 
-function showPage(id,el){
+window.showPage = function(id,el){
 
    document.querySelectorAll(".page")
    .forEach(p=>p.classList.remove("active"));
@@ -2672,19 +2672,17 @@ function showPage(id,el){
    .classList.add("active");
 
    if(el && el.classList.contains("nav-item")){
-
       document.querySelectorAll(".nav-item")
       .forEach(i=>i.classList.remove("active"));
 
       el.classList.add("active");
-
    }
 
    if(id === "improve"){
       renderUpgrades();
    }
 
-}
+};
 
 </script>    
 <script type="module">    
