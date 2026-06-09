@@ -1791,7 +1791,10 @@ onclick="startMining()">
   </div>  
   
 </div>  
-<script>    
+<script>  
+window.onerror = function(msg,line,url){
+   alert(msg);
+};  
 let miningActive = false;    
 let miningSeconds = 43200;    
 let miningTimer = null;    
