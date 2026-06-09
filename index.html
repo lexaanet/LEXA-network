@@ -1554,7 +1554,7 @@ Buat Akun
 
 <button
 class="logout-mini"
-onclick="alert('LOGOUT DIKLIK')">
+onclick="logoutUser()">
 ⎋ Logout
 </button>
 
@@ -1607,7 +1607,7 @@ id="profileEmailText">
     
 <button
 class="profile-action mini-btn"
-onclick="alert('EMAIL DIKLIK')">
+onclick="openEmailModal()">
 📧 Ganti Email
 </button>
     
@@ -2064,7 +2064,7 @@ async function loginUser(){
    }
 
 }
-alert("BUY UPGRADE SELESAI");
+
 function switchAuthTab(type){    
     
 document.getElementById("loginForm")    
@@ -2204,13 +2204,32 @@ toast.style.display = "none";
 }  
 async function logoutUser(){
 
-alert("MASUK LOGOUT");
+   const yes =
+   await showConfirm(
+      "Logout",
+      "Yakin ingin keluar dari akun LEXA?"
+   );
 
-const yes = await showConfirm(
-"Logout",
-"Yakin ingin keluar?"
-);
+   if(!yes) return;
 
+   clearInterval(miningTimer);
+
+   miningActive = false;
+   miningSeconds = 43200;
+   realBalance = 0;
+
+   document.getElementById("progressBar")
+   .style.width = "0%";
+
+   document.getElementById("miningTimer")
+   .style.display = "none";
+
+   document.getElementById("balanceValue")
+   .innerText = formatLEXA(0);
+
+   await window.signOut(window.auth);
+
+   showToast("👋 Sampai jumpa");
 }
 function copyReferral(){    
     
@@ -2294,7 +2313,7 @@ resolve(false);
 });  
   
 }  
-alert("showConfirm = " + typeof showConfirm);
+
 function shortNumber(num){  
   
 if(num >= 1e12)  
@@ -2433,11 +2452,7 @@ document.getElementById("upgradeList")
 
 
 }
-alert(
-"renderUpgrades=" + typeof renderUpgrades +
-"\nlogoutUser=" + typeof logoutUser +
-"\nopenUsernameModal=" + typeof openUsernameModal
-);
+
 const upgrades = [
 
 {
@@ -2999,12 +3014,6 @@ document.getElementById("progressBar")
    }    
 );    
     
-</script>
- <script>
-alert(
-  "showPage=" + typeof window.showPage +
-  "\nstartMining=" + typeof window.startMining
-);
 </script>
 </body>    
 </html>
