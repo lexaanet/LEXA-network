@@ -1802,7 +1802,7 @@ const totalDuration = 43200;
 let speedPerSecond =
 totalReward / totalDuration;
 async function startMining(){    
-    
+    window.startMining = startMining;
    if(!window.auth.currentUser){    
     
       showToast("Silakan login terlebih dahulu");    
@@ -1855,8 +1855,7 @@ document.getElementById("miningTimer").style.display =
 "block";    
     
     startMiningTimer();    
-}    
-window.startMining = startMining;    
+}     
 function startMiningTimer(){    
 clearInterval(miningTimer);    
     miningTimer = setInterval(async ()=>{    
