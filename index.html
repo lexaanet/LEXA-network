@@ -37,7 +37,17 @@ box-shadow:
     
 pointer-events:none;    
 }    
+.mine-stats{
+   display:flex;
+   justify-content:space-between;
+   margin-top:10px;
+}
 
+.mine-stats small{
+   opacity:.7;
+   display:block;
+   margin-bottom:4px;
+}
 .menu-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -1182,14 +1192,23 @@ onclick="showPage('profile')">
     12:00:00  
   </div>  
   
-  <div id="miningRateText">
-100 Ł / 12H⚡
-</div>
-  <div id="upgradeBonusText">
-+0 Ł UpgradeCard
-</div>
+  <div class="mine-stats">
 
-</div>  
+   <div>
+      <small>Rate</small>
+      <div id="miningRateText">
+         228 Ł / 12H
+      </div>
+   </div>
+
+   <div>
+      <small>Bonus</small>
+      <div id="upgradeBonusText">
+         +128 Ł
+      </div>
+   </div>
+
+</div>
     
 </section>    
 <section class="menu-grid">    
