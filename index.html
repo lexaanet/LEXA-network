@@ -1943,6 +1943,41 @@ document.getElementById("mineBtn")
     },1000);    
   
 }    
+const upgrades = [
+
+{
+ id:"miningNode",
+ name:"🖥️ Mining Node",
+ desc:"Meningkatkan efisiensi node mining",
+ rate:1,
+ cost:100
+},
+
+{
+ id:"networkRelay",
+ name:"📡 Network Relay",
+ desc:"Mempercepat distribusi jaringan",
+ rate:2,
+ cost:250
+},
+
+{
+ id:"powerCore",
+ name:"🔋 Power Core",
+ desc:"Menambah daya pemrosesan",
+ rate:5,
+ cost:500
+},
+
+{
+ id:"aiOptimizer",
+ name:"🤖 AI Optimizer",
+ desc:"AI otomatis mengoptimalkan mining",
+ rate:10,
+ cost:1000
+}
+
+]; 
 async function registerUser(){    
     
    const email =    
@@ -2061,7 +2096,7 @@ switchAuthTab("login");
     
 }    
 function renderUpgrades(){
-
+alert("render jalan");
 let html = "";
 
 upgrades.forEach(item=>{
@@ -2553,41 +2588,7 @@ function showPage(id,el){
 }    
 </script>    
 <script type="module">    
-   const upgrades = [
-
-{
- id:"miningNode",
- name:"🖥️ Mining Node",
- desc:"Meningkatkan efisiensi node mining",
- rate:1,
- cost:100
-},
-
-{
- id:"networkRelay",
- name:"📡 Network Relay",
- desc:"Mempercepat distribusi jaringan",
- rate:2,
- cost:250
-},
-
-{
- id:"powerCore",
- name:"🔋 Power Core",
- desc:"Menambah daya pemrosesan",
- rate:5,
- cost:500
-},
-
-{
- id:"aiOptimizer",
- name:"🤖 AI Optimizer",
- desc:"AI otomatis mengoptimalkan mining",
- rate:10,
- cost:1000
-}
-
-]; 
+   
 import { initializeApp }    
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";    
     
