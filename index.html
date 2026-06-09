@@ -1186,7 +1186,7 @@ onclick="showPage('profile')">
 100 Ł / 12H⚡
 </div>
   <div id="upgradeBonusText">
-+0 Ł Upgrade Bonus
++0 Ł UpgradeCard
 </div>
 
 </div>  
@@ -2852,17 +2852,6 @@ currentRate + " Ł / 12H";
 document.getElementById("upgradeBonusText")
 .innerText =
 "+" + bonusRate + " Ł Upgrade Bonus";
-
-const newRate =
-(data.miningRate || 100)
-+ upgrade.rate;
-
-document.getElementById("miningRateText")
-.innerHTML =
-newRate +
-" Ł / 12H <small>(+" +
-(newRate - 100) +
-")</small>";
 
 const mineLabel =
 document.querySelector("#mineBtn span");
