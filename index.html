@@ -2687,6 +2687,7 @@ function showPage(id,el){
    }
 
 }
+window.showPage = showPage;
 </script>    
 <script type="module">    
    window.onerror = function(msg, src, line, col){
@@ -2834,10 +2835,10 @@ document.getElementById("memberProfile").style.display = "none";
     
    return;    
 }    
-showPage(    
-"home",    
-document.querySelector(".nav-item")    
-);    
+window.showPage(
+   "home",
+   document.querySelector(".nav-item")
+);
     
 showToast("Selamat datang kembali");    
 document.getElementById("guestProfile").style.display = "none";
