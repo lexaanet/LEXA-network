@@ -1802,7 +1802,7 @@ const totalDuration = 43200;
 let speedPerSecond =
 totalReward / totalDuration;
 async function startMining(){    
-    window.startMining = startMining;
+    
    if(!window.auth.currentUser){    
     
       showToast("Silakan login terlebih dahulu");    
@@ -2749,7 +2749,7 @@ onAuthStateChanged;
 window.db = getFirestore(app);    
 window.verifyBeforeUpdateEmail =
 verifyBeforeUpdateEmail;    
-window.showPage = showPage;
+
 window.doc = doc;    
 window.getDoc = getDoc;    
 window.setDoc = setDoc;    
@@ -2761,7 +2761,8 @@ window.query = query;
 window.where = where;    
 window.getDocs = getDocs;    
 window.serverTimestamp =    
-serverTimestamp;    
+serverTimestamp;
+window.startMining = startMining;   
 async function loadUserData(uid){    
     
   const userRef =    
@@ -2830,7 +2831,8 @@ document.getElementById("memberProfile").style.display = "none";
    .innerText = "LEXA ID";    
     
    return;    
-}    
+}
+ alert("showPage = " + typeof window.showPage);   
 window.showPage(
    "home",
    document.querySelector(".nav-item")
