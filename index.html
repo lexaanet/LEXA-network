@@ -2062,7 +2062,18 @@ switchAuthTab("login");
     
 }
 function renderUpgrades(){
+alert("MASUK");
 
+const el =
+document.getElementById("upgradeList");
+
+alert(el);
+
+if(el){
+   el.innerHTML = "HALO DUNIA";
+}
+
+alert("SELESAI");
 let html = "";
 
 upgrades.forEach(item=>{
@@ -2094,7 +2105,7 @@ document.getElementById(
 ).innerHTML = html;
 
 }
-
+}
 const upgrades = [
 
 {
