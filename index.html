@@ -1952,9 +1952,8 @@ window.doc(window.db,"users",uid),
    (totalReward / 12).toFixed(0) +  
    "/H";  
   
-   document.getElementById("miningTimer")  
-   .innerHTML =  
-   "Mining Time: 12:00:00";  
+   document.getElementById("miningTimer")
+.innerText = "12:00:00";
   
    document.getElementById("miningTimer")  
    .style.display = "none";  
@@ -2284,8 +2283,7 @@ speedPerSecond =
 totalReward / totalDuration;
 
 const newRate =
-(data.miningRate || 100)
-+ upgrade.rate;
+updatedData.miningRate || 100;
 
 document.getElementById("miningRateText")
 .innerHTML =
