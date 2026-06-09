@@ -2923,7 +2923,9 @@ document.getElementById("activeReferral")
 
 document.getElementById("totalRewardReferral")
 .innerText = referralCount * 25;
-
+if(referralCount >= 10){
+   level = "⚡ Builder";
+}
 // LEVEL REFERRAL
 let level = "🔹 Explorer";
 
