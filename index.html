@@ -1813,7 +1813,12 @@ async function startMining(){
       return;    
     
    }    
-    const reward =
+    const uid = window.auth.currentUser.uid;
+
+const data =
+await window.loadUserData(uid);
+
+const reward =
 data.miningRate || 100;
 
 const yes = await showConfirm(
@@ -2924,7 +2929,6 @@ document.getElementById("referralCode")
 .innerText =    
 data.referralCode || "-";    
 
-}
 document.getElementById("homeReferralCount")
 .innerText = referralCount;
 
