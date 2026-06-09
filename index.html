@@ -2063,8 +2063,12 @@ switchAuthTab("login");
 }
 function renderUpgrades(){
 
-document.getElementById("upgradeList")
-.innerHTML = "HALO DUNIA";
+const el =
+document.getElementById("upgradeList");
+
+if(el){
+   el.innerHTML = "HALO DUNIA";
+}
 
 }
 
