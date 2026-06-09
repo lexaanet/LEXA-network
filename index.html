@@ -1,0 +1,3073 @@
+<!DOCTYPE html>    
+<html lang="id">    
+<head>    
+<meta charset="UTF-8">    
+<meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    
+<title>LEXA</title>    
+    
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">    
+<style>    
+    
+:root{    
+ --bg:#030B1F;    
+ --card:#081A38;    
+ --primary:#1E88FF;    
+ --secondary:#00D4FF;    
+ --text:#fff;    
+ --muted:#9FB3D9;    
+}    
+*{    
+ margin:0;    
+ padding:0;    
+ box-sizing:border-box;    
+}    
+.confirm-overlay{
+display:none !important;
+}
+.mining-card::after{    
+content:"";    
+    
+position:absolute;    
+inset:0;    
+    
+border-radius:35px;    
+    
+box-shadow:    
+0 0 25px rgba(0,212,255,.3),    
+0 0 60px rgba(30,136,255,.15);    
+    
+pointer-events:none;    
+}    
+.menu-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:18px;
+}
+body{    
+ background:var(--bg);    
+ color:var(--text);    
+    font-family:'Space Grotesk',sans-serif;    
+}    
+.balance-label{    
+ font-size:12px;    
+ letter-spacing:3px;    
+ color:#65d7ff;    
+ margin-bottom:6px;    
+}    
+.mining-card{    
+ position:relative;    
+ overflow:hidden;    
+    
+ margin-top:15px;    
+ padding:20px;    
+    
+ border-radius:35px;    
+    
+ background:    
+ linear-gradient(    
+ 135deg,    
+ #072B78,    
+ #0E47C6,    
+ #00BFFF    
+ );    
+    
+ border:1px solid rgba(255,255,255,.15);    
+    
+ box-shadow:    
+ 0 0 40px rgba(0,212,255,.15),    
+ inset 0 1px 0 rgba(255,255,255,.2);    
+}    
+body::before{    
+ content:"";    
+ position:fixed;    
+ inset:0;    
+ background:    
+ radial-gradient(circle at 20% 20%,rgba(0,212,255,.15),transparent 25%),    
+ radial-gradient(circle at 80% 10%,rgba(79,70,229,.15),transparent 25%);    
+ pointer-events:none;    
+}    
+.menu-card{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  min-height:72px;
+
+  padding:12px;
+
+  border-radius:18px;
+
+  background:#081A38;
+  border:1px solid rgba(255,255,255,.06);
+
+  overflow:hidden;
+}
+.menu-icon{
+  width:48px;
+  height:48px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:14px;
+
+  font-size:24px;
+}
+.topbar{    
+ display:flex;    
+ justify-content:space-between;    
+ align-items:center;    
+    
+ padding-bottom:18px;    
+ margin-bottom:18px;    
+    
+ border-bottom:    
+ 1px solid rgba(255,255,255,.05);    
+}    
+.page h2{    
+ font-size:24px;    
+ margin-bottom:15px;    
+}    
+
+.menu-card:hover{    
+ transform:translateY(-3px);    
+ box-shadow:    
+ 0 0 20px rgba(0,212,255,.15);    
+}    
+.premium-card{
+  border:1px solid rgba(0,212,255,.4);
+  box-shadow:
+  0 0 10px rgba(0,212,255,.3),
+  0 0 20px rgba(0,212,255,.15);
+}
+.menu-title{
+  font-size:16px;
+  font-weight:600;
+  line-height:1.2;
+}
+.card{    
+ background:var(--card);    
+ backdrop-filter:blur(10px);    
+ transition:.25s;    
+ padding:14px;    
+ border-radius:18px;    
+ margin-top:15px;    
+    
+ border:1px solid rgba(255,255,255,.06);    
+}    
+.card:hover{    
+ transform:translateY(-2px);    
+}    
+.menu-sub{
+  margin-top:3px;
+  font-size:12px;
+  opacity:.7;
+} 
+.page{    
+ display:none;    
+ padding:20px;    
+ padding-bottom:90px;    
+}    
+  
+#balanceValue{    
+ text-shadow:0 0 15px rgba(0,212,255,.5);    
+}    
+
+.progress{    
+ width:100%;    
+ height:8px;    
+ margin-top:12px;    
+ border-radius:999px;    
+ background:rgba(255,255,255,.1);    
+ overflow:hidden;    
+}    
+#statusText{    
+ transition:.3s;    
+}    
+#progressBar{    
+ width:0%;    
+ height:100%;    
+ background:#00ff88;    
+ transition:width 1s linear;    
+}    
+.mine-top{  
+display:flex;  
+justify-content:space-between;  
+align-items:flex-start;  
+gap:12px;  
+}  
+  
+.user-info{  
+flex:1;  
+min-width:0;  
+}  
+  
+.user-name{  
+font-size:20px;  
+font-weight:700;  
+}  
+  
+.user-id{  
+margin-top:6px;  
+font-size:13px;  
+color:#9FB3D9;  
+  
+overflow:hidden;  
+text-overflow:ellipsis;  
+white-space:nowrap;  
+}  
+  
+.balance-box{  
+margin-top:22px;  
+  
+display:flex;  
+align-items:flex-end;  
+gap:8px;  
+  
+flex-wrap:wrap;  
+}  
+  
+#balanceValue{  
+font-size:clamp(28px,8vw,52px);  
+font-weight:700;  
+line-height:1;  
+}  
+  
+.balance-unit{  
+font-size:18px;  
+color:#9FB3D9;  
+margin-bottom:6px;  
+}  
+  
+.mine-info{  
+margin-top:18px;  
+  
+display:flex;  
+justify-content:space-between;  
+align-items:center;  
+  
+gap:10px;  
+  
+flex-wrap:wrap;  
+  
+font-size:14px;  
+}  
+  
+.mine-footer{
+   display:flex;
+   justify-content:space-between;
+   gap:10px;
+}
+
+.mine-footer .label{
+   font-size:13px;
+   opacity:.7;
+}
+
+#miningTimer,
+#miningRateText,
+#upgradeBonusText{
+   font-size:14px;
+   font-weight:700;
+}
+  
+.rate-badge{  
+font-size:13px;  
+font-weight:700;  
+color:#65d7ff;  
+}  
+  
+#speedRate{  
+font-size:12px;  
+color:#9FB3D9;  
+}  
+.mining-card::before{    
+ content:"";    
+    
+ position:absolute;    
+    
+ inset:0;    
+    
+ border-radius:35px;    
+    
+ padding:1px;    
+    
+ background:    
+ linear-gradient(    
+ 135deg,    
+ rgba(255,255,255,.35),    
+ transparent    
+ );    
+    
+ -webkit-mask:    
+ linear-gradient(#fff 0 0) content-box,    
+ linear-gradient(#fff 0 0);    
+    
+ -webkit-mask-composite:xor;    
+    
+ pointer-events:none;    
+}    
+  
+.page.active{    
+ display:block;    
+}    
+.balance{    
+ display:flex;    
+ align-items:center;    
+ gap:6px;    
+    
+ font-family:'Rajdhani',sans-serif;    
+ font-size:30px;    
+ font-weight:700;    
+}    
+
+   
+.profile-btn:hover{  
+transform:  
+translateY(-2px)  
+scale(1.05);  
+  
+box-shadow:  
+0 0 20px rgba(0,212,255,.25);  
+}  
+.profile-header{
+
+  padding:25px;
+
+  border-radius:30px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #072B78,
+    #0E47C6,
+    #00BFFF
+  );
+
+  position:relative;
+
+  overflow:hidden;
+
+}
+
+.logout-mini{
+  position:absolute;
+  top:16px;
+  right:16px;
+
+  padding:8px 12px;
+
+  border:none;
+  border-radius:12px;
+
+  background:rgba(255,255,255,.15);
+  color:#fff;
+
+  font-size:13px;
+  font-weight:600;
+
+  cursor:pointer;
+}
+    
+.profile-name{    
+    
+font-size:22px;    
+font-weight:500;    
+    
+}    
+    
+.profile-email{    
+font-size:18px;   
+margin-top:5px;    
+    
+color:rgba(255,255,255,.8);    
+    
+}    
+    
+.profile-id{    
+    
+margin-top:15px;    
+    
+display:inline-block;    
+    
+padding:8px 14px;    
+    
+border-radius:999px;    
+    
+background:rgba(255,255,255,.12);    
+    
+font-size:13px;    
+    
+}    
+    
+.profile-item{    
+    
+background:#081A38;    
+    
+padding:10px;    
+    
+border-radius:14px;    
+    
+margin-top:10px;    
+    
+border:1px solid rgba(255,255,255,.05);    
+    
+}    
+    
+.profile-title{    
+    
+font-size:15px;    
+font-weight:600;    
+    
+}    
+    
+.profile-sub{    
+    
+margin-top:4px;    
+    
+font-size:12px;    
+    
+color:#9FB3D9;    
+    
+}    
+    
+.profile-action{    
+    
+margin-top:12px;    
+    
+padding:12px;    
+    
+width:100%;    
+    
+border:none;    
+    
+border-radius:14px;    
+    
+cursor:pointer;    
+    
+font-weight:700;    
+    
+color:white;    
+    
+background:    
+linear-gradient(    
+135deg,    
+#2347ff,    
+#00d4ff    
+);    
+    
+}    
+
+.toast{  
+position:fixed;  
+  
+top:20px;  
+left:50%;  
+  
+transform:  
+translateX(-50%)  
+translateY(-20px);  
+  
+padding:10px 16px;  
+  
+font-size:13px;  
+font-weight:600;  
+  
+color:#fff;  
+  
+background:  
+rgba(6,22,47,.92);  
+  
+backdrop-filter:blur(12px);  
+  
+border:1px solid  
+rgba(0,212,255,.25);  
+  
+border-radius:12px;  
+  
+box-shadow:  
+0 0 20px rgba(0,212,255,.18);  
+  
+opacity:0;  
+pointer-events:none;  
+  
+z-index:999999;  
+  
+transition:  
+opacity .25s ease,  
+transform .25s ease;  
+}  
+  
+.toast.show{  
+opacity:1;  
+  
+transform:  
+translateX(-50%)  
+translateY(0);  
+}  
+
+.token-mini{  
+width:46px;  
+height:46px;  
+  
+opacity:.8;  
+  
+filter:  
+drop-shadow(  
+0 0 8px rgba(0,212,255,.4)  
+);  
+}  
+.logo{    
+ font-family:'Orbitron',sans-serif;    
+ font-weight:700;    
+ letter-spacing:4px;    
+    
+ background:linear-gradient(    
+ 90deg,    
+ #ffffff,    
+ #8ad7ff,    
+ #1e88ff    
+ );    
+    
+ -webkit-background-clip:text;    
+ -webkit-text-fill-color:transparent;    
+    
+ text-shadow:    
+ 0 0 20px rgba(0,212,255,.4);    
+}    
+.card h3{    
+ margin-bottom:8px;    
+}    
+.card p{    
+ color:#9FB3D9;    
+}
+.mine-core::before{
+
+content:"";
+
+position:absolute;
+
+width:110px;
+height:110px;
+
+border-radius:50%;
+
+background:
+radial-gradient(
+rgba(0,212,255,.25),
+transparent 70%
+);
+
+z-index:-1;
+}
+.mine-core{
+
+width:78px;
+height:78px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:30px;
+font-weight:700;
+
+clip-path:polygon(
+25% 6.7%,
+75% 6.7%,
+100% 50%,
+75% 93.3%,
+25% 93.3%,
+0% 50%
+);
+
+background:
+linear-gradient(
+135deg,
+#2347ff,
+#00d4ff
+);
+
+box-shadow:
+0 0 25px rgba(0,212,255,.5),
+0 0 50px rgba(0,212,255,.2);
+
+border:
+1px solid rgba(255,255,255,.2);
+
+animation:
+corePulse 2.5s infinite;
+}
+@keyframes corePulse{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.08);
+}
+
+100%{
+transform:scale(1);
+}
+
+}
+.mine-center span{
+
+margin-top:8px;
+
+font-size:11px;
+font-weight:700;
+
+letter-spacing:1px;
+
+color:#d7f3ff;
+}
+ .mine-center{
+
+position:relative;
+
+margin-top:-42px;
+
+width:90px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+
+color:#fff;
+}
+.nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+
+max-width:480px;
+margin:auto;
+
+height:72px;
+
+display:flex;
+justify-content:space-around;
+align-items:center;
+
+background:
+linear-gradient(
+180deg,
+rgba(7,43,120,.95),
+rgba(5,21,45,.98)
+);
+
+backdrop-filter:blur(20px);
+
+border-top:
+1px solid rgba(0,212,255,.15);
+
+box-shadow:
+0 -10px 30px rgba(0,212,255,.08);
+
+z-index:9999;
+}
+.nav::before{
+content:"";
+
+position:absolute;
+top:0;
+left:10%;
+right:10%;
+
+height:1px;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(0,212,255,.6),
+transparent
+);
+}
+
+.auth-tabs{    
+display:flex;    
+gap:10px;    
+margin-bottom:20px;    
+}    
+  .confirm-overlay{  
+  
+position:fixed;  
+inset:0;  
+  
+display:flex;  
+align-items:center;  
+justify-content:center;  
+  
+background:rgba(0,0,0,.65);  
+backdrop-filter:blur(10px);  
+  
+opacity:0;  
+visibility:hidden;  
+  
+transition:.25s;  
+  
+z-index:9999999;  
+  
+} 
+ .upgrade-card{
+
+background:#081A38;
+
+padding:18px;
+
+border-radius:20px;
+
+margin-bottom:14px;
+
+border:1px solid
+rgba(255,255,255,.08);
+
+}
+
+.upgrade-card h3{
+margin-bottom:8px;
+}
+
+.upgrade-card button{
+
+width:100%;
+
+margin-top:10px;
+
+padding:12px;
+
+border:none;
+
+border-radius:12px;
+
+background:
+linear-gradient(
+90deg,
+#1a4cff,
+#00d4ff
+);
+
+color:white;
+
+font-weight:700;
+
+}
+  .notif{
+
+ width:26px;
+ height:26px;
+
+ position:relative;
+
+ display:flex;
+ align-items:center;
+ justify-content:center;
+
+ border-radius:50%;
+
+ background:rgba(255,255,255,.04);
+
+ border:1px solid rgba(255,255,255,.08);
+
+ backdrop-filter:blur(12px);
+
+}
+
+.notif svg{
+
+ width:14px;
+ height:14px;
+
+}
+
+.notif-dot{
+
+ position:absolute;
+
+ top:8px;
+ right:8px;
+
+ width:8px;
+ height:8px;
+
+ border-radius:50%;
+
+ background:#00D4FF;
+
+ box-shadow:
+ 0 0 10px #00D4FF,
+ 0 0 20px #00D4FF;
+
+}
+.confirm-overlay.show{  
+  
+opacity:1;  
+visibility:visible;  
+  
+}  
+  
+.confirm-box{  
+  
+width:90%;  
+max-width:360px;  
+  
+padding:24px;  
+  
+border-radius:28px;  
+  
+background:  
+linear-gradient(  
+135deg,  
+#081A38,  
+#0E47C6  
+);  
+  
+border:1px solid rgba(255,255,255,.12);  
+  
+box-shadow:  
+0 0 30px rgba(0,212,255,.25),  
+0 0 60px rgba(0,212,255,.12);  
+  
+transform:scale(.9);  
+  
+transition:.25s;  
+  
+}  
+  
+.confirm-overlay.show .confirm-box{  
+  
+transform:scale(1);  
+  
+}  
+  
+.confirm-icon{  
+  
+font-size:42px;  
+text-align:center;  
+  
+margin-bottom:12px;  
+  
+}  
+  
+.confirm-title{  
+  
+font-size:20px;  
+font-weight:700;  
+  
+text-align:center;  
+  
+margin-bottom:10px;  
+  
+}  
+  
+.confirm-message{  
+  
+text-align:center;  
+  
+color:#cfe3ff;  
+  
+line-height:1.5;  
+  
+margin-bottom:20px;  
+  
+}  
+  
+.confirm-actions{  
+  
+display:flex;  
+gap:12px;  
+  
+}  
+  
+.confirm-btn{  
+  
+flex:1;  
+  
+padding:12px;  
+  
+border:none;  
+border-radius:14px;  
+  
+cursor:pointer;  
+  
+font-weight:700;  
+  
+}  
+  #referralCode{
+color:#65d7ff;
+text-shadow:
+0 0 15px rgba(0,212,255,.4);
+}
+
+#referralList{
+line-height:2;
+color:#d5e4ff;
+}
+
+#referralList .member{
+padding:10px;
+margin-bottom:8px;
+
+background:
+rgba(255,255,255,.04);
+
+border-radius:12px;
+}
+.cancel-btn{  
+  
+background:rgba(255,255,255,.08);  
+color:white;  
+  
+}  
+  .mini-btn{
+  width:auto;
+  min-width:120px;
+
+  height:40px;
+
+  padding:0 16px;
+
+  margin-top:10px;
+}
+.ok-btn{  
+  
+background:  
+linear-gradient(  
+135deg,  
+#2347ff,  
+#00d4ff  
+);  
+  
+color:white;  
+  
+box-shadow:  
+0 0 20px rgba(0,212,255,.3);  
+  
+}  
+.auth-tab{    
+flex:1;    
+padding:12px;    
+border:none;    
+border-radius:12px;    
+cursor:pointer;    
+    
+background:#0a224a;    
+color:#9FB3D9;    
+    
+font-weight:700;    
+}    
+    
+.auth-tab.active{    
+background:    
+linear-gradient(    
+135deg,    
+#2347ff,    
+#00d4ff    
+);    
+    
+color:white;    
+}    
+    
+.auth-card input{    
+width:100%;    
+padding:14px;    
+    
+border-radius:14px;    
+border:none;    
+    
+background:#06162f;    
+color:white;    
+    
+outline:none;    
+}    
+    
+.auth-btn{    
+width:100%;    
+    
+padding:14px;    
+    
+border:none;    
+border-radius:14px;    
+    
+font-weight:700;    
+font-size:15px;    
+    
+cursor:pointer;    
+    
+color:white;    
+    
+background:    
+linear-gradient(    
+135deg,    
+#2347ff,    
+#00d4ff    
+);    
+}    
+.profile-btn{  
+width:52px;  
+height:52px;  
+  
+display:flex;  
+align-items:center;  
+justify-content:center;  
+  
+clip-path:polygon(  
+25% 6.7%,  
+75% 6.7%,  
+100% 50%,  
+75% 93.3%,  
+25% 93.3%,  
+0% 50%  
+);  
+  
+background:  
+linear-gradient(  
+135deg,  
+#1f4fff,  
+#00cfff  
+);  
+  
+color:#fff;  
+  
+font-family:'Orbitron',sans-serif;  
+font-size:14px;  
+font-weight:700;  
+  
+box-shadow:  
+0 0 15px rgba(0,212,255,.35);  
+  
+cursor:pointer;  
+transition:.25s;  
+}  
+  #referralLevel{
+
+font-size:18px;
+font-weight:700;
+
+text-shadow:
+0 0 15px rgba(0,212,255,.4);
+
+}
+.nav-item{    
+ text-align:center;    
+ font-size:12px;    
+ cursor:pointer;    
+ color:#b8c8e5;    
+}    
+    
+.nav-item.active{
+color:#65d7ff;
+
+text-shadow:
+0 0 12px rgba(0,212,255,.5);
+}
+    
+.logo{    
+ font-size:28px;    
+}    
+
+  @media (max-width:380px){  
+  
+#balanceValue{  
+font-size:42px;  
+}  
+  
+.user-name{  
+font-size:18px;  
+}  
+  
+.mine-info{  
+font-size:12px;  
+}  
+  
+.rate-badge{  
+font-size:12px;  
+}  
+  
+}  
+</style>    
+</head>    
+<body>  
+<div id="toast" class="toast"></div>    
+<!-- BERANDA -->    
+<div class="page active" id="home">    
+    
+<header class="topbar">    
+    
+  <div>    
+    
+    <div class="logo">    
+      LEXA    
+    </div>    
+    
+    <div class="tagline">    
+      Contribution Creates Value    
+    </div>    
+    
+  </div>    
+    
+  <div style="display:flex;gap:12px;align-items:center;">    
+    
+<div class="notif">    
+    
+<svg viewBox="0 0 24 24" fill="none">    
+<path    
+d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.63 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16Z"    
+fill="white"/>    
+</svg>    
+    
+<span class="notif-dot"></span>    
+    
+</div>    
+    
+<div class="profile-btn"  
+onclick="showPage('profile')">  
+◈ LX  
+</div>  
+    
+</div>    
+</header>    
+   
+<section class="mining-card">  
+  
+<div class="mine-top">  
+  
+  <div class="user-info">  
+    <div class="user-name">  
+      ME, <span id="cardUserName"></span>  
+    </div>  
+  
+    <div class="user-id">  
+      LEXA ID :  
+      <span id="userIdShort">LX-1A7F92B◈</span>  
+    </div>  
+  </div>  
+  
+  <img  
+  src="lexa-token.png"  
+  class="token-mini">  
+  
+</div>  
+  
+<div class="balance-box">  
+  
+  <span id="balanceValue">0</span>  
+  
+  <span class="balance-unit">  
+    LEXA◈
+  </span>  
+  
+</div>  
+  
+<div class="mine-info">  
+  
+  <div>  
+    ◈ STATUS  
+    <span style="color:#00ff88;">●</span>  
+    <span id="statusText">READY</span>  
+  </div>  
+  
+  <div id="speedRate">  
+    ≈ +0.0028 Ł/s  
+  </div>  
+  
+</div>  
+  
+<div class="progress">  
+  <div id="progressBar"></div>  
+</div>  
+  
+<div class="mine-footer">
+   <div>
+      <div class="label">Mining Time</div>
+      <div id="miningTimer">12:00:00</div>
+   </div>
+
+   <div>
+      <div class="label">Rate</div>
+      <div id="miningRateText">100 Ł</div>
+   </div>
+
+   <div>
+      <div class="label">Bonus</div>
+      <div id="upgradeBonusText">+0 Ł</div>
+   </div>
+</div>
+      
+</section>    
+<section class="menu-grid">    
+    
+<div class="menu-card premium-card"
+onclick="showPage('referral',this)">
+
+  <div class="menu-icon">👥</div>
+
+  <div>
+    <div class="menu-title">
+      Referral Team
+    </div>
+
+    <div class="menu-sub">
+      <span id="homeReferralCount">0</span>
+      Referral Aktif
+    </div>
+  </div>
+
+</div>
+<div
+class="menu-card"
+onclick="showPage('improve',this)">
+
+<div class="menu-icon">
+⚡
+</div>
+
+<div>
+
+<div class="menu-title">
+Improve
+</div>
+
+<div class="menu-sub">
+Upgrade Mining Rate
+</div>
+
+</div>
+
+</div>
+<div class="menu-card" onclick="showPage('missions',this)">    
+    
+<div class="menu-icon">    
+🎯    
+</div>    
+    
+<div>    
+    
+<div class="menu-title">    
+Daily Missions    
+</div>    
+    
+<div class="menu-sub">    
+Selesaikan tugas harian    
+</div>    
+    
+</div>    
+    
+</div>    
+    
+</section>    
+    
+<div class="card">    
+    
+<h3>Team Referral</h3>    
+    
+<div id="referralList">    
+Belum ada referral    
+</div>    
+    
+</div>    
+</div>    
+<div class="page" id="news">    
+    
+<h2>Berita LEXA</h2>    
+    
+<div class="card">    
+<h3>LEXA Network Launch</h3>    
+<p>Platform mining komunitas sedang dalam tahap pengembangan.</p>    
+</div>    
+    
+</div>    
+    
+<div class="page" id="missions">    
+    
+<h2>Daily Missions</h2>    
+    
+<div class="card">    
+📢 Follow Telegram    
+<br>    
+Reward: +10 LEXA    
+</div>    
+    
+<div class="card">    
+🐦 Follow X    
+<br>    
+Reward: +10 LEXA    
+</div>    
+    
+<div class="card">    
+📘 Join Facebook    
+<br>    
+Reward: +10 LEXA    
+</div>    
+    
+</div>
+
+<!-- IMPROVE -->
+
+<div class="page" id="improve">
+
+<h2>⚡ Improve</h2>
+
+<div id="upgradeList">
+
+</div>
+
+</div>
+<!-- REFERRAL -->
+
+<div class="page" id="referral">
+
+<h2>👥 Referral Team</h2>
+
+<div class="card">
+<div class="love-glow">
+❤️ Loved by Community
+</div>
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+">
+
+<div>
+
+<div style="
+font-size:13px;
+color:#9FB3D9;
+">
+Kode Referral
+</div>
+
+<div id="referralCode"
+style="
+font-size:28px;
+font-weight:700;
+letter-spacing:2px;
+margin-top:5px;
+">
+-
+</div>
+
+</div>
+
+<div style="font-size:40px;">
+25+🎁
+</div>
+
+</div>
+
+<button
+class="auth-btn"
+onclick="copyReferral()">
+ Copy Referral Code
+</button>
+
+</div>
+
+<div class="card">
+
+<div class="menu-grid">
+
+<div class="menu-card">
+<div class="menu-icon">🏆</div>
+<div>
+<div class="menu-title" id="totalReferral">0</div>
+<div class="menu-sub">Total Referral</div>
+</div>
+</div>
+
+<div class="menu-card">
+<div class="menu-icon">💰</div>
+<div>
+<div class="menu-title" id="totalRewardReferral">0</div>
+<div class="menu-sub">Reward Referral</div>
+</div>
+</div>
+
+<div class="menu-card">
+<div class="menu-icon">👥</div>
+<div>
+<div class="menu-title" id="activeReferral">0</div>
+<div class="menu-sub">Active Members</div>
+</div>
+</div>
+
+<div class="menu-card">
+<div class="menu-icon">📈</div>
+<div>
+<div class="menu-title" id="referralLevel">Bronze</div>
+<div class="menu-sub">Referral Level</div>
+</div>
+</div>
+
+</div>
+</div>
+    </div> <!-- page referral -->
+<div class="page" id="settings">
+
+<h2>💎 ◈VIP◈</h2>
+
+<div class="card">
+  <h3>VIP Membership</h3>
+  <p>
+    Fitur VIP sedang dipersiapkan.
+  </p>
+</div>
+
+</div>
+<div class="page" id="profile">    
+    
+<h2>Account Center</h2>    
+
+<div id="guestProfile">
+<div id="guestCard" class="card">
+
+  <h3>🔐 Account Access</h3>
+
+  <p>
+    Login atau buat akun untuk mulai menggunakan LEXA.
+  </p>
+
+  <br>
+
+  <button
+  class="auth-btn"
+  onclick="openLogin()">
+    Login
+  </button>
+
+  <br><br>
+
+  <button
+  class="profile-action"
+  onclick="openRegister()">
+    Buat Akun
+  </button>
+
+</div>
+<div
+id="authPage"
+class="card auth-card"
+style="display:none;">
+    
+<div class="auth-tabs">    
+    
+<button    
+id="loginTab"    
+class="auth-tab active"    
+onclick="switchAuthTab('login')">    
+Login    
+</button>    
+    
+<button    
+id="registerTab"    
+class="auth-tab"    
+onclick="switchAuthTab('register')">    
+Register    
+</button>    
+    
+</div>    
+    
+<div id="loginForm">    
+    
+<h3>🔐 Welcome Back</h3>    
+    
+<br>    
+    
+<input    
+id="loginEmail"    
+type="email"    
+placeholder="Email">    
+    
+<br><br>    
+    
+<input    
+id="loginPassword"    
+type="password"    
+placeholder="Password">    
+    
+<br><br>    
+    
+<button    
+class="auth-btn"    
+onclick="loginUser()">    
+Masuk    
+</button>    
+    
+</div>    
+    
+<div    
+id="registerForm"    
+style="display:none;">    
+    
+<h3>✨ Create Account</h3>    
+    
+<br>    
+    
+<input    
+id="username"    
+type="text"    
+placeholder="Username">    
+    
+<br><br>    
+    
+<input    
+id="email"    
+type="email"    
+placeholder="Email">    
+    
+<br><br>    
+    
+<input    
+id="password"    
+type="password"    
+placeholder="Password">    
+    
+<br><br>    
+    
+<input    
+id="referralInput"    
+type="text"    
+placeholder="Kode Referral (Opsional)">    
+    
+<br><br>    
+    
+<button    
+class="auth-btn"    
+onclick="registerUser()">    
+Buat Akun    
+</button>    
+  </div>    
+</div>    
+    
+</div>  
+
+<div id="memberProfile" style="display:none;">
+<div class="profile-header">
+
+<button
+class="logout-mini"
+onclick="logoutUser()">
+⎋ Logout
+</button>
+
+<div class="profile-name"
+id="profileName">
+Member
+</div>
+    
+<div class="profile-email"    
+id="profileEmail">    
+-    
+</div>    
+    
+<div class="profile-id" id="profileId">
+LEXA ID
+</div>
+</div>
+
+<div class="profile-item">    
+    
+<div class="profile-title">    
+👤 Username    
+</div>    
+    
+<div class="profile-sub"    
+id="profileUsername">    
+-    
+</div>    
+    
+<button
+class="profile-action mini-btn"
+onclick="openUsernameModal()">
+
+✏️ Edit
+
+</button>
+    
+</div>    
+  
+<div class="profile-item">    
+    
+<div class="profile-title">    
+📧 Email    
+</div>    
+    
+<div class="profile-sub"    
+id="profileEmailText">    
+-    
+</div>    
+    
+<button
+class="profile-action mini-btn"
+onclick="openEmailModal()">
+📧 Ganti Email
+</button>
+    
+</div>    
+    
+<div class="profile-item">    
+    
+<div class="profile-title">    
+💳 Wallet    
+</div>    
+    
+<div class="profile-sub">    
+    
+Wallet LEXA sedang dipersiapkan    
+    
+</div>    
+    
+</div>    
+    
+<div class="profile-item">    
+    
+<div class="profile-title">    
+🔒 Security    
+</div>    
+    
+<div class="profile-sub">    
+    
+Fitur keamanan akun akan segera hadir    
+ </div>    
+    
+</div>   
+    
+</div>
+</div> 
+<div id="usernameModal" class="confirm-overlay">
+
+  <div class="confirm-box">
+
+    <div class="confirm-title">
+      ✏️ Ubah Username
+    </div>
+
+    <div class="confirm-message">
+      Username hanya dapat diubah satu kali.
+    </div>
+
+    <input
+      id="usernameInput"
+      type="text"
+      placeholder="Masukkan username baru"
+      style="
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:14px;
+      background:#06162f;
+      color:#fff;
+      outline:none;
+      margin-bottom:18px;
+      ">
+
+    <div class="confirm-actions">
+
+      <button
+      class="confirm-btn cancel-btn"
+      onclick="closeUsernameModal()">
+      Batal
+      </button>
+
+      <button
+      class="confirm-btn ok-btn"
+      onclick="changeUsername()">
+      Simpan
+      </button>
+
+    </div>
+
+  </div>
+
+</div>  
+<div id="emailModal" class="confirm-overlay">
+
+  <div class="confirm-box">
+
+    <div class="confirm-title">
+      📧 Ganti Email
+    </div>
+
+    <div class="confirm-message">
+      Masukkan email baru.
+    </div>
+
+    <input
+    id="newEmailInput"
+    type="email"
+    placeholder="emailbaru@gmail.com">
+
+    <div class="confirm-actions">
+
+      <button
+      class="confirm-btn cancel-btn"
+      onclick="closeEmailModal()">
+      Batal
+      </button>
+
+<button
+class="confirm-btn ok-btn"
+onclick="changeEmail()">
+Simpan
+</button>
+
+    </div>
+
+  </div>
+
+</div>
+<!-- NAVBAR -->    
+    
+<div class="nav">    
+    
+<div class="nav-item active" onclick="showPage('home',this)">    
+🏠<br>Beranda    
+</div>    
+    
+<div class="nav-item" onclick="showPage('news',this)">    
+📰<br>Berita    
+</div>    
+<div
+id="mineBtn"
+class="nav-item mine-center"
+onclick="startMining()">
+
+<div class="mine-core">◈</div>
+
+<span>Core</span>
+
+</div>
+<div class="nav-item" onclick="showPage('referral',this)">    
+👥<br>Referral    
+</div>    
+    
+<div class="nav-item" onclick="showPage('settings',this)">    
+<br>◈VIP◈  
+</div>    
+    
+</div>    
+<div id="confirmModal" class="confirm-overlay">  
+  
+  <div class="confirm-box">  
+  
+    <div class="confirm-icon">⚠️</div>  
+  
+    <div id="confirmTitle" class="confirm-title">  
+      Konfirmasi  
+    </div>  
+  
+    <div id="confirmMessage" class="confirm-message">  
+      Apakah Anda yakin?  
+    </div>  
+  
+    <div class="confirm-actions">  
+  
+      <button  
+      id="confirmCancel"  
+      class="confirm-btn cancel-btn">  
+        Batal  
+      </button>  
+  
+      <button  
+      id="confirmOk"  
+      class="confirm-btn ok-btn">  
+        Lanjutkan  
+      </button>  
+  
+    </div>  
+  
+  </div>  
+  
+</div>  
+<div style="display:none">
+MARKER HTML AKHIR
+</div>
+
+<script>
+alert("SCRIPT 1");
+</script>
+<script>  
+window.showPage = function(id,el){
+   alert("showPage hidup");
+};
+let miningActive = false;    
+let miningSeconds = 43200;    
+let miningTimer = null;    
+    
+let realBalance = 0;    
+let totalReward = 100;
+const totalDuration = 43200;
+
+let speedPerSecond =
+totalReward / totalDuration;
+async function startMining(){    
+
+   if(!window.auth.currentUser){    
+    
+      showToast("Silakan login terlebih dahulu");    
+      return;    
+    
+   }    
+    const uid = window.auth.currentUser.uid;
+
+const yes = await showConfirm(...);
+
+if(!yes) return;
+if(miningActive) return;
+
+miningActive = true;
+
+await window.updateDoc(
+  window.doc(window.db,"users",uid),
+  {
+    miningStart: window.serverTimestamp(),
+    miningActive: true
+  }
+);
+    
+    document.querySelector("#mineBtn span")
+.innerText = "ACTIVE";
+    
+    document.getElementById("mineBtn")  
+.style.pointerEvents = "none";  
+    
+    miningSeconds = 43200;    
+    
+document.getElementById("miningTimer").style.display =    
+"block";    
+    
+    startMiningTimer();    
+}     
+function startMiningTimer(){    
+clearInterval(miningTimer);    
+    miningTimer = setInterval(async ()=>{    
+    
+        miningSeconds--;    
+    
+        let h =    
+        Math.floor(miningSeconds / 3600);    
+    
+        let m =    
+        Math.floor((miningSeconds % 3600) / 60);    
+    
+        let s =    
+        miningSeconds % 60;    
+    
+        let percent =    
+        ((43200 - miningSeconds) / 43200) * 100;    
+const earned =    
+((totalDuration - miningSeconds) / totalDuration)    
+* totalReward;    
+  
+const earnedEl =  
+document.getElementById("earnedRate");  
+  
+if(earnedEl){  
+   earnedEl.innerText =  
+   "+" + earned.toFixed(2) + " Ł";  
+}  
+  
+const displayBalance =  
+realBalance + earned;  
+  
+document.getElementById("balanceValue")  
+.innerText =  
+formatLEXA(displayBalance);  
+  
+document.getElementById("progressBar").style.width =  
+percent + "%";  
+  
+document.getElementById("speedRate").innerText =  
+"≈ +" +  
+earned.toFixed(4) +  
+" Ł/s";  
+  
+document.getElementById("miningTimer").innerText =
+String(h).padStart(2,"0") + ":" +
+String(m).padStart(2,"0") + ":" +
+String(s).padStart(2,"0");
+    
+        if(miningSeconds <= 0){  
+  
+   clearInterval(miningTimer);  
+  const mineLabel =
+document.querySelector("#mineBtn span");
+
+if(mineLabel){
+   mineLabel.innerText = "MINE";
+}
+
+document.getElementById("mineBtn")
+.style.pointerEvents = "auto";
+   const uid =  
+   window.auth.currentUser.uid;  
+  
+   await window.updateDoc(
+window.doc(window.db,"users",uid),
+{
+   balance: window.increment(totalReward),
+   miningStart: 0,
+   miningActive: false
+}
+);
+  
+   const updatedData =  
+   await window.loadUserData(uid);  
+  
+   realBalance =  
+   updatedData.balance;  
+  
+   document.getElementById("balanceValue")  
+   .innerText =  
+   formatLEXA(realBalance);  
+  
+   document.getElementById("statusText")  
+   .innerText = "READY";  
+  
+   document.getElementById("mineBtn")  
+   .style.pointerEvents = "auto";  
+  
+   document.getElementById("progressBar")  
+   .style.width = "0%";  
+  
+   document.getElementById("speedRate")  
+   .innerText =  
+   "≈ +" +  
+   speedPerSecond.toFixed(4) +  
+   " Ł/s • " +  
+   (totalReward / 12).toFixed(0) +  
+   "/H";  
+  
+   document.getElementById("miningTimer")
+.innerText = "12:00:00";
+  
+   document.getElementById("miningTimer")  
+   .style.display = "none";  
+  
+   miningActive = false;  
+}  
+    
+    },1000);    
+  
+}    
+
+async function registerUser(){    
+    
+   const email =    
+document.getElementById("email").value;    
+    
+const password =    
+document.getElementById("password").value;    
+    
+   try{    
+    
+      const result =    
+      await window.createUserWithEmailAndPassword(    
+         window.auth,    
+         email,    
+         password    
+      );    
+    
+      const uid = result.user.uid;
+
+const referralUsed =
+document.getElementById("referralInput")
+.value.trim().toUpperCase();
+
+const userRef =
+window.doc(window.db,"users",uid);
+
+const referralCode =
+uid.substring(0,8).toUpperCase();
+
+await setDoc(userRef,{
+  username: document.getElementById("username").value,
+
+  balance:10,
+
+  miningRate:100,
+
+  upgrades:{
+    miningNode:0,
+    networkRelay:0,
+    powerCore:0,
+    aiOptimizer:0
+  },
+
+  miningStart:0,
+  miningActive:false,
+
+  referredBy: referralUsed || "",
+
+  referralCode: referralCode,
+
+  referrals:0,
+
+  referredUsers:[]
+});
+
+
+// PROSES REFERRAL
+if(referralUsed){
+
+   const q = window.query(
+      window.collection(
+         window.db,
+         "users"
+      ),
+      window.where(
+         "referralCode",
+         "==",
+         referralUsed
+      )
+   );
+
+   const snap =
+   await window.getDocs(q);
+
+   if(!snap.empty){
+
+      const referrerDoc =
+      snap.docs[0];
+
+      const referrerData =
+      referrerDoc.data();
+
+      await window.updateDoc(
+         referrerDoc.ref,
+         {
+            referrals:
+            window.increment(1),
+
+            referredUsers:
+            window.arrayUnion(
+               document.getElementById("username").value
+            )
+         }
+      );
+
+   }
+
+}
+
+showToast(
+"🎉 Akun berhasil dibuat"
+);
+
+await showConfirm(
+   "🎁 Welcome Reward",
+   "Selamat datang di LEXA!\n\n+10 Ł berhasil ditambahkan ke akun Anda."
+);
+
+switchAuthTab("login");
+    
+}catch(err){    
+    
+      showToast(err.message);    
+    
+   }    
+    
+}
+async function renderUpgrades(){
+
+const user =
+window.auth.currentUser;
+
+if(!user) return;
+
+const data =
+await window.loadUserData(user.uid);
+
+let html = "";
+
+upgrades.forEach(item=>{
+
+const level =
+data.upgrades?.[item.id] || 0;
+
+const nextLevel =
+level + 1;
+
+const bonus =
+nextLevel * item.ratePerLevel;
+
+const cost =
+item.baseCost * Math.pow(2, level);
+
+html += `
+<div class="upgrade-card">
+
+<h3>${item.name}</h3>
+
+<div style="
+font-size:14px;
+margin-bottom:6px;
+color:#6EC8FF;
+">
+Level ${level}
+</div>
+
+<div style="
+font-size:13px;
+margin-bottom:10px;
+color:#A7D9FF;
+">
+⚡ Rate/H = +${bonus}
+</div>
+
+<p>${item.desc}</p>
+
+<button
+onclick="buyUpgrade('${item.id}')">
+Beli ${cost} LEXA
+</button>
+
+</div>
+`;
+
+});
+
+document.getElementById("upgradeList")
+.innerHTML = html;
+}
+
+alert("SAMPAI SINI");
+const upgrades = [
+
+{
+ id:"miningNode",
+ name:"🖥️ Mining Node",
+ desc:"Meningkatkan efisiensi node mining",
+ ratePerLevel:3,
+ baseCost:100
+},
+
+{
+ id:"networkRelay",
+ name:"📡 Network Relay",
+ desc:"Mempercepat distribusi jaringan",
+ ratePerLevel:5,
+ baseCost:250
+},
+
+{
+ id:"powerCore",
+ name:"🔋 Power Core",
+ desc:"Menambah daya pemrosesan",
+ ratePerLevel:10,
+ baseCost:500
+},
+
+{
+ id:"aiOptimizer",
+ name:"🤖 AI Optimizer",
+ desc:"AI otomatis mengoptimalkan mining",
+ ratePerLevel:20,
+ baseCost:1000
+}
+
+];
+
+async function buyUpgrade(id){
+
+const user =
+window.auth.currentUser;
+
+if(!user) return;
+
+const ref =
+window.doc(window.db,"users",user.uid);
+
+const snap =
+await window.getDoc(ref);
+
+const data =
+snap.data();
+
+const upgrade =
+upgrades.find(
+u=>u.id===id
+);
+
+const level =
+data.upgrades?.[id] || 0;
+
+const nextLevel =
+level + 1;
+
+const cost =
+upgrade.baseCost *
+Math.pow(2, level);
+
+const currentRate =
+data.miningRate || 100;
+
+const addedRate =
+upgrade.ratePerLevel;
+
+const nextRate =
+currentRate + addedRate;
+
+const yes =
+await showConfirm(
+"⚡ Konfirmasi Upgrade",
+
+upgrade.name +
+
+"\n\nLevel: " +
+level +
+" → " +
+nextLevel +
+
+"\n\nRate/H: +" +
+(currentRate - 100) +
+" → +" +
+(nextRate - 100) +
+
+"\n\nHarga: " +
+cost +
+" Ł"
+);
+
+if(!yes) return;
+
+if(data.balance < cost){
+
+showToast(
+"LEXA tidak cukup"
+);
+
+return;
+
+}
+
+const newUpgrades = {
+...(data.upgrades || {})
+};
+
+newUpgrades[id] = nextLevel;
+
+await window.updateDoc(ref,{
+
+balance:
+data.balance - cost,
+
+miningRate:
+nextRate,
+
+upgrades:
+newUpgrades
+
+});
+const updatedData =
+await window.loadUserData(user.uid);
+
+totalReward =
+updatedData.miningRate || 100;
+
+speedPerSecond =
+totalReward / totalDuration;
+
+const newRate =
+updatedData.miningRate || 100;
+
+document.getElementById("miningRateText")
+.innerHTML =
+newRate +
+" Ł / 12H <small>(+" +
+(newRate - 100) +
+")</small>";
+showToast(
+"⚡ Upgrade berhasil!"
+);
+
+renderUpgrades();
+
+}
+async function loginUser(){
+
+   const email =
+   document.getElementById("loginEmail").value;
+
+   const password =
+   document.getElementById("loginPassword").value;
+
+   if(!email || !password){
+      showToast("Isi email dan password");
+      return;
+   }
+
+   const yes = await showConfirm(
+   "🔐 Verifikasi Login",
+   "Pastikan email dan password sudah benar sebelum masuk."
+   );
+
+   if(!yes) return;
+
+   try{
+
+      await window.signInWithEmailAndPassword(
+   window.auth,
+   email,
+   password
+);
+
+      showToast("✅ Login berhasil");
+
+   }catch(err){
+
+      showToast(err.message);
+
+   }
+
+}
+function switchAuthTab(type){    
+    
+document.getElementById("loginForm")    
+.style.display =    
+type === "login"    
+? "block"    
+: "none";    
+    
+document.getElementById("registerForm")    
+.style.display =    
+type === "register"    
+? "block"    
+: "none";    
+    
+document.getElementById("loginTab")    
+.classList.toggle(    
+"active",    
+type === "login"    
+);    
+    
+document.getElementById("registerTab")    
+.classList.toggle(    
+"active",    
+type === "register"    
+);    
+    
+}  
+ function openLogin(){
+
+  switchAuthTab("login");
+
+  document.getElementById("guestCard")
+  .style.display = "none";
+
+  document.getElementById("authPage")
+  .style.display = "block";
+
+}
+
+function openRegister(){
+
+  switchAuthTab("register");
+
+  document.getElementById("guestCard")
+  .style.display = "none";
+
+  document.getElementById("authPage")
+  .style.display = "block";
+
+} 
+async function changeUsername(){
+
+const newName =
+document.getElementById("usernameInput")
+.value.trim();
+
+if(!newName){
+   showToast("Masukkan username");
+   return;
+}
+
+const uid =
+window.auth.currentUser.uid;
+
+const data =
+await window.loadUserData(uid);
+
+if(data.usernameChanged){
+
+showToast(
+"Username hanya bisa diubah 1 kali"
+);
+
+return;
+}
+
+const yes =
+await showConfirm(
+"Konfirmasi Username",
+'Ganti username menjadi "' +
+newName +
+'" ?'
+);
+
+if(!yes) return;
+
+await window.updateDoc(
+window.doc(window.db,"users",uid),
+{
+username:newName,
+usernameChanged:true
+}
+);
+
+document.getElementById("profileName")
+.innerText =
+newName;
+
+document.getElementById("profileUsername")
+.innerText =
+newName;
+
+document.getElementById("cardUserName")
+.innerText =
+newName;
+
+closeUsernameModal();
+
+showToast(
+"✅ Username berhasil diperbarui"
+);
+
+}
+function showToast(message){  
+  
+const toast =  
+document.getElementById("toast");  
+  
+toast.innerText = message;  
+  
+toast.style.display = "block";  
+  
+requestAnimationFrame(()=>{  
+toast.classList.add("show");  
+});  
+  
+setTimeout(()=>{  
+  
+toast.classList.remove("show");  
+  
+setTimeout(()=>{  
+toast.style.display = "none";  
+},250);  
+  
+},2200);  
+  
+}  
+async function logoutUser(){  
+  
+const yes =  
+await showConfirm(  
+"Logout",  
+"Yakin ingin keluar dari akun LEXA?"  
+);  
+  
+if(!yes) return;  
+  
+clearInterval(miningTimer);  
+  
+miningActive = false;  
+miningSeconds = 43200;  
+realBalance = 0;  
+  
+document.getElementById("progressBar")  
+.style.width = "0%";  
+  
+document.getElementById("miningTimer")  
+.style.display = "none";  
+  
+document.getElementById("balanceValue")  
+.innerText = formatLEXA(0);  
+  
+await window.signOut(window.auth);  
+
+showToast("👋 Sampai jumpa");  
+}  
+function copyReferral(){    
+    
+ const code =    
+ document.getElementById("referralCode")    
+ .innerText;    
+    
+ navigator.clipboard.writeText(code);    
+    
+ showToast("Referral berhasil disalin");    
+}    
+function formatLEXA(amount){  
+  
+return "Ł " + shortNumber(Number(amount));  
+}  
+ function openUsernameModal(){
+
+document.getElementById("usernameModal")
+.classList.add("show");
+
+}
+
+function closeUsernameModal(){
+
+document.getElementById("usernameModal")
+.classList.remove("show");
+
+document.getElementById("usernameInput")
+.value = "";
+
+}          
+  function showConfirm(  
+title,  
+message  
+){  
+  
+return new Promise(resolve=>{  
+  
+const modal =  
+document.getElementById("confirmModal");  
+  
+document.getElementById(  
+"confirmTitle"  
+).innerText = title;  
+  
+document.getElementById(  
+"confirmMessage"  
+).innerText = message;  
+  
+modal.classList.add("show");  
+  
+const okBtn =  
+document.getElementById("confirmOk");  
+  
+const cancelBtn =  
+document.getElementById("confirmCancel");  
+  
+function cleanup(){  
+  
+modal.classList.remove("show");  
+  
+okBtn.onclick = null;  
+cancelBtn.onclick = null;  
+  
+}  
+  
+okBtn.onclick = ()=>{  
+  
+cleanup();  
+resolve(true);  
+  
+};  
+  
+cancelBtn.onclick = ()=>{  
+  
+cleanup();  
+resolve(false);  
+  
+};  
+  
+});  
+  
+}  
+function shortNumber(num){  
+  
+if(num >= 1e12)  
+return (num/1e12).toFixed(2)+"T";  
+  
+if(num >= 1e9)  
+return (num/1e9).toFixed(2)+"B";  
+  
+if(num >= 1e6)  
+return (num/1e6).toFixed(2)+"M";  
+  
+if(num >= 1e3)  
+return (num/1e3).toFixed(2)+"K";  
+  
+return num.toFixed(2);  
+  
+}  
+async function changeEmail(){
+
+const newEmail =
+document.getElementById("newEmailInput")
+.value.trim();
+
+if(!newEmail){
+
+showToast("Masukkan email baru");
+return;
+
+}
+
+try{
+
+const user = window.auth.currentUser;
+
+await window.verifyBeforeUpdateEmail(
+user,
+newEmail
+);
+
+showToast(
+"📨 Link verifikasi dikirim ke email baru"
+);
+
+closeEmailModal();
+
+}catch(err){
+
+  if(err.code === "auth/requires-recent-login"){
+
+    showToast(
+      "🔐 Silakan login ulang terlebih dahulu"
+    );
+
+    return;
+  }
+
+  showToast(err.message);
+
+}
+
+}
+  function openEmailModal(){
+
+  document.getElementById("emailModal")
+  .classList.add("show");
+
+}
+
+function closeEmailModal(){
+
+  document.getElementById("emailModal")
+  .classList.remove("show");
+
+}
+
+function showPage(id, el){
+
+   document.querySelectorAll(".page")
+   .forEach(p => p.classList.remove("active"));
+
+   document.getElementById(id)
+   .classList.add("active");
+
+   if(el && el.classList.contains("nav-item")){
+
+      document.querySelectorAll(".nav-item")
+      .forEach(i => i.classList.remove("active"));
+
+      el.classList.add("active");
+   }
+
+   if(id === "improve"){
+      renderUpgrades();
+   }
+
+}
+</script>    
+<script type="module">    
+import { initializeApp }    
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";    
+    
+import {    
+  getAuth,    
+  createUserWithEmailAndPassword,    
+  signInWithEmailAndPassword,    
+  signOut,    
+  onAuthStateChanged, 
+  verifyBeforeUpdateEmail   
+}    
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";    
+import {    
+  serverTimestamp    
+}    
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";    
+import {    
+ getFirestore,    
+ doc,    
+ getDoc,    
+ setDoc,    
+ updateDoc,    
+ increment,    
+ query,    
+ where,    
+ getDocs,    
+ collection,    
+ arrayUnion    
+}    
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";    
+const firebaseConfig = {    
+  apiKey: "AIzaSyCqEdDDiACoU3aIYYgYGDZ48_x-1YFJ9jc",    
+  authDomain: "lexa-network.firebaseapp.com",    
+  projectId: "lexa-network",    
+  storageBucket: "lexa-network.firebasestorage.app",    
+  messagingSenderId: "471101991726",    
+  appId: "1:471101991726:web:7ba21aee8b3d64337e28bf"    
+};    
+    
+const app = initializeApp(firebaseConfig);    
+    
+window.auth = getAuth(app);    
+window.createUserWithEmailAndPassword =    
+createUserWithEmailAndPassword;    
+    
+window.signInWithEmailAndPassword =    
+signInWithEmailAndPassword;    
+    
+window.signOut =    
+signOut;    
+    
+window.onAuthStateChanged =    
+onAuthStateChanged;    
+window.db = getFirestore(app);    
+window.verifyBeforeUpdateEmail =
+verifyBeforeUpdateEmail;    
+
+window.doc = doc;    
+window.getDoc = getDoc;    
+window.setDoc = setDoc;    
+window.updateDoc = updateDoc;    
+window.increment = increment;    
+window.collection = collection;    
+window.arrayUnion = arrayUnion;    
+window.query = query;    
+window.where = where;    
+window.getDocs = getDocs;    
+window.serverTimestamp =    
+serverTimestamp;
+window.showPage = showPage;
+async function loadUserData(uid){    
+    
+  const userRef =    
+  doc(window.db,"users",uid);    
+    
+  const snap =    
+  await getDoc(userRef);    
+    
+  if(!snap.exists()){    
+    
+    await setDoc(userRef,{    
+   balance:0,    
+   miningStart:0,    
+   miningActive:false    
+});    
+    return {    
+   balance:0,    
+   miningStart:0,    
+   miningActive:false    
+};    
+  }    
+    
+  return snap.data();    
+}    
+window.loadUserData = loadUserData;    
+window.onAuthStateChanged(    
+   window.auth,    
+   async(user)=>{    
+    
+      if(!user){
+document.getElementById("guestProfile").style.display = "block";
+document.getElementById("memberProfile").style.display = "none";
+  document.getElementById("speedRate").innerText =
+  "≈ +" +
+  speedPerSecond.toFixed(4) +
+  " Ł/s • " +
+  (totalReward / 12).toFixed(0) +
+  "/H";
+
+  document.getElementById("guestCard")
+  .style.display = "block";
+
+  document.getElementById("authPage")
+  .style.display = "none";
+    
+   realBalance = 0;    
+    
+   document.getElementById("balanceValue")    
+   .innerText = "0.00";    
+    
+   document.getElementById("statusText")    
+   .innerText = "GUEST";    
+
+   // reset halaman profile    
+  
+  document.getElementById("cardUserName")  
+.innerText = "Guest";  
+  
+   document.getElementById("profileEmail")    
+   .innerText = "-";    
+    
+   document.getElementById("profileEmailText")    
+   .innerText = "-";    
+    
+   document.getElementById("profileId")    
+   .innerText = "LEXA ID";    
+    
+   return;    
+}
+ alert("showPage = " + typeof window.showPage);   
+showPage(
+   "home",
+   document.querySelector(".nav-item")
+);
+    
+showToast("Selamat datang kembali");    
+document.getElementById("guestProfile").style.display = "none";
+document.getElementById("memberProfile").style.display = "block";
+    document.getElementById("guestCard")
+.style.display = "none";
+
+      document.getElementById("authPage")    
+      .style.display = "none";    
+    
+      document.getElementById("balanceValue")    
+      .innerText = "0";    
+    
+      document.getElementById("statusText")    
+      .innerText = "READY";    
+    
+      document.getElementById("miningTimer")    
+      .style.display = "none";    
+    
+      const uid = user.uid;
+const data = await window.loadUserData(uid);
+
+const referralCount =
+data.referrals || 0;
+
+totalReward =
+data.miningRate || 100;
+
+speedPerSecond =
+totalReward / totalDuration;
+
+const baseRate = 100;
+
+const currentRate =
+data.miningRate || baseRate;
+
+const bonusRate =
+currentRate - baseRate;
+
+document.getElementById("miningRateText")
+.innerText =
+currentRate + " Ł / 12H";
+
+document.getElementById("upgradeBonusText")
+.innerText =
+"+" + bonusRate + " Ł ";
+
+const mineLabel =
+document.querySelector("#mineBtn span");
+
+if(mineLabel){
+   mineLabel.innerText = "MINE";
+}
+document.getElementById("mineBtn")
+.style.pointerEvents = "auto";
+
+document.getElementById("speedRate").innerText =  
+"≈ +" +  
+speedPerSecond.toFixed(4) +  
+" Ł/s";  
+  
+  document.getElementById("cardUserName").innerText =  
+data.username || "Member";  
+  
+document.getElementById("profileName").innerText =  
+data.username || "Member";  
+  
+document.getElementById("userIdShort").innerText =  
+user.uid.substring(0,8).toUpperCase();  
+  
+document.getElementById("profileUsername")    
+.innerText =    
+data.username || "-";    
+    
+document.getElementById("profileEmail")    
+.innerText =    
+user.email || "-";    
+    
+document.getElementById("profileEmailText")    
+.innerText =    
+user.email || "-";    
+    
+document.getElementById("profileId")    
+.innerText =    
+"LEXA ID • " +    
+user.uid.substring(0,8).toUpperCase();    
+    
+document.getElementById("referralCode")    
+.innerText =    
+data.referralCode || "-";    
+
+document.getElementById("homeReferralCount")
+.innerText = referralCount;
+
+document.getElementById("totalReferral")
+.innerText = referralCount;
+
+document.getElementById("activeReferral")
+.innerText = referralCount;
+
+document.getElementById("totalRewardReferral")
+.innerText = referralCount * 25;
+
+// LEVEL REFERRAL
+let level = "🔹 Explorer";
+
+if(referralCount >= 10){
+   level = "⚡ Builder";
+}
+
+if(referralCount >= 50){
+   level = "🚀 Pioneer";
+}
+
+if(referralCount >= 100){
+   level = "👑 Ambassador";
+}
+
+if(referralCount >= 500){
+   level = "💎 Legend";
+}
+
+if(referralCount >= 1000){
+   level = "🌌 Genesis";
+}
+
+document.getElementById("referralLevel")
+.innerText = level;
+    
+realBalance = data.balance;    
+    
+document.getElementById("balanceValue")    
+.innerText =    
+formatLEXA(realBalance);    
+const list =    
+document.getElementById("referralList");    
+    
+if(    
+   data.referredUsers &&    
+   data.referredUsers.length    
+){    
+    
+   list.innerHTML =
+data.referredUsers
+.map(name=>`
+<div class="member">
+👤 ${name}
+</div>
+`)
+.join("");
+    
+}else{    
+    
+   list.innerHTML =    
+   "Belum ada referral";    
+    
+}    
+      // lanjutkan kode mining recovery milikmu di sini...    
+      if(    
+   data.miningActive &&    
+   typeof data.miningStart?.toMillis === "function"    
+){    
+        
+    const miningStartMs =    
+    data.miningStart.toMillis();    
+    
+    const elapsedSeconds =    
+    Math.floor(    
+      (Date.now() - miningStartMs) / 1000    
+    );    
+    
+    const MAX_SECONDS = 43200;    
+    
+    // mining selesai    
+    if(elapsedSeconds >= MAX_SECONDS){    
+    
+        await window.updateDoc(    
+          window.doc(window.db,"users",uid),    
+          {    
+             balance: window.increment(totalReward), 
+             miningStart: 0,    
+             miningActive: false    
+          }    
+        );    
+    
+        const updatedData =    
+        await window.loadUserData(uid);    
+    
+        realBalance =    
+        updatedData.balance;    
+    
+        document.getElementById("balanceValue")    
+.innerText =    
+formatLEXA(realBalance);    
+       document.getElementById("statusText")    
+.innerText = "READY";    
+    
+document.getElementById("miningTimer")    
+.style.display = "none";    
+    
+document.getElementById("progressBar")    
+.style.width = "0%";    
+    
+}else{
+
+    miningActive = true;
+
+    miningSeconds =
+    MAX_SECONDS - elapsedSeconds;
+
+    const percent =
+    (elapsedSeconds / MAX_SECONDS) * 100;
+
+    document.getElementById("progressBar")
+    .style.width = percent + "%";
+
+    document.getElementById("statusText")
+    .innerText = "MINING";
+
+    const mineLabel =
+    document.querySelector("#mineBtn span");
+
+    if(mineLabel){
+       mineLabel.innerText = "ACTIVE";
+    }
+
+    document.getElementById("mineBtn")
+    .style.pointerEvents = "none";
+
+    document.getElementById("miningTimer")
+    .style.display = "block";
+
+    startMiningTimer();
+
+}
+}    
+      document.getElementById("authPage")    
+      .style.display = "none";    
+   }    
+);    
+    
+</script>
+ <script>
+alert(
+  "showPage=" + typeof window.showPage +
+  "\nstartMining=" + typeof window.startMining
+);
+</script>
+</body>    
+</html>
