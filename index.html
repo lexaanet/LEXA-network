@@ -1677,26 +1677,128 @@ Share
 </div>
 </div>
     </div> <!-- page referral -->
-<div class="page" id="settings">
+<!-- SETTINGS -->
 
-<h2>SETTING</h2>
+<div id="settings" class="page">
 
-<div class="card">
-  <h3>VIP Membership</h3>
-  <p>
-    Fitur VIP sedang dipersiapkan.
-  </p>
+<h2>⚙️ Settings</h2>
+
+<div class="settings-list">
+
+<div class="settings-item"
+onclick="showPage('profile')">
+
+<i class="fa-solid fa-user"></i>
+
+<span>Profile Settings</span>
+
+<i class="fa-solid fa-chevron-right"></i>
+
+</div>
+
+<div class="settings-item"
+onclick="showPage('referral')">
+
+<i class="fa-solid fa-users"></i>
+
+<span>Mining Team</span>
+
+<i class="fa-solid fa-chevron-right"></i>
+
+</div>
+
+<div class="settings-item"
+onclick="changePassword()">
+
+<i class="fa-solid fa-lock"></i>
+
+<span>Security</span>
+
+<i class="fa-solid fa-chevron-right"></i>
+
+</div>
+
+<hr>
+
+<div class="settings-item"
+onclick="openFAQ()">
+
+<i class="fa-solid fa-circle-question"></i>
+
+<span>FAQ</span>
+
+<i class="fa-solid fa-chevron-right"></i>
+
+</div>
+
+<div class="settings-item"
+onclick="openRoadmap()">
+
+<i class="fa-solid fa-map"></i>
+
+<span>Roadmap</span>
+
+<i class="fa-solid fa-chevron-right"></i>
+
+</div>
+
+<div class="settings-item"
+onclick="openTerms()">
+
+<i class="fa-solid fa-file-contract"></i>
+
+<span>Terms</span>
+
+<i class="fa-solid fa-chevron-right"></i>
+
+</div>
+
+<div class="settings-item"
+onclick="openWhitepaper()">
+
+<i class="fa-solid fa-book"></i>
+
+<span>Whitepaper</span>
+
+<i class="fa-solid fa-chevron-right"></i>
+
+</div>
+
+<hr>
+
+<div class="settings-item"
+onclick="openCommunity()">
+
+<i class="fa-solid fa-comments"></i>
+
+<span>Community</span>
+
+<i class="fa-solid fa-chevron-right"></i>
+
+</div>
+
+<hr>
+
+<div class="settings-item logout"
+onclick="logoutUser()">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+<span>Logout</span>
+
+</div>
+
 </div>
 
 </div>
 <div class="page" id="profile">    
     
-<h2>Account Center</h2>    
+<h2>Profile</h2>    
 
 <div id="guestProfile">
 <div id="guestCard" class="card">
 
-  <h3>🔐 Account Access</h3>
+  <h3>🔐 profile</h3>
 
   <p>
     Login atau buat akun untuk mulai menggunakan LEXA.
@@ -1894,18 +1996,25 @@ Wallet LEXA sedang dipersiapkan
     
 </div>    
     
-<div class="profile-item">    
-    
-<div class="profile-title">    
-🔒 Security    
-</div>    
-    
-<div class="profile-sub">    
-    
-Fitur keamanan akun akan segera hadir    
- </div>    
-    
-</div>   
+<div class="profile-item">
+
+<div class="profile-title">
+🔒 Password
+</div>
+
+<div class="profile-sub">
+Ubah password akun
+</div>
+
+<button
+class="profile-action mini-btn"
+onclick="openPasswordModal()">
+
+🔒 Ganti Password
+
+</button>
+
+</div>
     
 </div>
 </div> 
@@ -1985,6 +2094,37 @@ class="confirm-btn ok-btn"
 onclick="changeEmail()">
 Simpan
 </button>
+
+    </div>
+
+  </div>
+
+</div>
+<div id="passwordModal" class="confirm-overlay">
+
+  <div class="confirm-box">
+
+    <div class="confirm-title">
+      🔒 Ganti Password
+    </div>
+
+    <div class="confirm-message">
+      Link reset password akan dikirim ke email akun Anda.
+    </div>
+
+    <div class="confirm-actions">
+
+      <button
+      class="confirm-btn cancel-btn"
+      onclick="closePasswordModal()">
+      Batal
+      </button>
+
+      <button
+      class="confirm-btn ok-btn"
+      onclick="changePassword()">
+      Kirim
+      </button>
 
     </div>
 
@@ -3016,7 +3156,94 @@ users.join("\n")
 );
 
 }
+function openFAQ(){
 
+showConfirm(
+"FAQ",
+"FAQ akan tersedia pada update berikutnya."
+);
+
+}
+
+function openRoadmap(){
+
+showConfirm(
+"Roadmap",
+"Roadmap LEXA akan ditampilkan di sini."
+);
+
+}
+
+function openTerms(){
+
+showConfirm(
+"Terms",
+"Terms & Conditions akan ditampilkan di sini."
+);
+
+}
+
+function openWhitepaper(){
+
+showConfirm(
+"Whitepaper",
+"Whitepaper masih dalam pengembangan."
+);
+
+}
+
+function openCommunity(){
+
+window.open(
+"https://t.me/yourcommunity",
+"_blank"
+);
+
+}
+function openPasswordModal(){
+
+document.getElementById(
+"passwordModal"
+).style.display = "flex";
+
+}
+
+function closePasswordModal(){
+
+document.getElementById(
+"passwordModal"
+).style.display = "none";
+
+}
+async function changePassword(){
+
+const user =
+window.auth.currentUser;
+
+if(!user) return;
+
+try{
+
+await window.sendPasswordResetEmail(
+window.auth,
+user.email
+);
+
+closePasswordModal();
+
+showToast(
+"📩 Link reset password telah dikirim"
+);
+
+}catch(err){
+
+showToast(
+err.message
+);
+
+}
+
+}
 function showPage(id, el){
 
    document.querySelectorAll(".page")
