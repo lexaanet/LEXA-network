@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">    
     
 <title>LEXA</title>    
-    
+  <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">      
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">    
 <style>    
-    
+
 :root{    
  --bg:#030B1F;    
  --card:#081A38;    
@@ -1137,18 +1138,25 @@ text-shadow:
 0 0 15px rgba(0,212,255,.4);
 
 }
-.nav-item{    
- text-align:center;    
- font-size:12px;    
- cursor:pointer;    
- color:#b8c8e5;    
-}    
+.nav-item i{
 
-.nav-item.active{
-color:#65d7ff;
+font-size:20px;
+
+display:block;
+
+margin-bottom:4px;
+
+color:rgba(255,255,255,.8);
+
+}
+
+.nav-item.active i{
+
+color:#6EC8FF;
 
 text-shadow:
-0 0 12px rgba(0,212,255,.5);
+0 0 12px rgba(110,200,255,.7);
+
 }
     
 .logo{    
@@ -1856,40 +1864,60 @@ Simpan
   </div>
 
 </div>
-<!-- NAVBAR -->    
-    
-<div class="nav">    
-    
-<div class="nav-item active" onclick="showPage('home',this)">    
-🏠<br>Beranda    
-</div>    
-    
-<div onclick="showPage('vip')">
+<!-- NAVBAR -->
 
-◈VIP◈  
+<div class="nav">
 
-<span>vip</span>
+<div class="nav-item active"
+onclick="showPage('home',this)">
+
+<i class="fa-solid fa-house"></i>
+<br>
+Beranda
 
 </div>
+
+<div class="nav-item"
+onclick="showPage('vip',this)">
+
+<i class="fa-regular fa-gem"></i>
+<br>
+VIP
+
+</div>
+
 <div
 id="mineBtn"
 class="nav-item mine-center"
 onclick="startMining()">
 
-<div class="mine-core">◈</div>
+<div class="mine-core">
+<i class="fa-solid fa-microchip"></i>
+</div>
 
 <span>Core</span>
 
 </div>
-<div class="nav-item" onclick="showPage('referral',this)">    
-👥<br>Referral    
-</div>    
-    
-<div class="nav-item" onclick="showPage('settings',this)">    
-<br>settings
-</div>    
-    
-</div>    
+
+<div class="nav-item"
+onclick="showPage('referral',this)">
+
+<i class="fa-solid fa-users"></i>
+<br>
+Referral
+
+</div>
+
+<div class="nav-item"
+onclick="showPage('settings',this)">
+
+<i class="fa-solid fa-gear"></i>
+<br>
+Settings
+
+</div>
+
+</div>
 <div id="confirmModal" class="confirm-overlay">  
   
   <div class="confirm-box">  
