@@ -1971,39 +1971,6 @@ onclick="openEmailModal()">
     
 </div>    
     
-<div class="profile-item">    
-    
-<div class="profile-title">    
-💳 Wallet    
-</div>    
-    
-<div class="profile-sub">    
-    
-Wallet LEXA sedang dipersiapkan    
-    
-</div>    
-    
-</div>    
-    
-<div class="profile-item">
-
-<div class="profile-title">
-🔒 Password
-</div>
-
-<div class="profile-sub">
-Ubah password akun
-</div>
-
-<button
-class="profile-action mini-btn"
-onclick="openResetPasswordModal()">
-
-🔒 Ganti Password
-
-</button>
-</div>
-    
 </div>
 </div> 
 <div id="usernameModal" class="confirm-overlay">
@@ -2081,37 +2048,6 @@ onclick="openResetPasswordModal()">
 class="confirm-btn ok-btn"
 onclick="changeEmail()">
 Simpan
-</button>
-
-    </div>
-
-  </div>
-
-</div>
-<div id="resetPasswordModal" class="confirm-overlay">
-
-  <div class="confirm-box">
-
-    <div class="confirm-title">
-      🔒 Ganti Password
-    </div>
-
-    <div class="confirm-message">
-      Link reset password akan dikirim ke email akun Anda.
-    </div>
-
-    <div class="confirm-actions">
-
-     <button
-class="confirm-btn cancel-btn"
-onclick="closeResetPasswordModal()">
-Batal
-</button>
-
-<button
-class="confirm-btn ok-btn"
-onclick="changePassword()">
-Kirim
 </button>
 
     </div>
@@ -3188,73 +3124,7 @@ window.open(
 );
 
 }
-window.openResetPasswordModal = function(){
 
-document.getElementById(
-"resetPasswordModal"
-).style.display = "flex";
-
-};
-
-window.closeResetPasswordModal = function(){
-
-document.getElementById(
-"resetPasswordModal"
-).style.display = "none";
-
-};
-async function changePassword(){
-
-const user =
-window.auth.currentUser;
-
-if(!user){
-
-showToast(
-"Silakan login terlebih dahulu"
-);
-
-return;
-
-}
-
-const yes =
-await showConfirm(
-"🔒 Change Password",
-
-`Email tujuan:
-
-${user.email}
-
-Link reset password akan dikirim ke alamat email tersebut.
-
-Lanjutkan?`
-);
-
-if(!yes) return;
-
-try{
-
-await window.sendPasswordResetEmail(
-window.auth,
-user.email
-);
-
-closeresetPasswordModal();
-
-showToast(
-"📩 Link reset password berhasil dikirim"
-);
-
-}catch(err){
-
-showToast(
-err.message
-);
-
-}
-
-}
 function showPage(id, el){
 
    document.querySelectorAll(".page")
@@ -3287,8 +3157,7 @@ import {
   signInWithEmailAndPassword,    
   signOut,    
   onAuthStateChanged, 
-  verifyBeforeUpdateEmail, 
-  sendPasswordResetEmail  
+  verifyBeforeUpdateEmail  
 }    
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";    
 import {    
@@ -3335,8 +3204,7 @@ onAuthStateChanged;
 window.db = getFirestore(app);    
 window.verifyBeforeUpdateEmail =
 verifyBeforeUpdateEmail;    
-window.sendPasswordResetEmail =
-sendPasswordResetEmail;
+
 
 window.doc = doc;    
 window.getDoc = getDoc;    
