@@ -3185,23 +3185,21 @@ window.open(
 );
 
 }
-function openPasswordModal(){
-
-alert("fungsi jalan");
+window.openPasswordModal = function(){
 
 document.getElementById(
 "passwordModal"
 ).style.display = "flex";
 
-}
+};
 
-function closePasswordModal(){
+window.closePasswordModal = function(){
 
 document.getElementById(
 "passwordModal"
 ).style.display = "none";
 
-}
+};
 async function changePassword(){
 
 const user =
