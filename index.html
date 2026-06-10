@@ -1866,16 +1866,20 @@ function startMiningTimer(){
       let percent =
       ((43200 - miningSeconds) / 43200) * 100;
 
-      document.getElementById("progressBar")
-      .style.width = percent + "%";
-
       document.getElementById("miningTimer")
-      .innerText =
-      String(h).padStart(2,"0") + ":" +
-      String(m).padStart(2,"0") + ":" +
-      String(s).padStart(2,"0");
+.innerText =
+String(h).padStart(2,"0") + ":" +
+String(m).padStart(2,"0") + ":" +
+String(s).padStart(2,"0");
 
-      if(miningSeconds <= 0){
+const earned =
+((43200 - miningSeconds) / 43200) * totalReward;
+
+document.getElementById("balanceValue")
+.innerText =
+formatLEXA(realBalance + earned);
+
+if(miningSeconds <= 0){
 
          clearInterval(miningTimer);
 
