@@ -1807,6 +1807,21 @@ async function startMining(){
 
    if(miningActive) return;
 
+const yes = await showConfirm(
+   "◈ Activate Core",
+   `Contribution cycle akan dimulai.
+
+⏳ Duration : 12 Hours
+⚡ Reward : ${totalReward} Ł
+📈 Mining Rate : ${(totalReward / 12).toFixed(1)} Ł/H
+
+Setiap siklus yang selesai akan menambah saldo LEXA Anda.
+
+Activate Core?`
+);
+
+if(!yes) return;
+
    miningActive = true;
 
    const uid = window.auth.currentUser.uid;
@@ -1860,12 +1875,16 @@ function startMiningTimer(){
       String(s).padStart(2,"0");
 
       const earned =
-      ((43200 - miningSeconds) / 43200) *
-      totalReward;
+((43200 - miningSeconds) / 43200) *
+totalReward;
 
-      document.getElementById("balanceValue")
-      .innerText =
-      formatLEXA(realBalance + earned);
+document.getElementById("speedRate")
+.innerText =
+"+" + earned.toFixed(4) + " Ł";
+
+document.getElementById("balanceValue")
+.innerText =
+formatLEXA(realBalance + earned);
 
       if(miningSeconds <= 0){
 
