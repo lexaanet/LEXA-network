@@ -1804,9 +1804,12 @@ async function startMining(){
       showToast("Silakan login terlebih dahulu");
       return;
    }
-const yes = await showConfirm(
-  "◈ Activate Core",
-  `Contribution cycle akan dimulai.
+
+   if(miningActive) return;
+
+   const yes = await showConfirm(
+      "◈ Activate Core",
+      `Contribution cycle akan dimulai.
 
 ⏳ Duration : 12 Hours
 ⚡ Reward : ${totalReward} Ł
@@ -1815,15 +1818,13 @@ const yes = await showConfirm(
 Setiap siklus yang selesai akan menambah saldo LEXA Anda.
 
 Activate Core?`
-);
+   );
 
-if(!yes) return;
-   if(miningActive) return;
+   if(!yes) return;
 
    miningActive = true;
 
-   const uid =
-   window.auth.currentUser.uid;
+   const uid = window.auth.currentUser.uid;
 
    await window.updateDoc(
       window.doc(window.db,"users",uid),
@@ -1839,12 +1840,14 @@ if(!yes) return;
    document.getElementById("mineBtn")
    .style.pointerEvents = "none";
 
-   miningSeconds = 43200;
-
    document.getElementById("miningTimer")
    .style.display = "block";
 
+   miningSeconds = 43200;
+
    startMiningTimer();
+
+   showToast("⚡ Core Activated");
 }
 function startMiningTimer(){
 
@@ -1854,32 +1857,31 @@ function startMiningTimer(){
 
       miningSeconds--;
 
-      let h =
-      Math.floor(miningSeconds / 3600);
+      const h = Math.floor(miningSeconds / 3600);
+      const m = Math.floor((miningSeconds % 3600) / 60);
+      const s = miningSeconds % 60;
 
-      let m =
-      Math.floor((miningSeconds % 3600) / 60);
-
-      let s =
-      miningSeconds % 60;
-
-      let percent =
+      const percent =
       ((43200 - miningSeconds) / 43200) * 100;
 
+      document.getElementById("progressBar")
+      .style.width = percent + "%";
+
       document.getElementById("miningTimer")
-.innerText =
-String(h).padStart(2,"0") + ":" +
-String(m).padStart(2,"0") + ":" +
-String(s).padStart(2,"0");
+      .innerText =
+      String(h).padStart(2,"0") + ":" +
+      String(m).padStart(2,"0") + ":" +
+      String(s).padStart(2,"0");
 
-const earned =
-((43200 - miningSeconds) / 43200) * totalReward;
+      const earned =
+      ((43200 - miningSeconds) / 43200) *
+      totalReward;
 
-document.getElementById("balanceValue")
-.innerText =
-formatLEXA(realBalance + earned);
+      document.getElementById("balanceValue")
+      .innerText =
+      formatLEXA(realBalance + earned);
 
-if(miningSeconds <= 0){
+      if(miningSeconds <= 0){
 
          clearInterval(miningTimer);
 
