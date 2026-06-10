@@ -1235,17 +1235,19 @@ font-size:12px;
     
   <div style="display:flex;gap:12px;align-items:center;">    
     
-<div class="notif">    
-    
-<svg viewBox="0 0 24 24" fill="none">    
-<path    
-d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.63 5.36 6 7.92 6 11V16L4 18V19H20V18L18 16Z"    
-fill="white"/>    
-</svg>    
-    
-<span class="notif-dot"></span>    
-    
-</div>    
+<div
+class="notif"
+onclick="showPage('notifications')">
+
+<svg viewBox="0 0 24 24" fill="none">
+<path
+d="M12 22C13.1 22 14 21.1 14 20H10C10 21.1 10.9 22 12 22ZM18 16V11C18 7.93 16.37 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5S10.5 3.17 10.5 4V4.68C7.63 5.36 6 7.93 6 11V16L4 18V19H20V18L18 16Z"
+fill="white"/>
+</svg>
+
+<span class="notif-dot"></span>
+
+</div>
     
 <div class="profile-btn"  
 onclick="showPage('profile')">  
@@ -1394,16 +1396,18 @@ Belum ada referral
     
 </div>    
 </div>    
-<div class="page" id="news">    
-    
-<h2>Berita LEXA</h2>    
-    
-<div class="card">    
-<h3>LEXA Network Launch</h3>    
-<p>Platform mining komunitas sedang dalam tahap pengembangan.</p>    
-</div>    
-    
-</div>    
+<div class="page" id="vip">
+
+<h2>💎 ◈VIP◈</h2>
+
+<div class="card">
+  <h3>VIP Membership</h3>
+  <p>
+    Fitur VIP sedang dipersiapkan.
+  </p>
+</div>
+
+</div>
     
 <div class="page" id="missions">    
     
@@ -1436,6 +1440,33 @@ Reward: +10 LEXA
 <h2>⚡ Improve Network</h2>
 
 <div id="upgradeList" class="upgrade-grid"></div>
+
+</div>
+<!-- NOTIFICATIONS -->
+
+<div class="page" id="notifications">
+
+<h2>🔔 Notifications</h2>
+
+<div class="card">
+
+<div class="news-item">
+🚀 Mining System Upgrade Released
+</div>
+
+<div class="news-item">
+🎁 Referral Reward Active
+</div>
+
+<div class="news-item">
+💎 VIP Program Coming Soon
+</div>
+
+<div class="news-item">
+⚡ Network Optimization Complete
+</div>
+
+</div>
 
 </div>
 <!-- REFERRAL -->
@@ -1513,7 +1544,7 @@ Share
     </div> <!-- page referral -->
 <div class="page" id="settings">
 
-<h2>💎 ◈VIP◈</h2>
+<h2>SETTING</h2>
 
 <div class="card">
   <h3>VIP Membership</h3>
@@ -1833,9 +1864,13 @@ Simpan
 🏠<br>Beranda    
 </div>    
     
-<div class="nav-item" onclick="showPage('news',this)">    
-📰<br>Berita    
-</div>    
+<div onclick="showPage('vip')">
+
+◈VIP◈  
+
+<span>vip</span>
+
+</div>
 <div
 id="mineBtn"
 class="nav-item mine-center"
@@ -1851,7 +1886,7 @@ onclick="startMining()">
 </div>    
     
 <div class="nav-item" onclick="showPage('settings',this)">    
-<br>◈VIP◈  
+<br>settings
 </div>    
     
 </div>    
