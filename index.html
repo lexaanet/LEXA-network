@@ -1707,17 +1707,6 @@ onclick="showPage('referral')">
 
 </div>
 
-<div class="settings-item"
-onclick="changePassword()">
-
-<i class="fa-solid fa-lock"></i>
-
-<span>Security</span>
-
-<i class="fa-solid fa-chevron-right"></i>
-
-</div>
-
 <hr>
 
 <div class="settings-item"
@@ -3220,7 +3209,30 @@ async function changePassword(){
 const user =
 window.auth.currentUser;
 
-if(!user) return;
+if(!user){
+
+showToast(
+"Silakan login terlebih dahulu"
+);
+
+return;
+
+}
+
+const yes =
+await showConfirm(
+"🔒 Change Password",
+
+`Email tujuan:
+
+${user.email}
+
+Link reset password akan dikirim ke alamat email tersebut.
+
+Lanjutkan?`
+);
+
+if(!yes) return;
 
 try{
 
@@ -3232,7 +3244,7 @@ user.email
 closePasswordModal();
 
 showToast(
-"📩 Link reset password telah dikirim"
+"📩 Link reset password berhasil dikirim"
 );
 
 }catch(err){
