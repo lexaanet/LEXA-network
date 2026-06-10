@@ -1804,7 +1804,20 @@ async function startMining(){
       showToast("Silakan login terlebih dahulu");
       return;
    }
+const yes = await showConfirm(
+  "◈ Activate Core",
+  `Contribution cycle akan dimulai.
 
+⏳ Duration : 12 Hours
+⚡ Reward : ${totalReward} Ł
+📈 Mining Rate : ${(totalReward / 12).toFixed(1)} Ł/H
+
+Setiap siklus yang selesai akan menambah saldo LEXA Anda.
+
+Activate Core?`
+);
+
+if(!yes) return;
    if(miningActive) return;
 
    miningActive = true;
