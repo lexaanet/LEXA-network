@@ -1096,7 +1096,45 @@ text-shadow:
 .logo{    
  font-size:28px;    
 }    
+.team-card{
+padding:16px;
+background:rgba(255,255,255,.04);
+border-radius:16px;
+}
 
+.team-count{
+font-size:14px;
+color:#6EC8FF;
+margin-bottom:10px;
+}
+
+.team-preview{
+line-height:1.8;
+font-size:15px;
+color:#fff;
+word-break:break-word;
+}
+
+.team-more{
+margin-top:10px;
+font-size:13px;
+color:#9ECFFF;
+}
+
+.team-btn{
+margin-top:14px;
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+background:linear-gradient(
+90deg,
+#2563ff,
+#1ec8ff
+);
+color:#fff;
+font-weight:600;
+}
   @media (max-width:380px){  
   
 #balanceValue{  
@@ -2504,7 +2542,10 @@ Math.ceil(
 );
 
 const cost =
-item.baseCost * Math.pow(2, level);
+Math.floor(
+item.baseCost *
+Math.pow(1.35, level)
+);
 
 html += `
 <div class="upgrade-card">
@@ -2573,8 +2614,10 @@ const nextLevel =
 level + 1;
 
 const cost =
+Math.floor(
 upgrade.baseCost *
-Math.pow(2, level);
+Math.pow(1.35, level)
+);
 
 const currentRate =
 data.miningRate || 100;
@@ -2663,6 +2706,18 @@ showToast(
 renderUpgrades();
 
 }
+function showTeamMembers(){
+
+const users =
+window.currentReferralUsers || [];
+
+showConfirm(
+"👥 Team Referral",
+users.join("\n")
+);
+
+}
+
 function showPage(id, el){
 
    document.querySelectorAll(".page")
@@ -2962,22 +3017,53 @@ realBalance = data.balance;
 document.getElementById("balanceValue")    
 .innerText =    
 formatLEXA(realBalance);    
-const list =    
-document.getElementById("referralList");    
+const list =
+document.getElementById("referralList");
+
+window.currentReferralUsers =
+data.referredUsers || [];
+
+if(
+   data.referredUsers &&
+   data.referredUsers.length
+){
     
-if(    
-   data.referredUsers &&    
-   data.referredUsers.length    
-){    
-    
-   list.innerHTML =
-data.referredUsers
-.map(name=>`
-<div class="member">
-👤 ${name}
+   const users =
+data.referredUsers || [];
+
+const preview =
+users.slice(0,6);
+
+const remain =
+users.length - preview.length;
+
+list.innerHTML = `
+<div class="team-card">
+
+<div class="team-count">
+👥 ${users.length} Active Members
 </div>
-`)
-.join("");
+
+<div class="team-preview">
+${preview.join(" • ")}
+</div>
+
+${
+remain > 0
+? `<div class="team-more">
++${remain} anggota lainnya
+</div>`
+: ""
+}
+
+<button
+class="team-btn"
+onclick="showTeamMembers()">
+View Team
+</button>
+
+</div>
+`;
     
 }else{    
     
