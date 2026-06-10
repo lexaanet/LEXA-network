@@ -1997,7 +1997,7 @@ Ubah password akun
 
 <button
 class="profile-action mini-btn"
-onclick="openPasswordModal()">
+onclick="openResetPasswordModal()">
 
 🔒 Ganti Password
 
@@ -2088,7 +2088,7 @@ Simpan
   </div>
 
 </div>
-<div id="passwordModal" class="confirm-overlay">
+<div id="resetPasswordModal" class="confirm-overlay">
 
   <div class="confirm-box">
 
@@ -2102,13 +2102,13 @@ Simpan
 
     <div class="confirm-actions">
 
-      <button
+     <button
 class="confirm-btn cancel-btn"
-onclick="closePasswordModal()">
+onclick="closeResetPasswordModal()">
 Batal
 </button>
 
-      <button
+<button
 class="confirm-btn ok-btn"
 onclick="changePassword()">
 Kirim
@@ -3188,18 +3188,18 @@ window.open(
 );
 
 }
-window.openPasswordModal = function(){
+window.openResetPasswordModal = function(){
 
 document.getElementById(
-"passwordModal"
+"resetPasswordModal"
 ).style.display = "flex";
 
 };
 
-window.closePasswordModal = function(){
+window.closeResetPasswordModal = function(){
 
 document.getElementById(
-"passwordModal"
+"resetPasswordModal"
 ).style.display = "none";
 
 };
@@ -3240,7 +3240,7 @@ window.auth,
 user.email
 );
 
-closePasswordModal();
+closeresetPasswordModal();
 
 showToast(
 "📩 Link reset password berhasil dikirim"
