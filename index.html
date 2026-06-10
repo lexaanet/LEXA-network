@@ -2488,11 +2488,20 @@ upgrades.forEach(item=>{
 const level =
 data.upgrades?.[item.id] || 0;
 
-const currentBonus =
-level * item.ratePerLevel;
+let totalBonus = 0;
+
+for(let i = 0; i < level; i++){
+   totalBonus += Math.ceil(
+      item.ratePerLevel *
+      Math.pow(1.1, i)
+   );
+}
 
 const nextBonus =
-(level + 1) * item.ratePerLevel;
+Math.ceil(
+   item.ratePerLevel *
+   Math.pow(1.1, level)
+);
 
 const cost =
 item.baseCost * Math.pow(2, level);
@@ -2507,7 +2516,11 @@ Level ${level}
 </div>
 
 <div class="upgrade-rate">
-⚡ +${currentBonus} Ł / 12H
+⚡ +${totalBonus} Ł / 12H
+</div>
+
+<div class="upgrade-level">
+Next +${nextBonus}
 </div>
 
 <div class="upgrade-desc">
@@ -2567,7 +2580,10 @@ const currentRate =
 data.miningRate || 100;
 
 const addedRate =
-upgrade.ratePerLevel;
+Math.ceil(
+upgrade.ratePerLevel *
+Math.pow(1.1, level)
+);
 
 const nextRate =
 currentRate + addedRate;
