@@ -803,7 +803,127 @@ z-index:9999999;
  backdrop-filter:blur(12px);
 
 }
+.page-title{
+font-size:28px;
+font-weight:700;
+margin-bottom:20px;
+color:#fff;
+}
 
+.card{
+background:rgba(12,26,60,.75);
+backdrop-filter:blur(18px);
+border:1px solid rgba(110,200,255,.15);
+border-radius:24px;
+padding:20px;
+margin-bottom:18px;
+box-shadow:
+0 10px 30px rgba(0,0,0,.25);
+}
+
+.referral-link{
+background:#10264D;
+border:1px solid rgba(110,200,255,.15);
+border-radius:14px;
+padding:14px;
+font-size:13px;
+word-break:break-all;
+color:#CFEFFF;
+margin:12px 0;
+}
+
+.action-row{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+.action-btn{
+flex:1;
+height:48px;
+border:none;
+border-radius:14px;
+font-weight:600;
+color:#fff;
+background:
+linear-gradient(
+90deg,
+#2563ff,
+#22d3ee
+);
+}
+
+.team-preview{
+margin-top:15px;
+padding:14px;
+background:#10264D;
+border-radius:14px;
+color:#D8E8FF;
+line-height:1.7;
+}
+
+.upgrade-grid{
+display:grid;
+grid-template-columns:
+repeat(
+auto-fit,
+minmax(170px,1fr)
+);
+gap:14px;
+}
+
+.upgrade-card{
+background:
+linear-gradient(
+180deg,
+rgba(15,38,84,.95),
+rgba(8,22,54,.95)
+);
+border:1px solid rgba(110,200,255,.15);
+border-radius:20px;
+padding:16px;
+}
+
+.upgrade-card h3{
+font-size:16px;
+margin-bottom:8px;
+color:#fff;
+}
+
+.upgrade-level{
+font-size:12px;
+color:#7CCEFF;
+margin-bottom:6px;
+}
+
+.upgrade-rate{
+font-size:14px;
+font-weight:700;
+color:#22d3ee;
+margin-bottom:10px;
+}
+
+.upgrade-desc{
+font-size:12px;
+color:#A7C4E7;
+line-height:1.5;
+margin-bottom:12px;
+}
+
+.upgrade-card button{
+width:100%;
+height:42px;
+border:none;
+border-radius:12px;
+font-weight:700;
+color:#fff;
+background:
+linear-gradient(
+90deg,
+#2563ff,
+#22d3ee
+);
+}
 .notif svg{
 
  width:14px;
@@ -1384,54 +1504,36 @@ Reward: +10 LEXA
 
 <div class="page" id="referral">
 
-<h2>👥 Referral Team</h2>
-
 <div class="card">
-<div class="love-glow">
-❤️ Loved by Community
-</div>
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:15px;
-">
 
-<div>
+<h3>👥 Invite Friends</h3>
 
-<div style="
-font-size:13px;
-color:#9FB3D9;
-">
-Kode Referral
-</div>
+<p>
+Earn +25 Ł for every active referral
+</p>
 
 <div id="referralCode"
-style="
-font-size:28px;
-font-weight:700;
-letter-spacing:2px;
-margin-top:5px;
-">
--
+class="referral-link">
+Loading...
 </div>
 
-</div>
-
-<div style="font-size:40px;">
-25+🎁
-</div>
-
-</div>
+<div class="action-row">
 
 <button
-class="auth-btn"
+class="action-btn"
 onclick="copyReferral()">
- Copy Referral Code
+Copy Link
+</button>
+
+<button
+class="action-btn"
+onclick="shareReferral()">
+Share
 </button>
 
 </div>
 
+</div>
 <div class="card">
 
 <div class="menu-grid">
@@ -1859,6 +1961,24 @@ const totalDuration = 43200;
 
 let speedPerSecond =
 totalReward / totalDuration;
+window.addEventListener("load", ()=>{
+
+   const referralFromLink =
+   new URLSearchParams(
+      window.location.search
+   ).get("ref");
+
+   const input =
+   document.getElementById(
+      "referralInput"
+   );
+
+   if(referralFromLink && input){
+      input.value =
+      referralFromLink.toUpperCase();
+   }
+
+});
 async function startMining(){
 
    if(!window.auth.currentUser){
@@ -2316,16 +2436,55 @@ async function logoutUser(){
 
    showToast("👋 Sampai jumpa");
 }
-function copyReferral(){    
-    
- const code =    
- document.getElementById("referralCode")    
- .innerText;    
-    
- navigator.clipboard.writeText(code);    
-    
- showToast("Referral berhasil disalin");    
-}    
+async function copyReferral(){
+
+const link =
+document.getElementById("referralCode")
+.innerText;
+
+await navigator.clipboard
+.writeText(link);
+
+showToast(
+"📋 Referral link berhasil disalin"
+);
+
+}
+async function shareReferral(){
+
+const link =
+document.getElementById("referralCode")
+.innerText;
+
+if(navigator.share){
+
+try{
+
+await navigator.share({
+
+title:"LEXA Network",
+
+text:
+"Join LEXA Network menggunakan referral saya 🚀",
+
+url:link
+
+});
+
+}catch(e){}
+
+}else{
+
+await navigator.clipboard
+.writeText(link);
+
+showToast(
+"📋 Link berhasil disalin"
+);
+
+}
+
+}
 function formatLEXA(amount){  
   
 return "Ł " + shortNumber(Number(amount));  
@@ -2966,14 +3125,19 @@ document.getElementById("profileEmailText")
 .innerText =    
 user.email || "-";    
     
-document.getElementById("profileId")    
-.innerText =    
-"LEXA ID • " +    
-user.uid.substring(0,8).toUpperCase();    
-    
-document.getElementById("referralCode")    
-.innerText =    
-data.referralCode || "-";    
+document.getElementById("profileId")
+.innerText =
+"LEXA ID • " +
+user.uid.substring(0,8).toUpperCase();
+
+const referralLink =
+window.location.origin +
+"/?ref=" +
+(data.referralCode || "");
+
+document.getElementById("referralCode")
+.innerText =
+referralLink;
 
 document.getElementById("homeReferralCount")
 .innerText = referralCount;
