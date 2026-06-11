@@ -1609,11 +1609,11 @@ id="upgradeBonus">
 <div class="page" id="referral">
 
 <div class="card">
-
-<h3>👥 Invite Friends</h3>
+<i class="fa-solid fa-users"></i>
+<h3>Invite Friends</h3>
 
 <p>
-Earn +25 Ł for every active referral
+Earn +7 Ł for every active referral
 </p>
 
 <div id="referralCode"
@@ -2385,17 +2385,18 @@ if(referralUsed){
       referrerDoc.data();
 
       await window.updateDoc(
-         referrerDoc.ref,
-         {
-            referrals:
-            window.increment(1),
+  referrerDoc.ref,
+  {
+    referrals: window.increment(1),
 
-            referredUsers:
-            window.arrayUnion(
-               document.getElementById("username").value
-            )
-         }
-      );
+    balance: window.increment(7),
+
+    referredUsers:
+    window.arrayUnion(
+      document.getElementById("username").value
+    )
+  }
+);
 
    }
 
