@@ -2144,7 +2144,7 @@ let miningSeconds = 43200;
 let miningTimer = null;    
     
 let realBalance = 0;    
-let totalReward = 100;
+let totalReward = 3.5;
 const totalDuration = 43200;
 
 let speedPerSecond =
@@ -2232,7 +2232,7 @@ function startMiningTimer(){
       const s = miningSeconds % 60;
 
       const percent =
-      ((43200 - miningSeconds) / 43200) * 100;
+      ((43200 - miningSeconds) / 43200) * 3.5;
 
       document.getElementById("progressBar")
       .style.width = percent + "%";
@@ -2334,9 +2334,9 @@ uid.substring(0,8).toUpperCase();
 await setDoc(userRef,{
   username: document.getElementById("username").value,
 
-  balance:10,
+  balance:1,
 
-  miningRate:100,
+  miningRate:3.5,
 
   upgrades:{
     miningNode:0,
@@ -2407,7 +2407,7 @@ showToast(
 
 await showConfirm(
    "🎁 Welcome Reward",
-   "Selamat datang di LEXA!\n\n+10 Ł berhasil ditambahkan ke akun Anda."
+   "Selamat datang di LEXA!\n\n+1Ł berhasil ditambahkan ke akun Anda."
 );
 
 switchAuthTab("login");
@@ -2826,32 +2826,32 @@ const upgrades = [
  id:"miningNode",
  name:"🖥️ Mining Node",
  desc:"Meningkatkan efisiensi node mining",
- ratePerLevel:3,
- baseCost:100
+ ratePerLevel:1,
+ baseCost:55
 },
 
 {
  id:"networkRelay",
  name:"📡 Network Relay",
  desc:"Mempercepat distribusi jaringan",
- ratePerLevel:5,
- baseCost:250
+ ratePerLevel:2.5,
+ baseCost:75
 },
 
 {
  id:"powerCore",
  name:"🔋 Power Core",
  desc:"Menambah daya pemrosesan",
- ratePerLevel:10,
- baseCost:500
+ ratePerLevel:3.5,
+ baseCost:125
 },
 
 {
  id:"aiOptimizer",
  name:"🤖 AI Optimizer",
  desc:"AI otomatis mengoptimalkan mining",
- ratePerLevel:20,
- baseCost:1000
+ ratePerLevel:7,
+ baseCost:250
 }
 
 ];
@@ -2967,7 +2967,7 @@ Math.pow(1.35, level)
 );
 
 const currentRate =
-data.miningRate || 100;
+data.miningRate || 3.5;
 
 const addedRate =
 Math.ceil(
@@ -3032,7 +3032,7 @@ user.uid
 );
 
 totalReward =
-updatedData.miningRate || 100;
+updatedData.miningRate || 3.5;
 
 speedPerSecond =
 totalReward / totalDuration;
@@ -3043,7 +3043,7 @@ document.getElementById(
 
 totalReward +
 " Ł / 12H <small>(+" +
-(totalReward - 100) +
+(totalReward - 3.5) +
 ")</small>";
 document.getElementById(
 "upgradeBalance"
@@ -3053,14 +3053,14 @@ formatLEXA(updatedData.balance);
 document.getElementById(
 "upgradeRate"
 ).innerText =
-(updatedData.miningRate || 100) +
+(updatedData.miningRate || 3.5) +
 " Ł / 12H";
 
 document.getElementById(
 "upgradeBonus"
 ).innerText =
 "+" +
-((updatedData.miningRate || 100) - 100) +
+((updatedData.miningRate || 3.5) - 3.5) +
 " Ł";
 showToast(
 "⚡ Upgrade berhasil!"
@@ -3324,22 +3324,22 @@ formatLEXA(data.balance || 0);
 document.getElementById(
 "upgradeRate"
 ).innerText =
-(data.miningRate || 100) +
+(data.miningRate || 3.5) +
 " Ł / 12H";
 
 document.getElementById(
 "upgradeBonus"
 ).innerText =
 "+" +
-((data.miningRate || 100) - 100) +
+((data.miningRate || 3.5) - 3.5) +
 " Ł";
 totalReward =
-data.miningRate || 100;
+data.miningRate || 3.5;
 
 speedPerSecond =
 totalReward / totalDuration;
 
-const baseRate = 100;
+const baseRate = 3.5;
 
 const currentRate =
 data.miningRate || baseRate;
@@ -3414,7 +3414,7 @@ document.getElementById("activeReferral")
 .innerText = referralCount;
 
 document.getElementById("totalRewardReferral")
-.innerText = referralCount * 25;
+.innerText = referralCount * 7;
 
 let level = "🔹 Explorer";
 
@@ -3554,7 +3554,7 @@ document.getElementById("progressBar")
     MAX_SECONDS - elapsedSeconds;
 
     const percent =
-    (elapsedSeconds / MAX_SECONDS) * 100;
+    (elapsedSeconds / MAX_SECONDS) * 3.5;
 
     document.getElementById("progressBar")
     .style.width = percent + "%";
