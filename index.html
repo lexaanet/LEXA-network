@@ -322,7 +322,38 @@ color:#9FB3D9;
  font-size:30px;    
  font-weight:700;    
 }    
+.task-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px;
+margin-bottom:12px;
+border-radius:14px;
+background:rgba(255,255,255,.03);
+}
 
+.task-info{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.task-icon{
+font-size:24px;
+width:28px;
+text-align:center;
+}
+
+.task-item button{
+padding:8px 18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+.task-item button:disabled{
+opacity:.6;
+}
    
 .profile-btn:hover{  
 transform:  
@@ -1179,6 +1210,79 @@ text-shadow:
 0 0 12px rgba(110,200,255,.7);
 
 }
+.checkin-card{
+    position:relative;
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+    135deg,
+    rgba(0,120,255,.15),
+    rgba(0,255,255,.08)
+    );
+
+    border:1px solid
+    rgba(0,255,255,.25);
+
+    box-shadow:
+    0 0 10px rgba(0,150,255,.2);
+
+    animation:
+    pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow{
+
+0%{
+box-shadow:
+0 0 8px rgba(0,150,255,.2);
+}
+
+50%{
+box-shadow:
+0 0 20px rgba(0,200,255,.5),
+0 0 40px rgba(0,120,255,.25);
+}
+
+100%{
+box-shadow:
+0 0 8px rgba(0,150,255,.2);
+}
+
+}
+.checkin-card::before{
+content:"";
+position:absolute;
+top:0;
+left:-150%;
+
+width:50%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.15),
+transparent
+);
+
+animation:
+shine 4s infinite;
+}
+
+@keyframes shine{
+
+0%{
+left:-150%;
+}
+
+100%{
+left:200%;
+}
+
+}
+
 .power-summary{
 
 display:grid;
@@ -1508,28 +1612,49 @@ Belum ada referral
     
 <div class="page" id="missions">    
     
-<h2>Daily Missions</h2>    
-    
-<div class="card">    
-📢 Follow Telegram    
-<br>    
-Reward: +10 LEXA    
-</div>    
-    
-<div class="card">    
-🐦 Follow X    
-<br>    
-Reward: +10 LEXA    
-</div>    
-    
-<div class="card">    
-📘 Join Facebook    
-<br>    
-Reward: +10 LEXA    
-</div>    
-    
+<div class="card checkin-card">
+
+<h3>📅 Daily Check-In</h3>
+
+<div class="streak-info">
+
+<div id="streakText">
+🔥 Day 0 / 7
 </div>
 
+<div id="checkinStatus">
+
+Claim harian +1 LEXA
+
+<br>
+
+🔥 7 hari berturut-turut
+= Bonus +7 LEXA
+
+</div>
+
+</div>
+
+<button
+id="checkinBtn"
+class="action-btn"
+onclick="claimCheckin()">
+
+Claim +1 LEXA
+
+</button>
+
+</div>
+<div class="card">
+
+<h3>
+<i class="fa-solid fa-bullseye"></i>
+Social Tasks
+</h3>
+
+<div id="taskList"></div>
+
+</div>
 <!-- IMPROVE -->
 
 <div id="improve" class="page">
@@ -2332,31 +2457,35 @@ const referralCode =
 uid.substring(0,8).toUpperCase();
 
 await setDoc(userRef,{
-  username: document.getElementById("username").value,
+    username: document.getElementById("username").value,
 
-  balance:1,
+    balance:1,
 
-  miningRate:3.5,
+miningRate:3.5,
 
-  upgrades:{
-    miningNode:0,
-    networkRelay:0,
-    powerCore:0,
-    aiOptimizer:0
-  },
+completedTasks:[],
 
-  miningStart:0,
-  miningActive:false,
+streak:0,
+lastCheckin:0,
 
-  referredBy: referralUsed || "",
+    upgrades:{
+        miningNode:0,
+        networkRelay:0,
+        powerCore:0,
+        aiOptimizer:0
+    },
 
-  referralCode: referralCode,
+    miningStart:0,
+    miningActive:false,
 
-  referrals:0,
+    referredBy: referralUsed || "",
 
-  referredUsers:[]
+    referralCode: referralCode,
+
+    referrals:0,
+
+    referredUsers:[]
 });
-
 
 // PROSES REFERRAL
 if(referralUsed){
@@ -3125,6 +3254,248 @@ window.open(
 );
 
 }
+const tasks = [
+
+{
+  id:"telegram",
+  icon:"fa-brands fa-telegram",
+  title:"Join Telegram",
+  reward:7,
+  url:"https://t.me/lexa_network"
+},
+
+{
+  id:"twitter",
+  icon:"fa-brands fa-x-twitter",
+  title:"Follow X",
+  reward:7,
+  url:"https://x.com/lexaprotocol"
+},
+
+{
+  id:"facebook",
+  icon:"fa-brands fa-facebook-f",
+  title:"Follow Facebook",
+  reward:7,
+  url:"https://www.facebook.com/lexalabs77"
+}
+
+];
+function renderTasks(userData){
+
+const completed =
+userData.completedTasks || [];
+
+const container =
+document.getElementById("taskList");
+
+container.innerHTML = "";
+
+tasks.forEach(task => {
+
+const done =
+completed.includes(task.id);
+
+container.innerHTML += `
+
+<div class="task-item">
+
+<div class="task-info">
+
+<i class="${task.icon} task-icon"></i>
+
+<div>
+<div>${task.title}</div>
+<small>Reward +${task.reward} LEXA</small>
+</div>
+
+</div>
+
+${
+done
+?
+`<button disabled>✓ Claimed</button>`
+:
+`<button id="btn-${task.id}"
+onclick="startTask('${task.id}')">
+Go
+</button>`
+}
+
+</div>
+
+`;
+
+});
+
+}
+function startTask(taskId){
+
+const task =
+tasks.find(t => t.id === taskId);
+
+window.open(task.url,"_blank");
+
+const btn =
+document.getElementById("btn-" + taskId);
+
+btn.disabled = true;
+
+let sec = 15;
+
+btn.innerText = `Wait ${sec}s`;
+
+const timer = setInterval(()=>{
+
+sec--;
+
+btn.innerText = `Wait ${sec}s`;
+
+if(sec <= 0){
+
+clearInterval(timer);
+
+btn.disabled = false;
+btn.innerText = "Claim";
+
+btn.onclick = () => claimTask(taskId);
+
+}
+
+},1000);
+
+}
+async function claimTask(taskId){
+
+const task =
+tasks.find(t => t.id === taskId);
+
+await updateDoc(
+doc(db,"users",uid),
+{
+balance: increment(task.reward),
+
+completedTasks:
+arrayUnion(taskId)
+}
+);
+
+showToast(
+`🎉 +${task.reward} LEXA`
+);
+
+const userData =
+await loadUserData(uid);
+
+renderTasks(userData);
+
+}
+async function claimCheckin(){
+
+const user =
+window.auth.currentUser;
+
+if(!user) return;
+
+const ref =
+window.doc(
+window.db,
+"users",
+user.uid
+);
+
+const snap =
+await window.getDoc(ref);
+
+const data =
+snap.data();
+
+const now =
+Date.now();
+
+const oneDay =
+86400000;
+
+if(
+data.lastCheckin &&
+(now - data.lastCheckin)
+< oneDay
+){
+
+showToast(
+"Sudah check-in hari ini"
+);
+
+return;
+
+}
+
+let streak =
+data.streak || 0;
+
+if(
+data.lastCheckin &&
+(now - data.lastCheckin)
+< (oneDay * 2)
+){
+
+streak++;
+
+}else{
+
+streak = 1;
+
+}
+
+let reward = 1;
+
+if(streak >= 7){
+
+reward += 7;
+
+streak = 0;
+
+showToast(
+"🎉 Bonus Streak +7 LEXA"
+);
+
+}
+
+await window.updateDoc(
+ref,
+{
+balance:
+window.increment(reward),
+
+lastCheckin:
+now,
+
+streak:
+streak
+}
+);
+
+document.getElementById(
+"streakText"
+).innerText =
+"🔥 Day " +
+streak +
+" / 7";
+
+document.getElementById(
+"checkinBtn"
+).disabled = true;
+
+document.getElementById(
+"checkinBtn"
+).innerText =
+"✅ Claimed Today";
+
+showToast(
+"+" + reward + " LEXA"
+);
+
+}
 
 function showPage(id, el){
 
@@ -3321,6 +3692,44 @@ document.getElementById(
 "upgradeBalance"
 ).innerText =
 formatLEXA(data.balance || 0);
+
+document.getElementById(
+"streakText"
+).innerText =
+"🔥 Day " +
+(data.streak || 0) +
+" / 7";
+
+const now = Date.now();
+const oneDay = 86400000;
+
+if(
+data.lastCheckin &&
+(now - data.lastCheckin) < oneDay
+){
+
+document.getElementById(
+"checkinBtn"
+).disabled = true;
+
+document.getElementById(
+"checkinBtn"
+).innerText =
+"✅ Claimed Today";
+
+}
+else{
+
+document.getElementById(
+"checkinBtn"
+).disabled = false;
+
+document.getElementById(
+"checkinBtn"
+).innerText =
+"Claim +1 LEXA";
+
+}
 
 document.getElementById(
 "upgradeRate"
