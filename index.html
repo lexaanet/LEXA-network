@@ -1248,8 +1248,6 @@ box-shadow:
 box-shadow:
 0 0 8px rgba(0,150,255,.2);
 }
-
-}
 .checkin-card::before{
 content:"";
 position:absolute;
@@ -1279,8 +1277,6 @@ left:-150%;
 
 100%{
 left:200%;
-}
-
 }
 
 .power-summary{
@@ -3688,6 +3684,7 @@ const data = await window.loadUserData(uid);
 
 const referralCount =
 data.referrals || 0;
+renderTasks(data);
 document.getElementById(
 "upgradeBalance"
 ).innerText =
