@@ -1211,106 +1211,37 @@ text-shadow:
 
 }
 .checkin-card{
-position:relative;
-
-padding:22px;
-margin-bottom:20px;
-
-border-radius:24px;
-
-background:linear-gradient(
-135deg,
-rgba(17,34,74,.95),
-rgba(8,18,48,.95)
-);
-
-border:1px solid rgba(0,180,255,.18);
-
-box-shadow:
-0 10px 30px rgba(0,120,255,.15);
-
-overflow:hidden;
-}
-
-.checkin-card::before{
-content:"";
-
-position:absolute;
-top:0;
-left:0;
-right:0;
-
-height:3px;
-
-background:linear-gradient(
-90deg,
-#2b5cff,
-#22d7ff,
-#2b5cff
-);
-}
-
-.checkin-card h3{
-margin:0 0 18px;
-font-size:1.6rem;
-font-weight:700;
-color:#fff;
-}
-
-.checkin-card .action-btn{
-margin-top:18px;
-width:100%;
-}
-.checkin-card::after{
-content:"";
-
-position:absolute;
-
-top:-80px;
-right:-80px;
-
-width:180px;
-height:180px;
-
-border-radius:50%;
-
-background:
-radial-gradient(
-rgba(0,200,255,.12),
-transparent 70%
-);
-
-pointer-events:none;
+    padding:20px;
+    border-radius:18px;
+    background:#101c35;
+    border:1px solid rgba(255,255,255,.08);
 }
 .checkin-days{
-display:flex;
-gap:8px;
-margin:18px 0;
-justify-content:space-between;
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    margin:16px 0;
 }
 
 .day{
-width:42px;
-height:42px;
-border-radius:12px;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-background:#12254b;
-color:#7faeff;
-font-weight:bold;
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+    background:#16284d;
+    color:#fff;
+    font-weight:700;
 }
 
 .day.active{
-background:linear-gradient(135deg,#2b59ff,#28d8ff);
-color:#fff;
+    background:#2d7cff;
 }
 
 .day.bonus{
-background:#ffb300;
-color:#111;
+    background:#ffb300;
+    color:#111;
 }
 
 .power-summary{
