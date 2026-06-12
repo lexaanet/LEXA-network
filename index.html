@@ -2385,7 +2385,7 @@ function startMiningTimer(){
       const s = miningSeconds % 60;
 
       const percent =
-      ((43200 - miningSeconds) / 43200) * 3.5;
+      ((43200 - miningSeconds) / 43200) * 100;
 
       document.getElementById("progressBar")
       .style.width = percent + "%";
@@ -3771,7 +3771,7 @@ document.querySelectorAll(".day").forEach((el, i) => {
     }
 
 });
-
+renderTasks(data);
 const now = Date.now();
 const oneDay = 86400000;
 
@@ -4034,7 +4034,7 @@ document.getElementById("progressBar")
     MAX_SECONDS - elapsedSeconds;
 
     const percent =
-    (elapsedSeconds / MAX_SECONDS) * 3.5;
+    (elapsedSeconds / MAX_SECONDS) * 100;
 
     document.getElementById("progressBar")
     .style.width = percent + "%";
@@ -4056,7 +4056,7 @@ document.getElementById("progressBar")
     .style.display = "block";
 
     startMiningTimer();
-renderTasks(data);
+
 }
 }    
       document.getElementById("authPage")    
