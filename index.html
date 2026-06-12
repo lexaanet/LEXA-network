@@ -777,7 +777,83 @@ Logout
 </div>
 
 </div>
-</div> <!-- page profile -->
+<!-- USERNAME MODAL -->
+<div id="usernameModal" class="modal-overlay">
+
+  <div class="modal-box">
+
+    <div class="modal-title">
+      ✏️ Change Username
+    </div>
+
+    <div class="modal-sub">
+      Username hanya dapat diubah 1 kali.
+    </div>
+
+    <input
+      id="usernameInput"
+      class="modal-input"
+      type="text"
+      placeholder="Masukkan username baru">
+
+    <div class="modal-actions">
+
+      <button
+        class="modal-btn cancel"
+        onclick="closeUsernameModal()">
+        Cancel
+      </button>
+
+      <button
+        class="modal-btn save"
+        onclick="changeUsername()">
+        Save
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- EMAIL MODAL -->
+<div id="emailModal" class="modal-overlay">
+
+  <div class="modal-box">
+
+    <div class="modal-title">
+      📧 Change Email
+    </div>
+
+    <div class="modal-sub">
+      Link verifikasi akan dikirim ke email baru.
+    </div>
+
+    <input
+      id="newEmailInput"
+      class="modal-input"
+      type="email"
+      placeholder="Email baru">
+
+    <div class="modal-actions">
+
+      <button
+        class="modal-btn cancel"
+        onclick="closeEmailModal()">
+        Cancel
+      </button>
+
+      <button
+        class="modal-btn save"
+        onclick="changeEmail()">
+        Save
+      </button>
+
+    </div>
+
+  </div>
+</div>
+</div>
 <div id="faq" class="page">
 
 <h2 class="page-title">

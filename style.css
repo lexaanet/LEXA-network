@@ -11,7 +11,191 @@
  padding:0;    
  box-sizing:border-box;    
 }    
+/* ===== MODAL ===== */
 
+.modal-overlay{
+
+position:fixed;
+inset:0;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:rgba(0,8,25,.75);
+backdrop-filter:blur(8px);
+
+opacity:0;
+visibility:hidden;
+
+transition:.28s;
+
+z-index:99999;
+
+}
+
+.modal-overlay.show{
+
+opacity:1;
+visibility:visible;
+
+}
+
+.modal-box{
+
+width:90%;
+max-width:380px;
+
+padding:24px;
+
+border-radius:22px;
+
+background:
+linear-gradient(
+180deg,
+rgba(16,34,92,.95),
+rgba(4,16,48,.96)
+);
+
+border:1px solid rgba(65,170,255,.35);
+
+box-shadow:
+0 0 35px rgba(0,140,255,.25);
+
+transform:scale(.85);
+transition:.28s;
+
+}
+
+.modal-overlay.show .modal-box{
+
+transform:scale(1);
+
+}
+
+.modal-title{
+
+font-size:22px;
+font-weight:700;
+
+color:#fff;
+
+margin-bottom:8px;
+
+}
+
+.modal-sub{
+
+color:#8ebcff;
+
+font-size:14px;
+
+margin-bottom:18px;
+
+line-height:1.5;
+
+}
+
+.modal-input{
+
+width:100%;
+
+padding:14px 16px;
+
+border:none;
+
+outline:none;
+
+border-radius:14px;
+
+background:#081935;
+
+color:#fff;
+
+font-size:16px;
+
+box-sizing:border-box;
+
+border:1px solid rgba(80,170,255,.2);
+
+}
+
+.modal-input:focus{
+
+border-color:#24b9ff;
+
+box-shadow:0 0 15px rgba(36,185,255,.35);
+
+}
+
+.modal-actions{
+
+display:flex;
+
+gap:12px;
+
+margin-top:22px;
+
+}
+
+.modal-btn{
+
+flex:1;
+
+padding:13px;
+
+border:none;
+
+border-radius:14px;
+
+font-weight:700;
+
+font-size:15px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.modal-btn.cancel{
+
+background:#16274b;
+
+color:#b9d8ff;
+
+}
+
+.modal-btn.cancel:hover{
+
+background:#203761;
+
+}
+
+.modal-btn.save{
+
+background:
+linear-gradient(
+135deg,
+#1f6fff,
+#19c4ff
+);
+
+color:#fff;
+
+box-shadow:
+0 0 18px rgba(33,170,255,.35);
+
+}
+
+.modal-btn.save:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+0 8px 24px rgba(33,170,255,.45);
+
+}
 .mining-card::after{    
 content:"";    
     
@@ -153,11 +337,11 @@ body::before{
   font-size:12px;
   opacity:.7;
 } 
-.page{
-    display:none;
-    width:100%;
-    min-height:100vh;
-}
+.page{    
+ display:none;    
+ padding:20px;    
+ padding-bottom:90px;    
+}    
 
 .page.active{
     display:block;
@@ -302,9 +486,6 @@ color:#9FB3D9;
  pointer-events:none;    
 }    
   
-.page.active{    
- display:block;    
-}    
 .balance{    
  display:flex;    
  align-items:center;    
