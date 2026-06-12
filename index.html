@@ -3438,6 +3438,56 @@ showToast(
 }
 
 }
+
+function updateCheckinUI(streak){
+
+let currentDay;
+
+if(streak === 0){
+
+currentDay = 0;
+
+}else{
+
+currentDay = streak % 7;
+
+if(currentDay === 0){
+currentDay = 7;
+}
+
+}
+
+document.querySelectorAll(".checkin-days .day")
+.forEach((el,i)=>{
+
+el.classList.remove("active");
+
+if(i < 6){
+
+if(i < currentDay){
+
+el.classList.add("active");
+el.innerText = "✓";
+
+}else{
+
+el.innerText = i + 1;
+
+}
+
+}else{
+
+el.innerText = "🎁";
+
+if(currentDay === 7){
+el.classList.add("active");
+}
+
+}
+
+});
+
+}
 async function claimCheckin(){
 
 const user = window.auth.currentUser;
@@ -3491,7 +3541,7 @@ balance: window.increment(reward),
 lastCheckin: now,
 streak: streak
 });
-
+updateCheckinUI(streak);
 document.getElementById("checkinBtn").disabled = true;
 document.getElementById("checkinBtn").innerText = "Claimed Today";
 
@@ -3726,34 +3776,8 @@ formatLEXA(data.balance || 0);
 
 renderTasks(data);
 
-const streak = data.streak || 0;
+updateCheckinUI(data.streak || 0);
 
-const currentDay = (streak % 7) || 7;
-
-document.querySelectorAll(".checkin-days .day").forEach((el,i)=>{
-
-el.classList.remove("active");
-
-if(i < 6){
-
-if(i < currentDay - 1){
-el.classList.add("active");
-el.innerText = "✓";
-}else{
-el.innerText = i + 1;
-}
-
-}else{
-
-el.innerText = "🎁";
-
-if(currentDay === 7){
-el.classList.add("active");
-}
-
-}
-
-});
 const now = Date.now();
 const oneDay = 86400000;
 
