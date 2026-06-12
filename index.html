@@ -1547,7 +1547,7 @@ onclick="showPage('profile')">
 
    <div>
       <div class="label">Rate</div>
-      <div id="miningRateText">100 Ł</div>
+      <div id="miningRateText">3.5Ł</div>
    </div>
 
    <div>
@@ -3523,12 +3523,7 @@ streak
 }
 );
 
-document.getElementById(
-"streakText"
-).innerText =
-" Day " +
-streak +
-" / 7";
+
 
 document.getElementById(
 "checkinBtn"
@@ -3742,12 +3737,8 @@ document.getElementById(
 ).innerText =
 formatLEXA(data.balance || 0);
 
-document.getElementById("streakText").innerText =
-"🔥 Day " +
-(data.streak || 0) +
-" / 7";
-
 renderTasks(data);
+
 const now = Date.now();
 const oneDay = 86400000;
 
