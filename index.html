@@ -3433,49 +3433,34 @@ renderTasks(userData);
 
 function updateCheckinUI(streak){
 
-let currentDay;
+let currentDay = streak % 7;
 
-if(streak === 0){
-
-currentDay = 0;
-
-}else{
-
-currentDay = streak % 7;
-
-if(currentDay === 0){
-currentDay = 7;
+if(currentDay === 0 && streak > 0){
+    currentDay = 7;
 }
 
-}
+document.querySelectorAll(".day").forEach((el,i)=>{
 
-document.querySelectorAll(".checkin-days .day")
-.forEach((el,i)=>{
+    el.classList.remove("active");
 
-el.classList.remove("active");
+    if(i < 6){
 
-if(i < 6){
+        if(i < currentDay){
+            el.classList.add("active");
+            el.innerText = "✓";
+        }else{
+            el.innerText = i + 1;
+        }
 
-if(i < currentDay){
+    }else{
 
-el.classList.add("active");
-el.innerText = "✓";
+        el.innerText = "🎁";
 
-}else{
+        if(currentDay === 7){
+            el.classList.add("active");
+        }
 
-el.innerText = i + 1;
-
-}
-
-}else{
-
-el.innerText = "🎁";
-
-if(currentDay === 7){
-el.classList.add("active");
-}
-
-}
+    }
 
 });
 
