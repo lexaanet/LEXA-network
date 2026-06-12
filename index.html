@@ -1229,6 +1229,37 @@ box-shadow:
 }
 
 }
+.checkin-days{
+display:flex;
+gap:8px;
+margin:18px 0;
+justify-content:space-between;
+}
+
+.day{
+width:42px;
+height:42px;
+border-radius:12px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:#12254b;
+color:#7faeff;
+font-weight:bold;
+}
+
+.day.active{
+background:linear-gradient(135deg,#2b59ff,#28d8ff);
+color:#fff;
+}
+
+.day.bonus{
+background:#ffb300;
+color:#111;
+}
+
 .power-summary{
 
 display:grid;
@@ -1560,23 +1591,23 @@ Belum ada referral
     
 <div class="card checkin-card">
 
-<h3> Daily Check-In</h3>
+<h3> Daily Check-in</h3>
 
-<div class="streak-info">
+<div class="checkin-days">
 
-<div id="streakText">
-Day 0 / 7
+<div class="day active">✓</div>
+<div class="day">2</div>
+<div class="day">3</div>
+<div class="day">4</div>
+<div class="day">5</div>
+<div class="day">6</div>
+<div class="day bonus">+7🎁</div>
+
 </div>
 
-<div id="checkinStatus">
-
-Claim harian +1 LEXA
-
-<br>
-
- 7 hari berturut-turut
-= Bonus +7 LEXA
-
+<div class="reward-text">
+Today's Reward
+<b>+1 LEXA</b>
 </div>
 
 </div>
@@ -3444,7 +3475,7 @@ streak
 document.getElementById(
 "streakText"
 ).innerText =
-"🔥 Day " +
+" Day " +
 streak +
 " / 7";
 
@@ -3455,7 +3486,7 @@ document.getElementById(
 document.getElementById(
 "checkinBtn"
 ).innerText =
-"✅ Claimed Today";
+"Claimed Today";
 
 showToast(
 "+" + reward + " LEXA"
@@ -3660,12 +3691,16 @@ document.getElementById(
 ).innerText =
 formatLEXA(data.balance || 0);
 
-document.getElementById(
-"streakText"
-).innerText =
+document.getElementById("streakText").innerText =
 "🔥 Day " +
 (data.streak || 0) +
 " / 7";
+
+const streak = data.streak || 0;
+
+document.querySelectorAll(".day").forEach((el, i) => {
+    el.classList.toggle("active", i < streak);
+});
 
 const now = Date.now();
 const oneDay = 86400000;
