@@ -3690,7 +3690,31 @@ document.getElementById(
 ).innerText =
 formatLEXA(data.balance || 0);
 
-else{
+document.getElementById(
+"streakText"
+).innerText =
+"🔥 Day " +
+(data.streak || 0) +
+" / 7";
+
+const now = Date.now();
+const oneDay = 86400000;
+
+if(
+data.lastCheckin &&
+(now - data.lastCheckin) < oneDay
+){
+
+document.getElementById(
+"checkinBtn"
+).disabled = true;
+
+document.getElementById(
+"checkinBtn"
+).innerText =
+"✅ Claimed Today";
+
+}else{
 
 document.getElementById(
 "checkinBtn"
@@ -3700,8 +3724,6 @@ document.getElementById(
 "checkinBtn"
 ).innerText =
 "Claim +1 LEXA";
-
-}
 
 document.getElementById(
 "upgradeRate"
@@ -3919,32 +3941,6 @@ View Team
         document.getElementById("balanceValue")    
 .innerText =    
 formatLEXA(realBalance);    
-
-document.getElementById(
-"streakText"
-).innerText =
-"🔥 Day " +
-(data.streak || 0) +
-" / 7";
-
-const now = Date.now();
-const oneDay = 86400000;
-
-if(
-data.lastCheckin &&
-(now - data.lastCheckin) < oneDay
-){
-
-document.getElementById(
-"checkinBtn"
-).disabled = true;
-
-document.getElementById(
-"checkinBtn"
-).innerText =
-"✅ Claimed Today";
-
-}
 
        document.getElementById("statusText")    
 .innerText = "READY";    
