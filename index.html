@@ -2278,6 +2278,8 @@ async function uploadAvatar(file){
     );
 
     const data = await res.json();
+console.log(data);
+alert(JSON.stringify(data));
 
     if(!data.secure_url){
         showToast("Upload gagal");
