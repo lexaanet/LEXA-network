@@ -3514,10 +3514,11 @@ showToast(
 }
 
 await window.updateDoc(ref,{
-balance: window.increment(reward),
-lastCheckin: now,
-streak: streak
+    balance: window.increment(reward),
+    lastCheckin: now,
+    streak: streak
 });
+
 realBalance += reward;
 
 document.getElementById("balanceValue").innerText =
@@ -3525,36 +3526,11 @@ formatLEXA(realBalance);
 
 document.getElementById("upgradeBalance").innerText =
 formatLEXA(realBalance);
+
 updateCheckinUI(streak);
+
 document.getElementById("checkinBtn").disabled = true;
 document.getElementById("checkinBtn").innerText = "Claimed Today";
-
-// Update kotak hari
-
-el.classList.remove("active");
-
-if(i < 6){
-
-const current = streak % 7 || 7;
-
-if(i < current - 1){
-el.classList.add("active");
-el.innerText = "✓";
-}else{
-el.innerText = i + 1;
-}
-
-}else{
-
-el.innerText = "🎁";
-
-if(streak % 7 === 0){
-el.classList.add("active");
-}
-
-}
-
-});
 
 showToast("+" + reward + " LEXA");
 
