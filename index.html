@@ -79,7 +79,7 @@ onclick="showPage('profile')">
   <span id="balanceValue">0</span>  
   
   <span class="balance-unit">  
-    LEXA◈
+    LEXA
   </span>  
   
 </div>  
@@ -650,6 +650,7 @@ Buat Akun
 </div>  
 
 <div id="memberProfile" style="display:none;">
+
 <div class="profile-header">
 
 <div class="profile-avatar-box">
@@ -666,8 +667,7 @@ accept="image/*"
 style="display:none"
 onchange="uploadAvatar(this.files[0])">
 
-<button
-class="change-avatar"
+<button class="change-avatar"
 onclick="document.getElementById('avatarInput').click()">
 
 <i class="fa-solid fa-camera"></i>
@@ -676,149 +676,105 @@ onclick="document.getElementById('avatarInput').click()">
 
 </div>
 
-<button
-class="logout-mini"
-onclick="logoutUser()">
-⎋ Logout
-</button>
-
-<div class="profile-name"
-id="profileName">
+<div class="profile-name" id="profileName">
 Member
 </div>
-    
-<div class="profile-email"    
-id="profileEmail">    
--    
-</div>    
-    
+
+<div class="profile-email" id="profileEmail">
+-
+</div>
+
 <div class="profile-id" id="profileId">
 LEXA ID
 </div>
+
 </div>
 
-<div class="profile-item">    
-    
-<div class="profile-title">    
-👤 Username    
-</div>    
-    
-<div class="profile-sub"    
-id="profileUsername">    
--    
-</div>    
-    
-<button
-class="profile-action mini-btn"
+
+<div class="profile-card">
+
+<div class="profile-item"
 onclick="openUsernameModal()">
 
-✏️ Edit
+<div>
 
-</button>
-    
-</div>    
-  
-<div class="profile-item">    
-    
-<div class="profile-title">    
-📧 Email    
-</div>    
-    
-<div class="profile-sub"    
-id="profileEmailText">    
--    
-</div>    
-    
-<button
-class="profile-action mini-btn"
-onclick="openEmailModal()">
-📧 Ganti Email
-</button>
-    
-</div>    
-    
+<div class="profile-label">
+Username
 </div>
-</div> 
-<div id="usernameModal" class="confirm-overlay">
 
-  <div class="confirm-box">
+<div class="profile-value"
+id="profileUsername">
+-
+</div>
 
-    <div class="confirm-title">
-      ✏️ Ubah Username
-    </div>
+</div>
 
-    <div class="confirm-message">
-      Username hanya dapat diubah satu kali.
-    </div>
+<i class="fa-solid fa-chevron-right"></i>
 
-    <input
-      id="usernameInput"
-      type="text"
-      placeholder="Masukkan username baru"
-      style="
-      width:100%;
-      padding:14px;
-      border:none;
-      border-radius:14px;
-      background:#06162f;
-      color:#fff;
-      outline:none;
-      margin-bottom:18px;
-      ">
+</div>
 
-    <div class="confirm-actions">
 
-      <button
-      class="confirm-btn cancel-btn"
-      onclick="closeUsernameModal()">
-      Batal
-      </button>
+<div class="profile-item"
+onclick="openEmailModal()">
 
-      <button
-      class="confirm-btn ok-btn"
-      onclick="changeUsername()">
-      Simpan
-      </button>
+<div>
 
-    </div>
+<div class="profile-label">
+Email
+</div>
 
-  </div>
+<div class="profile-value"
+id="profileEmailText">
+-
+</div>
 
-</div>  
-<div id="emailModal" class="confirm-overlay">
+</div>
 
-  <div class="confirm-box">
+<i class="fa-solid fa-chevron-right"></i>
 
-    <div class="confirm-title">
-      📧 Ganti Email
-    </div>
+</div>
 
-    <div class="confirm-message">
-      Masukkan email baru.
-    </div>
 
-    <input
-    id="newEmailInput"
-    type="email"
-    placeholder="emailbaru@gmail.com">
+<div class="profile-item"
+onclick="resetPassword()">
 
-    <div class="confirm-actions">
+<div>
 
-      <button
-      class="confirm-btn cancel-btn"
-      onclick="closeEmailModal()">
-      Batal
-      </button>
+<div class="profile-label">
+Password
+</div>
 
-<button
-class="confirm-btn ok-btn"
-onclick="changeEmail()">
-Simpan
-</button>
+<div class="profile-value">
+Change Password
+</div>
 
-    </div>
+</div>
 
-  </div>
+<i class="fa-solid fa-chevron-right"></i>
+
+</div>
+
+</div>
+
+
+<div class="logout-card">
+
+<div class="profile-item logout-item"
+onclick="logoutUser()">
+
+<div>
+
+<div class="profile-value">
+Logout
+</div>
+
+</div>
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+</div>
+
+</div>
 
 </div>
 <div id="faq" class="page">
@@ -2489,12 +2445,7 @@ document.getElementById("memberProfile").style.display = "block";
     
       const uid = user.uid;
 const data = await window.loadUserData(uid);
-if(user.photoURL){
 
-    document.getElementById("profileAvatar").src =
-    user.photoURL;
-
-}
 const referralCount =
 data.referrals || 0;
 
