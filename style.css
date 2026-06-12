@@ -153,11 +153,15 @@ body::before{
   font-size:12px;
   opacity:.7;
 } 
-.page{    
- display:none;    
- padding:20px;    
- padding-bottom:90px;    
-}    
+.page{
+    display:none;
+    width:100%;
+    min-height:100vh;
+}
+
+.page.active{
+    display:block;
+}
   
 #balanceValue{    
  text-shadow:0 0 15px rgba(0,212,255,.5);    
