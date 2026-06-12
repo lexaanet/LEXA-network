@@ -90,29 +90,6 @@ visibility:visible;
     position:relative;
     overflow:hidden;
 }
-.mini-btn{
-    width:100%;
-    padding:16px;
-    margin-top:14px;
-
-    border-radius:18px;
-    border:1px solid rgba(70,180,255,.28);
-
-    background:rgba(255,255,255,.05);
-    color:#8fdcff;
-
-    font-size:17px;
-    font-weight:700;
-
-    backdrop-filter:blur(14px);
-
-    transition:.25s;
-}
-
-.mini-btn:hover{
-    background:rgba(40,170,255,.12);
-    border-color:#33c6ff;
-}
 .auth-btn::before{
     content:"";
     position:absolute;
@@ -511,7 +488,37 @@ font-size:18px;
 color:#9FB3D9;  
 margin-bottom:6px;  
 }  
-  
+.profile-action{
+    width:100%;
+    padding:16px 20px;
+    margin-top:14px;
+
+    border:none;
+    border-radius:18px;
+
+    background:linear-gradient(135deg,#2f63ff,#19c9ff);
+    color:#fff;
+
+    font-size:17px;
+    font-weight:700;
+
+    cursor:pointer;
+    transition:.25s ease;
+
+    box-shadow:
+        0 8px 24px rgba(32,132,255,.28),
+        inset 0 1px 0 rgba(255,255,255,.15);
+}
+
+.profile-action:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 12px 30px rgba(32,132,255,.4);
+}
+
+.profile-action:active{
+    transform:scale(.98);
+}  
 .mine-info{  
 margin-top:18px;  
   
@@ -2014,7 +2021,7 @@ cursor:pointer;
 }
 .profile-signature{
     margin-top:18px;
-    text-align:center;
+    text-align:left;
     color:#6ba9ff;
     font-size:12px;
     letter-spacing:2px;
@@ -2022,7 +2029,7 @@ cursor:pointer;
 }
 .profile-item{
     display:flex;
-    align-items:center;
+    align-items:flex-start;
     justify-content:space-between;
 
     padding:16px 18px;
