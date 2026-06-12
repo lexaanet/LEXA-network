@@ -3440,103 +3440,90 @@ showToast(
 }
 async function claimCheckin(){
 
-const user =
-window.auth.currentUser;
-
+const user = window.auth.currentUser;
 if(!user) return;
 
-const ref =
-window.doc(
-window.db,
-"users",
-user.uid
-);
+const ref = window.doc(window.db,"users",user.uid);
+const snap = await window.getDoc(ref);
+const data = snap.data();
 
-const snap =
-await window.getDoc(ref);
+const now = Date.now();
+const oneDay = 86400000;
 
-const data =
-snap.data();
-
-const now =
-Date.now();
-
-const oneDay =
-86400000;
-
+// Sudah claim hari ini
 if(
 data.lastCheckin &&
-(now - data.lastCheckin)
-< oneDay
+(now - data.lastCheckin) < oneDay
 ){
+showToast("Sudah check-in hari ini");
+return;
+}
+
+let streak = data.streak || 0;
+
+// Lanjut streak jika tidak lewat 48 jam
+if(
+data.lastCheckin &&
+(now - data.lastCheckin) < (oneDay * 2)
+){
+streak++;
+}else{
+streak = 1;
+}
+
+// Reward harian
+let reward = 1;
+
+// Bonus setiap kelipatan 7
+if(streak % 7 === 0){
+
+reward += streak;
 
 showToast(
-"Sudah check-in hari ini"
+"🎉 Day " + streak +
+" Bonus +" + streak + " LEXA"
 );
-
-return;
 
 }
 
-let streak =
-data.streak || 0;
+await window.updateDoc(ref,{
+balance: window.increment(reward),
+lastCheckin: now,
+streak: streak
+});
 
-if(
-data.lastCheckin &&
-(now - data.lastCheckin)
-< (oneDay * 2)
-){
+document.getElementById("checkinBtn").disabled = true;
+document.getElementById("checkinBtn").innerText = "Claimed Today";
 
-streak++;
+// Update kotak hari
+document.querySelectorAll(".checkin-days .day").forEach((el,i)=>{
+
+el.classList.remove("active");
+
+if(i < 6){
+
+const current = streak % 7 || 7;
+
+if(i < current - 1){
+el.classList.add("active");
+el.innerText = "✓";
+}else{
+el.innerText = i + 1;
+}
 
 }else{
 
-streak = 1;
+el.innerText = "🎁";
+
+if(streak % 7 === 0){
+el.classList.add("active");
+}
 
 }
 
-let reward = 1;
+});
 
-if(streak >= 7){
-
-reward += 7;
-
-streak = 0;
-
-showToast(
-"🎉 Bonus Streak +7 LEXA"
-);
-
-}
-
-await window.updateDoc(
-ref,
-{
-balance:
-window.increment(reward),
-
-lastCheckin:
-now,
-
-streak:
-streak
-}
-);
-
-
-
-document.getElementById(
-"checkinBtn"
-).disabled = true;
-
-document.getElementById(
-"checkinBtn"
-).innerText =
-"Claimed Today";
-
-showToast(
-"+" + reward + " LEXA"
-);
+showToast("+" + reward + " LEXA");
 
 }
 
@@ -3739,6 +3726,34 @@ formatLEXA(data.balance || 0);
 
 renderTasks(data);
 
+const streak = data.streak || 0;
+
+const currentDay = (streak % 7) || 7;
+
+document.querySelectorAll(".checkin-days .day").forEach((el,i)=>{
+
+el.classList.remove("active");
+
+if(i < 6){
+
+if(i < currentDay - 1){
+el.classList.add("active");
+el.innerText = "✓";
+}else{
+el.innerText = i + 1;
+}
+
+}else{
+
+el.innerText = "🎁";
+
+if(currentDay === 7){
+el.classList.add("active");
+}
+
+}
+
+});
 const now = Date.now();
 const oneDay = 86400000;
 
@@ -3754,7 +3769,7 @@ document.getElementById(
 document.getElementById(
 "checkinBtn"
 ).innerText =
-"✅ Claimed Today";
+"Claimed-Today";
 
 }else{
 
