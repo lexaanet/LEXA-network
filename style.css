@@ -90,7 +90,29 @@ visibility:visible;
     position:relative;
     overflow:hidden;
 }
+.mini-btn{
+    width:100%;
+    padding:16px;
+    margin-top:14px;
 
+    border-radius:18px;
+    border:1px solid rgba(70,180,255,.28);
+
+    background:rgba(255,255,255,.05);
+    color:#8fdcff;
+
+    font-size:17px;
+    font-weight:700;
+
+    backdrop-filter:blur(14px);
+
+    transition:.25s;
+}
+
+.mini-btn:hover{
+    background:rgba(40,170,255,.12);
+    border-color:#33c6ff;
+}
 .auth-btn::before{
     content:"";
     position:absolute;
