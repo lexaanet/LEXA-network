@@ -3395,27 +3395,25 @@ btn.onclick = () => claimTask(taskId);
 }
 async function claimTask(taskId){
 
-try{
-
 const uid =
 window.auth.currentUser.uid;
 
 const task =
-tasks.find(t => t.id === taskId);
+tasks.find(t=>t.id===taskId);
 
-await window.updateDoc(
-window.doc(
-window.db,
-"users",
-uid
-),
+await updateDoc(
+doc(db,"users",uid),
 {
 balance:
-window.increment(task.reward),
+increment(task.reward),
 
 completedTasks:
-window.arrayUnion(taskId)
+arrayUnion(taskId)
 }
+);
+
+refreshBalance(
+realBalance + task.reward
 );
 
 showToast(
@@ -3423,22 +3421,25 @@ showToast(
 );
 
 const userData =
-await window.loadUserData(uid);
+await loadUserData(uid);
 
+refreshBalance(userData.balance);
 renderTasks(userData);
 
-}catch(err){
+}
+function refreshBalance(balance){
 
-console.error(err);
+realBalance = balance;
 
-showToast(
-"Claim gagal"
-);
+document.getElementById("balanceValue")
+.innerText =
+formatLEXA(balance);
+
+document.getElementById("upgradeBalance")
+.innerText =
+formatLEXA(balance);
 
 }
-
-}
-
 function updateCheckinUI(streak){
 
 let currentDay;
@@ -3541,6 +3542,10 @@ balance: window.increment(reward),
 lastCheckin: now,
 streak: streak
 });
+refreshBalance(
+realBalance + reward
+);
+
 updateCheckinUI(streak);
 document.getElementById("checkinBtn").disabled = true;
 document.getElementById("checkinBtn").innerText = "Claimed Today";
@@ -3560,7 +3565,8 @@ el.innerText = "✓";
 }else{
 el.innerText = i + 1;
 }
-
+const newData = await loadUserData(user.uid);
+refreshBalance(newData.balance);
 }else{
 
 el.innerText = "🎁";
@@ -3926,11 +3932,13 @@ if(referralCount >= 1000){
 document.getElementById("referralLevel")
 .innerText = level;
     
-realBalance = data.balance;    
-    
-document.getElementById("balanceValue")    
-.innerText =    
-formatLEXA(realBalance);    
+realBalance =
+data.balance;
+
+document.getElementById("balanceValue")
+.innerText =
+formatLEXA(realBalance);
+
 const list =
 document.getElementById("referralList");
 
@@ -4016,12 +4024,7 @@ View Team
         const updatedData =    
         await window.loadUserData(uid);    
     
-        realBalance =    
-        updatedData.balance;    
-    
-        document.getElementById("balanceValue")    
-.innerText =    
-formatLEXA(realBalance);    
+        refreshBalance(updatedData.balance);
 
        document.getElementById("statusText")    
 .innerText = "READY";    
