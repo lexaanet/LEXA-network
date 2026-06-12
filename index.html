@@ -405,7 +405,8 @@ Share
 Account
 </div>
 
-<div class="setting-item" onclick="showProfile()">
+<div class="settings-item"
+onclick="showPage('profile')">
 <i class="fa-solid fa-user"></i>
 <span>Profile Settings</span>
 <i class="fa-solid fa-chevron-right"></i>
@@ -426,10 +427,15 @@ Account
 Information
 </div>
 
-<div class="setting-item">
+<div class="setting-item"
+onclick="showPage('faq')">
+
 <i class="fa-regular fa-circle-question"></i>
+
 <span>FAQ</span>
+
 <i class="fa-solid fa-chevron-right"></i>
+
 </div>
 
 <div class="setting-item">
@@ -459,10 +465,14 @@ Information
 Community
 </div>
 
-<div class="setting-item">
+<div class="settings-item"
+onclick="window.open('https://t.me/lexacommunity','_blank')">
+
 <i class="fa-brands fa-telegram"></i>
 <span>Telegram</span>
+
 <i class="fa-solid fa-chevron-right"></i>
+
 </div>
 
 <div class="setting-item">
@@ -471,10 +481,14 @@ Community
 <i class="fa-solid fa-chevron-right"></i>
 </div>
 
-<div class="setting-item">
+<div class="settings-item"
+onclick="window.open('https://x.com/lexaprotocol','_blank')">
+
 <i class="fa-brands fa-x-twitter"></i>
-<span>X (Twitter)</span>
+<span>X</span>
+
 <i class="fa-solid fa-chevron-right"></i>
+
 </div>
 
 </div>
@@ -496,8 +510,8 @@ About
 <!-- LOGOUT -->
 <div class="settings-card">
 
-<div class="setting-item logout-item"
-onclick="logout()">
+<div class="settings-item logout"
+onclick="logoutUser()">
 
 <i class="fa-solid fa-right-from-bracket"></i>
 
@@ -781,6 +795,110 @@ Simpan
     </div>
 
   </div>
+
+</div>
+<div id="faq" class="page">
+
+<h2 class="page-title">
+<i class="fa-solid fa-circle-question"></i>
+FAQ
+</h2>
+
+<div class="faq-card">
+
+<div class="faq-item">
+
+<div class="faq-question" onclick="toggleFAQ(this)">
+
+<span>🚀 What is LEXA?</span>
+
+<i class="fa-solid fa-chevron-down"></i>
+
+</div>
+
+<div class="faq-answer">
+
+LEXA is a community-powered digital ecosystem where members earn rewards through Mining, Daily Check-in, Referrals, and future ecosystem activities. Our mission is to build a sustainable platform that grows together with its community.
+
+</div>
+
+</div>
+
+<div class="faq-item">
+
+<div class="faq-question" onclick="toggleFAQ(this)">
+
+<span>⛏ How does Mining work?</span>
+
+<i class="fa-solid fa-chevron-down"></i>
+
+</div>
+
+<div class="faq-answer">
+
+Mining runs for 12 hours per session. Once completed, rewards are automatically added to your balance and you can immediately start the next mining session.
+
+</div>
+
+</div>
+
+<div class="faq-item">
+
+<div class="faq-question" onclick="toggleFAQ(this)">
+
+<span>🔥 How does Daily Check-in work?</span>
+
+<i class="fa-solid fa-chevron-down"></i>
+
+</div>
+
+<div class="faq-answer">
+
+Claim your Daily Check-in every day to maintain your streak. Every multiple of 7 consecutive days grants an increasing bonus reward. Missing one day resets your streak back to Day 1.
+
+</div>
+
+</div>
+
+<div class="faq-item">
+
+<div class="faq-question" onclick="toggleFAQ(this)">
+
+<span>🌍 What is the future of LEXA?</span>
+
+<i class="fa-solid fa-chevron-down"></i>
+
+</div>
+
+<div class="faq-answer">
+
+LEXA is currently under active development. Future updates include Marketplace Utility, Community Events, Referral Expansion, Token Utility, and Withdrawal support after the official launch.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="future-card">
+
+<div class="future-title">
+
+🌌 Build the Future with LEXA
+
+</div>
+
+<div class="future-text">
+
+Mining is only the beginning.
+
+Stay active, grow your network, and become part of the LEXA ecosystem.
+
+<b>Powered by Community. Built for the Future.</b>
+
+</div>
+
+</div>
 
 </div>
 <!-- NAVBAR -->
@@ -2108,6 +2226,13 @@ document.getElementById("checkinBtn").disabled = true;
 document.getElementById("checkinBtn").innerText = "Claimed Today";
 
 showToast("+" + reward + " LEXA");
+
+}
+function toggleFAQ(el){
+
+const item = el.parentElement;
+
+item.classList.toggle("active");
 
 }
 
