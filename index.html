@@ -3412,9 +3412,13 @@ arrayUnion(taskId)
 }
 );
 
-refreshBalance(
-realBalance + task.reward
-);
+realBalance += task.reward;
+
+document.getElementById("balanceValue").innerText =
+formatLEXA(realBalance);
+
+document.getElementById("upgradeBalance").innerText =
+formatLEXA(realBalance);
 
 showToast(
 `🎉 +${task.reward} LEXA`
@@ -3423,23 +3427,10 @@ showToast(
 const userData =
 await loadUserData(uid);
 
-refreshBalance(userData.balance);
 renderTasks(userData);
 
 }
-function refreshBalance(balance){
 
-realBalance = balance;
-
-document.getElementById("balanceValue")
-.innerText =
-formatLEXA(balance);
-
-document.getElementById("upgradeBalance")
-.innerText =
-formatLEXA(balance);
-
-}
 function updateCheckinUI(streak){
 
 let currentDay;
@@ -3542,16 +3533,18 @@ balance: window.increment(reward),
 lastCheckin: now,
 streak: streak
 });
-refreshBalance(
-realBalance + reward
-);
+realBalance += reward;
 
+document.getElementById("balanceValue").innerText =
+formatLEXA(realBalance);
+
+document.getElementById("upgradeBalance").innerText =
+formatLEXA(realBalance);
 updateCheckinUI(streak);
 document.getElementById("checkinBtn").disabled = true;
 document.getElementById("checkinBtn").innerText = "Claimed Today";
 
 // Update kotak hari
-document.querySelectorAll(".checkin-days .day").forEach((el,i)=>{
 
 el.classList.remove("active");
 
@@ -3565,8 +3558,7 @@ el.innerText = "✓";
 }else{
 el.innerText = i + 1;
 }
-const newData = await loadUserData(user.uid);
-refreshBalance(newData.balance);
+
 }else{
 
 el.innerText = "🎁";
@@ -4024,7 +4016,12 @@ View Team
         const updatedData =    
         await window.loadUserData(uid);    
     
-        refreshBalance(updatedData.balance);
+        realBalance =
+updatedData.balance;
+
+document.getElementById("balanceValue")
+.innerText =
+formatLEXA(realBalance);
 
        document.getElementById("statusText")    
 .innerText = "READY";    
