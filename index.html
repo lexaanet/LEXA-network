@@ -664,7 +664,7 @@ type="file"
 id="avatarInput"
 accept="image/*"
 style="display:none"
-onchange="uploadAvatar(event)">
+onchange="uploadAvatar(this.files[0])">
 
 <button
 class="change-avatar"
@@ -2278,8 +2278,6 @@ async function uploadAvatar(file){
     );
 
     const data = await res.json();
-console.log(data);
-alert(JSON.stringify(data));
 
     if(!data.secure_url){
         showToast("Upload gagal");
