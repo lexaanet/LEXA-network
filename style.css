@@ -902,7 +902,113 @@ border-radius:14px;
 color:#D8E8FF;
 line-height:1.7;
 }
+.settings-card{
 
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,255,255,.06);
+
+border-radius:18px;
+
+padding:8px 18px;
+
+margin-bottom:16px;
+
+}
+
+.settings-group{
+
+font-size:12px;
+
+font-weight:700;
+
+letter-spacing:1px;
+
+text-transform:uppercase;
+
+color:#7FA7D9;
+
+padding:10px 0;
+
+}
+
+.setting-item{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+padding:15px 0;
+
+cursor:pointer;
+
+border-bottom:1px solid rgba(255,255,255,.05);
+
+transition:.2s;
+
+}
+
+.setting-item:last-child{
+
+border-bottom:none;
+
+}
+
+.setting-item i:first-child{
+
+width:24px;
+
+font-size:18px;
+
+color:rgba(255,255,255,.75);
+
+text-align:center;
+
+}
+
+.setting-item span{
+
+flex:1;
+
+font-size:15px;
+
+color:#fff;
+
+}
+
+.setting-item i:last-child{
+
+color:#6EC8FF;
+
+font-size:12px;
+
+}
+
+.setting-item:hover{
+
+color:#6EC8FF;
+
+}
+
+.logout-item{
+
+color:#ff6b6b;
+
+}
+
+.logout-item span{
+
+color:#ff6b6b;
+
+}
+
+.logout-item i:first-child{
+
+color:#ff6b6b;
+
+}
 .notif svg{
 
  width:14px;

@@ -394,98 +394,110 @@ Share
 </div>
     </div> <!-- page referral -->
 <!-- SETTINGS -->
+<div class="page" id="settings">
 
-<div id="settings" class="page">
+<h2>⚙ Settings</h2>
 
-<h2>⚙️ Settings</h2>
+<!-- ACCOUNT -->
+<div class="settings-card">
 
-<div class="settings-list">
+<div class="settings-group">
+Account
+</div>
 
-<div class="settings-item"
-onclick="showPage('profile')">
-
+<div class="setting-item" onclick="showProfile()">
 <i class="fa-solid fa-user"></i>
-
 <span>Profile Settings</span>
-
 <i class="fa-solid fa-chevron-right"></i>
-
 </div>
 
-<div class="settings-item"
-onclick="showPage('referral')">
-
+<div class="setting-item" onclick="showPage('referral')">
 <i class="fa-solid fa-users"></i>
-
 <span>Mining Team</span>
-
 <i class="fa-solid fa-chevron-right"></i>
+</div>
 
 </div>
 
-<hr>
+<!-- INFORMATION -->
+<div class="settings-card">
 
-<div class="settings-item"
-onclick="openFAQ()">
+<div class="settings-group">
+Information
+</div>
 
-<i class="fa-solid fa-circle-question"></i>
-
+<div class="setting-item">
+<i class="fa-regular fa-circle-question"></i>
 <span>FAQ</span>
-
 <i class="fa-solid fa-chevron-right"></i>
-
 </div>
 
-<div class="settings-item"
-onclick="openRoadmap()">
-
-<i class="fa-solid fa-map"></i>
-
+<div class="setting-item">
+<i class="fa-regular fa-map"></i>
 <span>Roadmap</span>
-
 <i class="fa-solid fa-chevron-right"></i>
-
 </div>
 
-<div class="settings-item"
-onclick="openTerms()">
-
-<i class="fa-solid fa-file-contract"></i>
-
-<span>Terms</span>
-
-<i class="fa-solid fa-chevron-right"></i>
-
-</div>
-
-<div class="settings-item"
-onclick="openWhitepaper()">
-
-<i class="fa-solid fa-book"></i>
-
+<div class="setting-item">
+<i class="fa-regular fa-file-lines"></i>
 <span>Whitepaper</span>
-
 <i class="fa-solid fa-chevron-right"></i>
+</div>
+
+<div class="setting-item">
+<i class="fa-solid fa-scale-balanced"></i>
+<span>Terms & Privacy</span>
+<i class="fa-solid fa-chevron-right"></i>
+</div>
 
 </div>
 
-<hr>
+<!-- COMMUNITY -->
+<div class="settings-card">
 
-<div class="settings-item"
-onclick="openCommunity()">
+<div class="settings-group">
+Community
+</div>
 
-<i class="fa-solid fa-comments"></i>
-
-<span>Community</span>
-
+<div class="setting-item">
+<i class="fa-brands fa-telegram"></i>
+<span>Telegram</span>
 <i class="fa-solid fa-chevron-right"></i>
+</div>
+
+<div class="setting-item">
+<i class="fa-brands fa-discord"></i>
+<span>Discord</span>
+<i class="fa-solid fa-chevron-right"></i>
+</div>
+
+<div class="setting-item">
+<i class="fa-brands fa-x-twitter"></i>
+<span>X (Twitter)</span>
+<i class="fa-solid fa-chevron-right"></i>
+</div>
 
 </div>
 
-<hr>
+<!-- ABOUT -->
+<div class="settings-card">
 
-<div class="settings-item logout"
-onclick="logoutUser()">
+<div class="settings-group">
+About
+</div>
+
+<div class="setting-item">
+<i class="fa-solid fa-code"></i>
+<span>Version 1.0.0</span>
+</div>
+
+</div>
+
+<!-- LOGOUT -->
+<div class="settings-card">
+
+<div class="setting-item logout-item"
+onclick="logout()">
 
 <i class="fa-solid fa-right-from-bracket"></i>
 
