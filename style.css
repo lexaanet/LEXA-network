@@ -1210,6 +1210,248 @@ cursor:pointer;
 font-weight:700;  
   
 }  
+/* ===========================
+   PROFILE HEADER
+=========================== */
+
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:22px;
+
+    margin:20px;
+    padding:22px;
+
+    border-radius:24px;
+
+    background:linear-gradient(
+        135deg,
+        rgba(16,31,78,.96),
+        rgba(8,18,48,.96)
+    );
+
+    border:1px solid rgba(66,154,255,.25);
+
+    box-shadow:
+        0 0 25px rgba(0,132,255,.12);
+}
+
+/* ===========================
+   AVATAR
+=========================== */
+
+.profile-avatar-box{
+    position:relative;
+    flex-shrink:0;
+}
+
+.profile-avatar{
+    width:110px;
+    height:110px;
+
+    border-radius:50%;
+    object-fit:cover;
+
+    border:4px solid #3498ff;
+
+    background:#18264f;
+
+    box-shadow:
+        0 0 18px rgba(52,152,255,.35);
+}
+
+.change-avatar{
+
+    position:absolute;
+
+    right:-2px;
+    bottom:-2px;
+
+    width:40px;
+    height:40px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#2b87ff;
+
+    color:#fff;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.change-avatar:hover{
+
+    transform:scale(1.08);
+
+    background:#46a3ff;
+
+}
+
+/* ===========================
+   INFO
+=========================== */
+
+.profile-info-card{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.profile-info-item{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.profile-label{
+
+    font-size:12px;
+
+    color:#7eb8ff;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+    margin-bottom:6px;
+
+}
+
+.profile-value{
+
+    color:#fff;
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+/* ===========================
+   XP
+=========================== */
+
+.xp-bar{
+
+    width:100%;
+
+    height:8px;
+
+    border-radius:999px;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.08);
+
+    margin:4px 0;
+
+}
+
+.xp-fill{
+
+    height:100%;
+
+    width:0%;
+
+    border-radius:999px;
+
+    background:linear-gradient(
+        90deg,
+        #25b6ff,
+        #00ffd5
+    );
+
+    transition:.4s;
+
+}
+
+.profile-xp{
+
+    color:#d8e7ff;
+
+    font-size:13px;
+
+}
+
+/* ===========================
+   BADGE
+=========================== */
+
+.profile-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    width:max-content;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:rgba(44,137,255,.12);
+
+    border:1px solid rgba(44,137,255,.25);
+
+    color:#8fd2ff;
+
+    font-weight:600;
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:650px){
+
+.profile-header{
+
+    flex-direction:column;
+
+    text-align:center;
+
+}
+
+.profile-info-card{
+
+    width:100%;
+
+}
+
+.profile-label{
+
+    text-align:center;
+
+}
+
+.profile-value{
+
+    text-align:center;
+
+}
+
+.profile-badge{
+
+    margin:auto;
+
+}
+
+}
+
   #referralCode{
 color:#65d7ff;
 text-shadow:
@@ -1674,6 +1916,14 @@ font-size:14px;
 
 cursor:pointer;
 
+}
+.profile-signature{
+    margin-top:18px;
+    text-align:center;
+    color:#6ba9ff;
+    font-size:12px;
+    letter-spacing:2px;
+    opacity:.8;
 }
 
 .logout-btn{
