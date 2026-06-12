@@ -1487,6 +1487,33 @@ max-height:300px;
 margin-top:10px;
 
 }
+.profile-avatar-box{
+position:relative;
+width:110px;
+margin:0 auto 20px;
+}
+
+.profile-avatar{
+width:110px;
+height:110px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #33d6ff;
+box-shadow:0 0 20px rgba(0,180,255,.4);
+}
+
+.change-avatar{
+position:absolute;
+right:0;
+bottom:0;
+width:36px;
+height:36px;
+border:none;
+border-radius:50%;
+background:#1f6fff;
+color:#fff;
+cursor:pointer;
+}
 
 .future-card{
 
