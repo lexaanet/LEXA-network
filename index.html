@@ -1512,10 +1512,6 @@ usernameChanged:true
 }
 );
 
-document.getElementById("profileName")
-.innerText =
-newName;
-
 document.getElementById("profileUsername")
 .innerText =
 newName;
@@ -2372,7 +2368,7 @@ async function uploadAvatar(file){
     document.getElementById("profileAvatar").src =
     data.secure_url;
 
-    const uid = auth.currentUser.uid;
+    const uid = window.auth.currentUser.uid;
 
     await updateDoc(
         doc(db,"users",uid),
@@ -2380,9 +2376,9 @@ async function uploadAvatar(file){
             photoURL:data.secure_url
         }
     );
-document.querySelectorAll(".user-avatar").forEach(img=>{
-    img.src = data.secure_url;
-});
+const currentData = await window.loadUserData(uid);
+document.getElementById("profileAvatar").src =
+currentData.photoURL;
     showToast("Photo updated");
 }
 
@@ -2574,6 +2570,13 @@ document.getElementById("memberProfile").style.display = "block";
     
       const uid = user.uid;
 const data = await window.loadUserData(uid);
+
+// Load avatar dari Firebase
+document.getElementById("profileAvatar").src =
+data.photoURL ||
+"https://ui-avatars.com/api/?name=" +
+encodeURIComponent(data.username || "LEXA") +
+"&background=1f6fff&color=fff&size=256";
 
 const referralCount =
 data.referrals || 0;
