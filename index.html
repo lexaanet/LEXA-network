@@ -1211,74 +1211,24 @@ text-shadow:
 
 }
 .checkin-card{
-    position:relative;
-    overflow:hidden;
-
-    background:
-    linear-gradient(
-    135deg,
-    rgba(0,120,255,.15),
-    rgba(0,255,255,.08)
-    );
-
-    border:1px solid
-    rgba(0,255,255,.25);
-
-    box-shadow:
-    0 0 10px rgba(0,150,255,.2);
-
-    animation:
-    pulseGlow 2s infinite;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.03);
+    animation:softGlow 4s infinite;
 }
 
-@keyframes pulseGlow{
+@keyframes softGlow{
 
-0%{
+0%,100%{
 box-shadow:
-0 0 8px rgba(0,150,255,.2);
+0 0 6px rgba(0,150,255,.08);
 }
 
 50%{
 box-shadow:
-0 0 20px rgba(0,200,255,.5),
-0 0 40px rgba(0,120,255,.25);
+0 0 12px rgba(0,150,255,.18);
 }
 
-100%{
-box-shadow:
-0 0 8px rgba(0,150,255,.2);
 }
-.checkin-card::before{
-content:"";
-position:absolute;
-top:0;
-left:-150%;
-
-width:50%;
-height:100%;
-
-background:
-linear-gradient(
-90deg,
-transparent,
-rgba(255,255,255,.15),
-transparent
-);
-
-animation:
-shine 4s infinite;
-}
-
-@keyframes shine{
-
-0%{
-left:-150%;
-}
-
-100%{
-left:200%;
-}
-
 .power-summary{
 
 display:grid;
@@ -1610,12 +1560,12 @@ Belum ada referral
     
 <div class="card checkin-card">
 
-<h3>📅 Daily Check-In</h3>
+<h3> Daily Check-In</h3>
 
 <div class="streak-info">
 
 <div id="streakText">
-🔥 Day 0 / 7
+Day 0 / 7
 </div>
 
 <div id="checkinStatus">
@@ -1624,7 +1574,7 @@ Claim harian +1 LEXA
 
 <br>
 
-🔥 7 hari berturut-turut
+ 7 hari berturut-turut
 = Bonus +7 LEXA
 
 </div>
@@ -1636,7 +1586,7 @@ id="checkinBtn"
 class="action-btn"
 onclick="claimCheckin()">
 
-Claim +1 LEXA
+Claim
 
 </button>
 
@@ -1650,8 +1600,6 @@ Social Tasks
 
 <div id="taskList"></div>
 </div>
-
-</div> 
 </div> 
 <!-- IMPROVE -->
 
@@ -3365,16 +3313,26 @@ btn.onclick = () => claimTask(taskId);
 }
 async function claimTask(taskId){
 
+try{
+
+const uid =
+window.auth.currentUser.uid;
+
 const task =
 tasks.find(t => t.id === taskId);
 
-await updateDoc(
-doc(db,"users",uid),
+await window.updateDoc(
+window.doc(
+window.db,
+"users",
+uid
+),
 {
-balance: increment(task.reward),
+balance:
+window.increment(task.reward),
 
 completedTasks:
-arrayUnion(taskId)
+window.arrayUnion(taskId)
 }
 );
 
@@ -3383,9 +3341,19 @@ showToast(
 );
 
 const userData =
-await loadUserData(uid);
+await window.loadUserData(uid);
 
 renderTasks(userData);
+
+}catch(err){
+
+console.error(err);
+
+showToast(
+"Claim gagal"
+);
+
+}
 
 }
 async function claimCheckin(){
@@ -3725,7 +3693,7 @@ document.getElementById(
 document.getElementById(
 "checkinBtn"
 ).innerText =
-"Claim +1 LEXA";
+"Claim";
 }
 document.getElementById(
 "upgradeRate"
