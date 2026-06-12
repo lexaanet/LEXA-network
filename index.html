@@ -1654,7 +1654,7 @@ Belum ada referral
 <div class="day">4</div>
 <div class="day">5</div>
 <div class="day">6</div>
-<div class="day bonus">🎁</div>
+<div class="day bonus">+7🎁</div>
 
 </div>
 
@@ -3750,7 +3750,26 @@ document.getElementById("streakText").innerText =
 const streak = data.streak || 0;
 
 document.querySelectorAll(".day").forEach((el, i) => {
-    el.classList.toggle("active", i < streak);
+
+    el.classList.remove("active");
+
+    if(i < 6){
+        if(i < streak){
+            el.classList.add("active");
+            el.innerText = "✓";
+        }else{
+            el.innerText = i + 1;
+        }
+    }
+
+    if(i === 6){
+        el.innerText = "🎁";
+
+        if(streak >= 7){
+            el.classList.add("active");
+        }
+    }
+
 });
 
 const now = Date.now();
