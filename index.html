@@ -1217,17 +1217,40 @@ formatLEXA(realBalance + earned);
          const uid =
          window.auth.currentUser.uid;
 
-         await window.updateDoc(
-            window.doc(window.db,"users",uid),
-            {
-               balance: window.increment(totalReward),
-               miningStart: 0,
-               miningActive: false
-            }
-         );
+         const rewarded =
+await claimMiningReward(uid);
 
-         const updatedData =
-         await window.loadUserData(uid);
+const updatedData =
+await window.loadUserData(uid);
+
+if(!rewarded){
+
+   // Reward sudah diberikan oleh perangkat lain
+   realBalance = updatedData.balance;
+
+   document.getElementById("balanceValue")
+   .innerText =
+   formatLEXA(realBalance);
+
+   document.getElementById("statusText")
+   .innerText = "READY";
+
+   document.getElementById("progressBar")
+   .style.width = "0%";
+
+   document.getElementById("miningTimer")
+   .style.display = "none";
+
+   document.querySelector("#mineBtn span")
+   .innerText = "MINE";
+
+   document.getElementById("mineBtn")
+   .style.pointerEvents = "auto";
+
+   miningActive = false;
+
+   return;
+}
 
          realBalance =
          updatedData.balance;
@@ -1257,6 +1280,44 @@ formatLEXA(realBalance + earned);
    },1000);
 
 }
+async function claimMiningReward(uid){
+
+   const userRef =
+   window.doc(window.db, "users", uid);
+
+   let rewardGiven = false;
+
+   await window.runTransaction(
+      window.db,
+      async(transaction)=>{
+
+         const snap =
+         await transaction.get(userRef);
+
+         if(!snap.exists()) return;
+
+         const data = snap.data();
+
+         // Sudah pernah diproses
+         if(!data.miningActive){
+            return;
+         }
+
+         transaction.update(userRef,{
+            balance: window.increment(data.miningRate || 3.5),
+            miningStart: 0,
+            miningActive: false
+         });
+
+         rewardGiven = true;
+
+      }
+   );
+
+   return rewardGiven;
+
+}
+
 async function registerUser(){    
     
    const email =    
@@ -2431,8 +2492,9 @@ import {
  query,    
  where,    
  getDocs,    
- collection,    
- arrayUnion    
+ collection,
+ arrayUnion,
+ runTransaction
 }    
 from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";    
 const firebaseConfig = {    
@@ -2469,7 +2531,9 @@ window.setDoc = setDoc;
 window.updateDoc = updateDoc;    
 window.increment = increment;    
 window.collection = collection;    
-window.arrayUnion = arrayUnion;    
+window.arrayUnion = arrayUnion;
+window.runTransaction = runTransaction;
+    
 window.query = query;    
 window.where = where;    
 window.getDocs = getDocs;    
@@ -2810,33 +2874,31 @@ View Team
     // mining selesai    
     if(elapsedSeconds >= MAX_SECONDS){    
     
-        await window.updateDoc(    
-          window.doc(window.db,"users",uid),    
-          {    
-             balance: window.increment(totalReward), 
-             miningStart: 0,    
-             miningActive: false    
-          }    
-        );    
-    
-        const updatedData =    
-        await window.loadUserData(uid);    
-    
-        realBalance =
+        const rewarded =
+await claimMiningReward(uid);
+
+const updatedData =
+await window.loadUserData(uid);
+
+realBalance =
 updatedData.balance;
 
 document.getElementById("balanceValue")
 .innerText =
 formatLEXA(realBalance);
 
-       document.getElementById("statusText")    
-.innerText = "READY";    
-    
-document.getElementById("miningTimer")    
-.style.display = "none";    
-    
-document.getElementById("progressBar")    
-.style.width = "0%";    
+document.getElementById("statusText")
+.innerText = "READY";
+
+document.getElementById("miningTimer")
+.style.display = "none";
+
+document.getElementById("progressBar")
+.style.width = "0%";
+
+if(!rewarded){
+   console.log("Reward sudah diproses oleh perangkat lain.");
+}
     
 }else{
 
